@@ -1,4 +1,4 @@
-# GrouponUp
+# Groupon Up
 Groupon, reinvented.
 
 
