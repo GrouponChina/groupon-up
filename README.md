@@ -16,26 +16,9 @@ Life is so good with Groupon, isn't it?
 - [ ] Dragging anywhere in the view should reveal the menu.
 - [ ] The menu should include links to Home page, Profile page, and My orders page.
 
-### Home page
-- [ ] User should be able to browse Groupon deals.
-- [ ] User should be able to perform search on the page.
-
-### Deal page
-- [ ] User should be able to view the details of Groupon deals.
-- [ ] There should be a buy button on the page
-- [ ] There should be a Groupon UP button on the page, click on the button will bring Groupon UP instruction page
-
 ### Groupon UP instruction page
 - [ ] Provide a basic walkthrough of Groupon UP feature
 - [ ] Return to the deal page at the end of the walkthrough
-
-### Checkout page
-- [ ] User should be able to enter billing information and purchase the deal.
-- [ ] After checkout, user should be redirected to the confirmation page
-
-### Confirmation page
-- [ ] User should be able to see confirmation message about the deal purchase
-- [ ] User should have the option of creating a Groupon UP campaign (maybe we need to create a separate view for this?)
 
 ### Groupon UP creation page
 - [ ] A brief order information should be displayed on this page.
@@ -57,8 +40,9 @@ Optional:
 - [ ] User should be able to chat with the user in this group by tapping a Chat button.
 
 ### User Sessions page
-- [ ] User should be able to register (fake) Groupon account. (via Parse)
 - [ ] User should be able to sign in with (fake) Groupon account. (via Parse)
+Optional:
+- [ ] User should be able to register (fake) Groupon account. (via Parse)
 
 ### My Orders page
 - [ ] We will implement user order via Parse.
@@ -75,6 +59,23 @@ Optional:
 ### User Profile page
 - [ ] Contains the user header view.
 - [ ] Contains a section with the users basic stats: name, gender, profile image, location / division.
+
+### Home page (Optional)
+- [ ] User should be able to browse Groupon deals.
+- [ ] User should be able to perform search on the page.
+
+### Deal page (Optional)
+- [ ] User should be able to view the details of Groupon deals.
+- [ ] There should be a buy button on the page
+- [ ] There should be a Groupon UP button on the page, click on the button will bring Groupon UP instruction page
+
+### Checkout page (Optional)
+- [ ] User should be able to enter billing information and purchase the deal.
+- [ ] After checkout, user should be redirected to the confirmation page
+
+### Confirmation page (Optional)
+- [ ] User should be able to see confirmation message about the deal purchase
+- [ ] User should have the option of creating a Groupon UP campaign (maybe we need to create a separate view for this?)
 
 ### Optional:
 - [ ] User should be able to see a list of the last 5 or 10 Groupon UP request (use local storage maybe?)
