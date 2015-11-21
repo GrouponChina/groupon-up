@@ -1,5 +1,6 @@
 # Mac OS
 .DS_Store
+Groupon\ UP/.DS_Store
 
 # Xcode
 #
@@ -19,6 +20,7 @@ Groupon\ UP/DerivedData
 Groupon\ UP/*.hmap
 Groupon\ UP/*.ipa
 Groupon\ UP/*.xcuserstate
+Groupon\ UP.xcodeproj/project.pbxproj
 
 # CocoaPods
 #
