@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        setupParse()
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window!.backgroundColor = UPBackgroundColor
+        window!.tintColor = UPTintColor
+        window!.rootViewController = InitialViewController()
+        window!.makeKeyAndVisible()
         return true
     }
 
@@ -41,6 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func setupParse() {
+        let dic = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("parse", ofType: "plist")!)!
+        if let appId = dic.objectForKey("appId") as? String, clientKey = dic.objectForKey("clientKey") as? String {
+            // Initialize Parse.
+            debugPrint("appId", appId, "clientKey", clientKey)
+            Parse.enableLocalDatastore()
+            Parse.setApplicationId(appId, clientKey: clientKey)
+        }
+    }
 }
 
