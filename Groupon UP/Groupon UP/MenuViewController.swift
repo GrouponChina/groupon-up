@@ -1,0 +1,128 @@
+//
+//  MenuViewController.swift
+//  Groupon UP
+//
+//  Created by Robert Xue on 11/21/15.
+//  Copyright © 2015 Chang Liu. All rights reserved.
+//
+
+import UIKit
+import Parse
+import ParseUI
+
+class MenuViewController: BaseViewController {
+    private var _tableView: UITableView!
+    private var _userProfileScreen: ProfileViewController!
+    private var _ordersScreen: BrowseViewController!
+    private var _upNotificationsScreen: UPListViewController!
+    private var _viewControllers: [UIViewController]!
+    
+    override func addSubviews() {
+        view.addSubview(tableView)
+    }
+    
+    override func addLayouts() {
+        tableView.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(snp_topLayoutGuideBottom)
+            make.bottom.equalTo(snp_bottomLayoutGuideTop)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+        }
+    }
+    
+    override func initializeUI() {
+        if let hamburgerVC = (navigationController ?? self).parentViewController as? HamburgerViewController where viewControllers.count > 0 {
+            hamburgerVC.centerViewController = viewControllers[0]
+        }
+        automaticallyAdjustsScrollViewInsets = false
+    }
+    
+}
+
+extension MenuViewController: UITableViewDataSource {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewControllers.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell
+        let reuseId = "command cell"
+        if let reuseCell = tableView.dequeueReusableCellWithIdentifier(reuseId) {
+            cell = reuseCell
+        } else {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: reuseId)
+        }
+        switch indexPath.row {
+        case 0:
+            // Profile cell
+            cell.textLabel?.text = "My Profile"
+        case 1:
+            // Home timeline
+            cell.textLabel?.text = "Orders"
+        case 2:
+            // Home timeline
+            cell.textLabel?.text = "UP invitations"
+        default:
+            break
+        }
+        return cell
+    }
+}
+
+extension MenuViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if let hamburgerVC = (navigationController ?? self).parentViewController as? HamburgerViewController {
+            hamburgerVC.centerViewController = viewControllers[indexPath.row]
+            hamburgerVC.closeLeftView()
+        }
+    }
+}
+
+extension MenuViewController {
+    var tableView: UITableView {
+        if _tableView == nil {
+            let v = UITableView()
+            v.dataSource = self
+            v.delegate = self
+            v.tableFooterView = UIView()
+            _tableView = v
+        }
+        return _tableView
+    }
+    
+    var viewControllers: [UIViewController] {
+        if _viewControllers == nil {
+            _viewControllers = [
+                MenuEnabledNavigationViewController(rootViewController: userProfileScreen),
+                MenuEnabledNavigationViewController(rootViewController: ordersScreen),
+                MenuEnabledNavigationViewController(rootViewController: upNotificationsScreen)
+            ]
+        }
+        return _viewControllers
+    }
+    
+    var userProfileScreen: ProfileViewController {
+        if _userProfileScreen == nil {
+            let s = ProfileViewController()
+            _userProfileScreen = s
+        }
+        return _userProfileScreen
+    }
+    
+    var ordersScreen: BrowseViewController {
+        if _ordersScreen == nil {
+            let s = BrowseViewController()
+            _ordersScreen = s
+        }
+        return _ordersScreen
+    }
+    
+    var upNotificationsScreen: UPListViewController {
+        if _upNotificationsScreen == nil {
+            let s = UPListViewController()
+            _upNotificationsScreen = s
+        }
+        return _upNotificationsScreen
+    }
+}
