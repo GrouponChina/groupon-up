@@ -10,6 +10,15 @@ import UIKit
 import Parse
 
 class InitialViewController: UIViewController {
+    
+    var deals = [Deal]()
+    
+    override func viewDidLoad() {
+        DealClient.getDivisionDeals { (deals: [Deal]!) -> Void in
+            self.deals = deals
+        }
+    }
+
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
