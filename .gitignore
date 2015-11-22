@@ -21,6 +21,8 @@ Groupon\ UP/*.hmap
 Groupon\ UP/*.ipa
 Groupon\ UP/*.xcuserstate
 Groupon\ UP.xcodeproj/project.pbxproj
+Groupon\ UP/Groupon\ UP.xcodeproj/project.pbxproj
+Groupon\ UP/Groupon\ UP.xcworkspace/*
 
 # CocoaPods
 #
@@ -29,3 +31,5 @@ Groupon\ UP.xcodeproj/project.pbxproj
 # http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
 Groupon\ UP/Pods/
+
+Groupon UP/Groupon UP.xcworkspace/xcuserdata/rxue.xcuserdatad/UserInterfaceState.xcuserstate
