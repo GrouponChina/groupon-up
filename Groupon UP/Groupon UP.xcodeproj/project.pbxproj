@@ -26,6 +26,7 @@
 		A130FD721C011DB600B40829 /* UPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD711C011DB600B40829 /* UPViewController.swift */; };
 		A130FD741C01221A00B40829 /* parse.plist in Resources */ = {isa = PBXBuildFile; fileRef = A130FD731C01221A00B40829 /* parse.plist */; };
 		A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD751C0125A400B40829 /* LoginViewController.swift */; };
+		A199F25E1C021BF20008FB29 /* StringMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = A199F25D1C021BF20008FB29 /* StringMD5.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,8 @@
 		A130FD711C011DB600B40829 /* UPViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPViewController.swift; sourceTree = "<group>"; };
 		A130FD731C01221A00B40829 /* parse.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = parse.plist; sourceTree = "<group>"; };
 		A130FD751C0125A400B40829 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A199F2591C021BCD0008FB29 /* Groupon UP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Groupon UP-Bridging-Header.h"; sourceTree = "<group>"; };
+		A199F25D1C021BF20008FB29 /* StringMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringMD5.swift; sourceTree = "<group>"; };
 		C39C97F5CA29441AEBD38DBF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		EF5DE927F9472D92EC326EC8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +76,7 @@
 				49EFA4411C005B7A00D04B7D /* Products */,
 				DFA9E4BB3F01BA9E4DC8E7D0 /* Pods */,
 				BCAD3F284303B2564B3322CB /* Frameworks */,
+				A199F2591C021BCD0008FB29 /* Groupon UP-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +121,7 @@
 				A130FD581C01124B00B40829 /* BaseViewController.swift */,
 				A130FD561C01116A00B40829 /* HexColor.swift */,
 				A130FD5B1C0112AD00B40829 /* HamburgerViewController.swift */,
+				A199F25D1C021BF20008FB29 /* StringMD5.swift */,
 			);
 			name = BaseClassesAndExtensions;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 		49EFA4381C005B7A00D04B7D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Chang Liu";
 				TargetAttributes = {
@@ -303,6 +309,7 @@
 				A130FD721C011DB600B40829 /* UPViewController.swift in Sources */,
 				A130FD691C011D3800B40829 /* BrowseViewController.swift in Sources */,
 				A130FD5F1C01135100B40829 /* MenuViewController.swift in Sources */,
+				A199F25E1C021BF20008FB29 /* StringMD5.swift in Sources */,
 				A130FD661C01175400B40829 /* MenuEnabledNavigationViewController.swift in Sources */,
 				A130FD571C01116A00B40829 /* HexColor.swift in Sources */,
 				A130FD641C0116A600B40829 /* ProfileViewController.swift in Sources */,
@@ -414,10 +421,13 @@
 			baseConfigurationReference = EF5DE927F9472D92EC326EC8 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Groupon UP/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ngliu.Groupon-UP";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Groupon UP-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -426,10 +436,12 @@
 			baseConfigurationReference = C39C97F5CA29441AEBD38DBF /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Groupon UP/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ngliu.Groupon-UP";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Groupon UP-Bridging-Header.h";
 			};
 			name = Release;
 		};
