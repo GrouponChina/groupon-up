@@ -11,11 +11,9 @@ import Alamofire
 import SwiftyJSON
 
 class OrderViewController: UIViewController {
-    
     private var _tableView: UITableView!
     private var _refreshController: UIRefreshControl!
     var deals: [Deal] = []
-    //var selectedEntree: Entree!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +25,7 @@ class OrderViewController: UIViewController {
         super.viewWillAppear(animated)
         initData()
     }
+    
     func addSubViews() {
         view.addSubview(tableView)
         tableView.addSubview(refreshController)
@@ -52,7 +51,6 @@ class OrderViewController: UIViewController {
 }
 
 extension OrderViewController: UITableViewDataSource, UITableViewDelegate {
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return deals.count
     }
@@ -67,19 +65,12 @@ extension OrderViewController: UITableViewDataSource, UITableViewDelegate {
             cell = DealTableViewCell(style: .Subtitle, reuseIdentifier: reuseId)
         }
         let deal = deals[indexPath.row]
-//        cell.addToCart.tag = indexPath.row
-//        cell.addToCart.addTarget(self, action: "addToCart:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.setDeal(deal)
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //let selectedEntree = deals[indexPath.row]
-        //let entreeDetail = EntreeDetailViewController()
-        //entreeDetail.selectedEntree = selectedEntree
         NSLog("didSelect")
-        //self.navigationController?.pushViewController(entreeDetail, animated: true)
-        
     }
 }
 
@@ -92,7 +83,6 @@ extension OrderViewController {
             _tableView.separatorStyle = UITableViewCellSeparatorStyle.None
             _tableView.estimatedRowHeight = 300
             _tableView.rowHeight = UITableViewAutomaticDimension
-            //_tableView.backgroundColor = FYMenu.backgroundColor
         }
         return _tableView
     }
@@ -101,9 +91,6 @@ extension OrderViewController {
         if _refreshController == nil {
             _refreshController = UIRefreshControl()
             _refreshController.tintColor = UIColor.whiteColor()
-//            let imageSize = CGSize(width: self.view.frame.width, height: 170.0)
-//            let refreshBackground = Image.reSizeUIImage(UIImage(named: "fusionyo.png")!, scaledToSize: imageSize)
-//            _refreshController.backgroundColor = UIColor(patternImage: refreshBackground)
             _refreshController.addTarget(self, action: "refreshView", forControlEvents: .ValueChanged)
         }
         return _refreshController
@@ -111,17 +98,16 @@ extension OrderViewController {
 }
 
 extension OrderViewController {
-    
     func makeGetDealsRequest() {
         //self.deals = fakeDeals()
-        
         DealClient.getDivisionDeals { (deals: [Deal]!) -> Void in
             self.deals = deals
+            self.tableView.reloadData()
         }
     }
     
     func fakeDeals() -> [Deal] {
-        var deal = Deal()
+        let deal = Deal()
         
         deal.uuid = "5b1d966e-78b0-214c-1de7-0ce7b1eb0323"
         deal.title = "Medieval Times – Tournament Dinner and Show with Optional VIP Package through January 31"
@@ -132,7 +118,7 @@ extension OrderViewController {
         deal.status = "Open"
         deal.price = "$26.00"
         deal.value = "$43.78"
-        var dealImage = DealImages()
+        let dealImage = DealImages()
         dealImage.grid6ImageUrl = "https://img.grouponcdn.com/deal/sHHKA7Hp8ZxUfC9gyeH7/XT-2048x1229/v1/t460x279.jpg"
         deal.dealImages = dealImage
         deal.divisionId = "chicago"
@@ -142,8 +128,7 @@ extension OrderViewController {
     
     func refreshView() {
         refreshController.beginRefreshing()
-        tableView.reloadData()
-        //initData()
+        initData()
         refreshController.endRefreshing()
     }
 }

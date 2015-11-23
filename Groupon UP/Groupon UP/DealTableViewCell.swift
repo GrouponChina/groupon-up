@@ -50,15 +50,12 @@ class DealTableViewCell: UITableViewCell {
             make.top.equalTo(dealImageView.snp_bottom)
             make.left.equalTo(dealImageView.snp_left)
             make.right.equalTo(dealImageView.snp_right)
-            //make.height.equalTo(UPDeal.dealInfoHeight)
         }
         
         dealTitle.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(dealInfo).offset(UPDeal.titleOffset)
             make.left.equalTo(dealInfo).offset(UPDeal.titleOffset)
             make.right.equalTo(dealInfo).offset(-UPDeal.titleOffset)
-            //make.height.equalTo(UPDeal.titleHeight)
-            //make.bottom.lessThanOrEqualTo(dealInfo.snp_bottom).offset(-UPDeal.offset)
         }
         
         dealDivision.snp_makeConstraints { (make) -> Void in
@@ -76,13 +73,11 @@ class DealTableViewCell: UITableViewCell {
         soldQuantityMessage.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(dealDivision.snp_bottom).offset(UPDeal.subOffset)
             make.left.equalTo(dealDivision.snp_left)
-            //make.bottom.equalTo(dealInfo.snp_bottom).offset(-UPDeal.bottomInfoOffset)
         }
         
         dealPrice.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(value.snp_bottom).offset(UPDeal.subOffset)
             make.right.equalTo(dealTitle.snp_right)
-            //make.bottom.equalTo(dealInfo.snp_bottom).offset(-UPDeal.bottomInfoOffset)
         }
         
         backgroundColor = UPDeal.backgroundColor
@@ -119,11 +114,7 @@ class DealTableViewCell: UITableViewCell {
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
-    
-    
 }
 
 
@@ -149,7 +140,6 @@ extension DealTableViewCell {
             _dealTitle = UILabel()
             _dealTitle.font = UPDeal.titleFont
             _dealTitle.numberOfLines = 2
-            
         }
         return _dealTitle
     }
@@ -186,7 +176,6 @@ extension DealTableViewCell {
             _dealPrice = UILabel()
             _dealPrice.font = UPDeal.priceFont
             _dealPrice.textColor = UPDeal.priceFontColor
-            
         }
         return _dealPrice
     }

@@ -14,7 +14,7 @@ let clientId = "b91d375e38147f3c1e0339a3588d0b791c190424"
 let host = "https://api.groupon.com"
 
 class DealClient {
-    static func getDivisionDeals(divisionId: String = "chicago", limit: Int = 5, completion: ([Deal]!) -> Void) {
+    static func getDivisionDeals(divisionId: String = "chicago", limit: Int = 10, completion: ([Deal]!) -> Void) {
         let parameters = [
             "division_id": divisionId,
             "limit": limit.description,

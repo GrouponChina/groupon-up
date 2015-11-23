@@ -28,7 +28,7 @@
 		A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD751C0125A400B40829 /* LoginViewController.swift */; };
 		EC44DA931C0137D2003CD93C /* DealClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA921C0137D2003CD93C /* DealClient.swift */; };
 		EC44DA961C01380A003CD93C /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA951C01380A003CD93C /* Deal.swift */; };
-		EC44DA981C014FED003CD93C /* BrowseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA971C014FED003CD93C /* BrowseConstants.swift */; };
+		EC44DA981C014FED003CD93C /* DealDetailsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,7 +56,7 @@
 		C39C97F5CA29441AEBD38DBF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		EC44DA921C0137D2003CD93C /* DealClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealClient.swift; sourceTree = "<group>"; };
 		EC44DA951C01380A003CD93C /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
-		EC44DA971C014FED003CD93C /* BrowseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseConstants.swift; sourceTree = "<group>"; };
+		EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsConstants.swift; sourceTree = "<group>"; };
 		EF5DE927F9472D92EC326EC8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,7 +153,7 @@
 				A130FD681C011D3800B40829 /* DealDetailsViewController.swift */,
 				A130FD6A1C011D6100B40829 /* OrderViewController.swift */,
 				A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */,
-				EC44DA971C014FED003CD93C /* BrowseConstants.swift */,
+				EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -322,7 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC44DA931C0137D2003CD93C /* DealClient.swift in Sources */,
-				EC44DA981C014FED003CD93C /* BrowseConstants.swift in Sources */,
+				EC44DA981C014FED003CD93C /* DealDetailsConstants.swift in Sources */,
 				A130FD5C1C0112AD00B40829 /* HamburgerViewController.swift in Sources */,
 				A130FD591C01124B00B40829 /* BaseViewController.swift in Sources */,
 				49EFA4461C005B7A00D04B7D /* InitialViewController.swift in Sources */,

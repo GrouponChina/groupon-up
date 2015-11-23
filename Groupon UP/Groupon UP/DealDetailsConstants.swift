@@ -1,5 +1,5 @@
 //
-//  BrowseConstants.swift
+//  DealDetailsConstants.swift
 //  Groupon UP
 //
 //  Created by Ping Zhang on 11/21/15.
