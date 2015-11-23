@@ -10,6 +10,7 @@ PODS:
     - Parse (~> 1.9)
   - SnapKit (0.15.0)
   - SwiftSpinner (0.8.0)
+  - SwiftyJSON (2.3.1)
 
 DEPENDENCIES:
   - AlamofireImage (~> 2.0)
@@ -17,6 +18,16 @@ DEPENDENCIES:
   - ParseUI (~> 1.1.7)
   - SnapKit (~> 0.15.0)
   - SwiftSpinner (~> 0.8.0)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+
+EXTERNAL SOURCES:
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  SwiftyJSON:
+    :commit: 10f67900bdf2fb0faba3371249a6fefdcaa880c5
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
   Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
@@ -26,5 +37,6 @@ SPEC CHECKSUMS:
   ParseUI: c2bcdfbb00330e464b5b773266ae221697a3bb7b
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
   SwiftSpinner: 11c2c5ec7443d92f3026d3067ca8a91d4adef13f
+  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
 
 COCOAPODS: 0.39.0

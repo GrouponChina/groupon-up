@@ -13,7 +13,7 @@ import ParseUI
 class MenuViewController: BaseViewController {
     private var _tableView: UITableView!
     private var _userProfileScreen: ProfileViewController!
-    private var _ordersScreen: BrowseViewController!
+    private var _ordersScreen: OrderViewController!
     private var _upNotificationsScreen: UPListViewController!
     private var _viewControllers: [UIViewController]!
     
@@ -110,9 +110,9 @@ extension MenuViewController {
         return _userProfileScreen
     }
     
-    var ordersScreen: BrowseViewController {
+    var ordersScreen: OrderViewController {
         if _ordersScreen == nil {
-            let s = BrowseViewController()
+            let s = OrderViewController()
             _ordersScreen = s
         }
         return _ordersScreen
