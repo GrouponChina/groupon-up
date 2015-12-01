@@ -26,6 +26,7 @@
 		A130FD721C011DB600B40829 /* UPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD711C011DB600B40829 /* UPViewController.swift */; };
 		A130FD741C01221A00B40829 /* parse.plist in Resources */ = {isa = PBXBuildFile; fileRef = A130FD731C01221A00B40829 /* parse.plist */; };
 		A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD751C0125A400B40829 /* LoginViewController.swift */; };
+		EC25203F1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC25203E1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift */; };
 		A199F25E1C021BF20008FB29 /* StringMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = A199F25D1C021BF20008FB29 /* StringMD5.swift */; };
 		EC44DA931C0137D2003CD93C /* DealClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA921C0137D2003CD93C /* DealClient.swift */; };
 		EC44DA961C01380A003CD93C /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA951C01380A003CD93C /* Deal.swift */; };
@@ -57,6 +58,7 @@
 		A199F2591C021BCD0008FB29 /* Groupon UP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Groupon UP-Bridging-Header.h"; sourceTree = "<group>"; };
 		A199F25D1C021BF20008FB29 /* StringMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringMD5.swift; sourceTree = "<group>"; };
 		C39C97F5CA29441AEBD38DBF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EC25203E1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsBaseViewController.swift; sourceTree = "<group>"; };
 		EC44DA921C0137D2003CD93C /* DealClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealClient.swift; sourceTree = "<group>"; };
 		EC44DA951C01380A003CD93C /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsConstants.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		49EFA4421C005B7A00D04B7D /* Groupon UP */ = {
 			isa = PBXGroup;
 			children = (
+				49EFA4431C005B7A00D04B7D /* AppDelegate.swift */,
 				EC44DA941C013801003CD93C /* Models */,
 				EC44DA911C0137C4003CD93C /* Lib */,
 				A130FD6E1C011D9900B40829 /* UP */,
@@ -105,7 +108,6 @@
 				A130FD5D1C01134500B40829 /* Navigation */,
 				A130FD5A1C01127F00B40829 /* BaseClassesAndExtensions */,
 				A130FD531C01111C00B40829 /* LayoutConstants */,
-				49EFA4431C005B7A00D04B7D /* AppDelegate.swift */,
 				49EFA4451C005B7A00D04B7D /* InitialViewController.swift */,
 				49EFA44A1C005B7A00D04B7D /* Assets.xcassets */,
 				49EFA44C1C005B7A00D04B7D /* LaunchScreen.storyboard */,
@@ -159,6 +161,7 @@
 				A130FD6A1C011D6100B40829 /* OrderViewController.swift */,
 				A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */,
 				EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */,
+				EC25203E1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				49EFA4441C005B7A00D04B7D /* AppDelegate.swift in Sources */,
 				EC44DA961C01380A003CD93C /* Deal.swift in Sources */,
 				A130FD6B1C011D6100B40829 /* OrderViewController.swift in Sources */,
+				EC25203F1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
