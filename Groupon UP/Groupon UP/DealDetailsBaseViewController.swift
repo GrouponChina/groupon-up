@@ -18,6 +18,7 @@ class DealDetailsBaseViewController: BaseViewController {
     private var _dealTitle: UILabel!
     private var _dealExpireDate: UILabel!
     private var _dealStatusView: UIView!
+    private var _bottomToolbar: UIView!
     
     var selectedDeal: Deal!
     
@@ -36,16 +37,22 @@ class DealDetailsBaseViewController: BaseViewController {
         dealInfo.addSubview(dealTitle)
         dealInfo.addSubview(dealExpireDate)
         contentView.addSubview(dealStatusView)
+        view.addSubview(bottomToolbar)
     }
     
     override func addLayouts() {
         view.backgroundColor = UIColor.whiteColor()
+        bottomToolbar.snp_makeConstraints { (make) -> Void in
+            make.bottom.equalTo(snp_bottomLayoutGuideTop)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+        }
         
         anchorView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(snp_topLayoutGuideBottom)//.offset(64) //Nav bar height without hardcoded??
             make.left.equalTo(view.snp_left)
             make.right.equalTo(view.snp_right)
-            make.bottom.equalTo(-UPDealDetailsBase.bottomButtonHeight)
+            make.bottom.equalTo(bottomToolbar.snp_top)
         }
         
         scrollView.snp_makeConstraints { (make) -> Void in
@@ -181,9 +188,19 @@ extension DealDetailsBaseViewController {
         return _dealStatusView
     }
     
+    var bottomToolbar: UIView! {
+        if _bottomToolbar == nil {
+            _bottomToolbar = getBottomToolbar()
+        }
+        return _bottomToolbar
+    }
+    
     // Override point for providing a deal specific status view
     func getDealStatusView() -> UIView {
-        let v = UIView()
-        return v
+        return UIView()
+    }
+    
+    func getBottomToolbar() -> UIView {
+        return UIView()
     }
 }

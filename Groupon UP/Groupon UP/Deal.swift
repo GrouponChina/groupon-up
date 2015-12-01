@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import Parse
 
 class Deal {
     var uuid :String!
@@ -22,6 +23,28 @@ class Deal {
     var dealImages: DealImages!
     var divisionId: String!
     var expiresAt: String = "Never Expires"
+    var up: UpInvitation?
+    
+    var upStatus: DealUpStatus {
+        guard let up = up else {
+            return .None
+        }
+        //TODO: Check for redeem status
+        //if redeemed {
+        //    return .Redeemed
+        //}
+        if up.date.timeIntervalSinceNow < 0 {
+            return .Expired
+        }
+        if !up.openEnroll {
+            return .Confirmed
+        }
+        if let rsvps = up.rsvps where !rsvps.isEmpty {
+            return .Active
+        } else {
+            return .Created
+        }
+    }
     
     init() {
         
@@ -56,6 +79,20 @@ class Deal {
         return deals
     }
     
+    func getUpCreatedByUser(userId: String, callback: (UpInvitation?, NSError?) -> Void) {
+        let query = PFQuery(className: "GrouponUP")
+        query.whereKey("dealId", equalTo: uuid)
+        query.whereKey("createdBy", equalTo: userId)
+        query.getFirstObjectInBackgroundWithBlock { (up, error) -> Void in
+            if let _ = error {
+                callback(nil, error)
+            }
+            if let up = up {
+                self.up = UpInvitation(up: up)
+            }
+            callback(self.up, error)
+        }
+    }
 }
 
 
@@ -80,5 +117,36 @@ class DealImages {
         mediumImageUrl = dealData["mediumImageUrl"].stringValue
         smallImageUrl = dealData["smallImageUrl"].stringValue
         sidebarImageUrl = dealData["sidebarImageUrl"].stringValue
+    }
+}
+
+enum DealUpStatus {
+    // Nothing has happened at this state
+    case None
+    // Up has been created, no one responded yet. Can cancel
+    // `Cancel` -> None
+    // Other user `Accept` -> Active
+    case Created
+    // Up has been created, some user has responded already. Can not cancel
+    // `Confirm` -> Confirmed
+    case Active
+    // Up has been created, users are onboard, enrollment ended. Can not cancel
+    // `Redeem` -> Redeemed
+    // `Time > Exprie date` -> Expired
+    case Confirmed
+    // Up has been created, users are onboard, enrollment ended, groupon expired
+    // Final state
+    case Expired
+    // Up has been created, users are onboard, enrollment ended, groupon redeemed
+    // Final state
+    case Redeemed
+    
+    var canCancel: Bool {
+        switch self {
+        case .Created:
+            return true
+        default:
+            return false
+        }
     }
 }

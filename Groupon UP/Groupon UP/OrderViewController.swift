@@ -70,7 +70,7 @@ extension OrderViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let dealDetailView = DealDetailsBaseViewController()
+        let dealDetailView = DealDetailsViewController()
         dealDetailView.selectedDeal = deals[indexPath.row]
         navigationController?.pushViewController(dealDetailView, animated: true)
     }
