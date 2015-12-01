@@ -8,16 +8,76 @@
 
 import UIKit
 import Parse
+import AlamofireImage
+import CoreLocation
 
 class ProfileViewController: BaseViewController {
-    var _logoutButton: UIBarButtonItem!
+    private var _logoutButton: UIBarButtonItem!
+    private var _userProfile: UIImageView!
+    private var _usernameLabel: UILabel!
+    private var _locationLabel: UILabel!
+    private let profileImageDimension = 100
+    private var _locationManager: CLLocationManager!
+    private lazy var filter = RoundedCornersFilter(radius: 5)
     
     override func addSubviews() {
         navigationItem.rightBarButtonItem = logoutButton
+        view.addSubview(userProfile)
+        view.addSubview(usernameLabel)
+        view.addSubview(locationLabel)
+    }
+    
+    override func addLayouts() {
+        userProfile.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(snp_topLayoutGuideBottom).offset(50)
+            make.centerX.equalTo(view)
+            make.width.equalTo(profileImageDimension)
+            make.height.equalTo(profileImageDimension)
+        }
+        usernameLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(userProfile.snp_bottom).offset(UPSpanSize)
+            make.centerX.equalTo(view)
+        }
+        locationLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(usernameLabel.snp_bottom).offset(UPSpanSize)
+            make.centerX.equalTo(view)
+        }
+    }
+    
+    override func refreshUI() {
+        if let user = PFUser.currentUser() {
+            if let email = user.email {
+                userProfile.af_setImageWithURL(NSURL(string: "https://www.gravatar.com/avatar/\(email.md5())?s=200")!, filter: filter)
+            }
+            usernameLabel.text = user.username
+        }
+        switch CLLocationManager.authorizationStatus() {
+            case .AuthorizedWhenInUse, .Authorized:
+                locationManager
+            case .NotDetermined:
+                locationManager.requestAlwaysAuthorization()
+            case .Restricted, .Denied:
+                let alertController = UIAlertController(
+                    title: "Background Location Access Disabled",
+                    message: "In order to be notified about adorable kittens near you, please open this app's settings and set location access to 'Always'.",
+                    preferredStyle: .Alert)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                let openAction = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
+                    if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+                        UIApplication.sharedApplication().openURL(url)
+                    }
+                }
+                alertController.addAction(openAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     override func initializeUI() {
-        title = PFUser.currentUser()?.username
+        title = "Profile"
     }
 }
 
@@ -25,6 +85,33 @@ extension ProfileViewController {
     func didPressedLogOutButton() {
         PFUser.logOut()
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private func composeStrings(left: String, right: String) -> NSAttributedString {
+        let countText = NSMutableAttributedString(string: left, attributes: [NSForegroundColorAttributeName: UPSecondaryTextColor, NSFontAttributeName: UPContentFont])
+        countText.appendAttributedString(NSAttributedString(string: " " + right, attributes: [NSForegroundColorAttributeName: UPPrimaryTextColor, NSFontAttributeName: UPContentFont]))
+        return countText
+    }
+}
+
+extension ProfileViewController: CLLocationManagerDelegate {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedAlways || status == .AuthorizedWhenInUse {
+            manager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationManager.stopUpdatingLocation()
+        let geoCoder = CLGeocoder()
+        geoCoder.reverseGeocodeLocation(locations[0]) { (places, error) -> Void in
+            if let error = error {
+                NSLog("Geocode failed with error: %@", error)
+            }
+            if let placemark = places?[0] {
+                self.locationLabel.attributedText = self.composeStrings(placemark.locality! + ",", right: placemark.administrativeArea!)
+            }
+        }
     }
 }
 
@@ -35,5 +122,42 @@ extension ProfileViewController {
             _logoutButton = v
         }
         return _logoutButton
+    }
+    
+    var userProfile: UIImageView {
+        if _userProfile == nil {
+            let v = UIImageView()
+            v.af_setImageWithURL(NSURL(string: "https://www.gravatar.com/avatar?s=200")!, filter: filter)
+            _userProfile = v
+        }
+        return _userProfile
+    }
+    
+    var usernameLabel: UILabel {
+        if _usernameLabel == nil {
+            let v = UILabel()
+            _usernameLabel = v
+        }
+        return _usernameLabel
+    }
+    
+    var locationLabel: UILabel {
+        if _locationLabel == nil {
+            let v = UILabel()
+            v.textAlignment = .Center
+            _locationLabel = v
+        }
+        return _locationLabel
+    }
+    
+    var locationManager: CLLocationManager {
+        if _locationManager == nil {
+            let manager = CLLocationManager()
+            manager.delegate = self
+            manager.distanceFilter = kCLDistanceFilterNone
+            manager.desiredAccuracy = kCLLocationAccuracyBest
+            _locationManager = manager
+        }
+        return _locationManager
     }
 }

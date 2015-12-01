@@ -181,11 +181,9 @@ extension DealDetailsBaseViewController {
         return _dealStatusView
     }
     
+    // Override point for providing a deal specific status view
     func getDealStatusView() -> UIView {
         let v = UIView()
-        v.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(2000)
-        }
         return v
     }
 }
