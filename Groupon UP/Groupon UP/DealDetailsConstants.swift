@@ -19,7 +19,6 @@ struct UPDealDetailsBase {
     static let titleOffset = 8
     static let subOffset = 4
     
-    static let bottomButtonHeight = 40
     static let expiredAtFont = UIFont(name: "Avenir", size: 14)
     static let expiredAtFontColor = UIColor.grayColor()
     

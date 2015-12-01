@@ -26,8 +26,9 @@
 		A130FD721C011DB600B40829 /* UPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD711C011DB600B40829 /* UPViewController.swift */; };
 		A130FD741C01221A00B40829 /* parse.plist in Resources */ = {isa = PBXBuildFile; fileRef = A130FD731C01221A00B40829 /* parse.plist */; };
 		A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD751C0125A400B40829 /* LoginViewController.swift */; };
-		EC25203F1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC25203E1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift */; };
+		A1393F941C0D692900073B3B /* UpInvitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1393F931C0D692900073B3B /* UpInvitation.swift */; };
 		A199F25E1C021BF20008FB29 /* StringMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = A199F25D1C021BF20008FB29 /* StringMD5.swift */; };
+		EC25203F1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC25203E1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift */; };
 		EC44DA931C0137D2003CD93C /* DealClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA921C0137D2003CD93C /* DealClient.swift */; };
 		EC44DA961C01380A003CD93C /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA951C01380A003CD93C /* Deal.swift */; };
 		EC44DA981C014FED003CD93C /* DealDetailsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */; };
@@ -55,6 +56,7 @@
 		A130FD711C011DB600B40829 /* UPViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPViewController.swift; sourceTree = "<group>"; };
 		A130FD731C01221A00B40829 /* parse.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = parse.plist; sourceTree = "<group>"; };
 		A130FD751C0125A400B40829 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A1393F931C0D692900073B3B /* UpInvitation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpInvitation.swift; sourceTree = "<group>"; };
 		A199F2591C021BCD0008FB29 /* Groupon UP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Groupon UP-Bridging-Header.h"; sourceTree = "<group>"; };
 		A199F25D1C021BF20008FB29 /* StringMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringMD5.swift; sourceTree = "<group>"; };
 		C39C97F5CA29441AEBD38DBF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				EC44DA951C01380A003CD93C /* Deal.swift */,
+				A1393F931C0D692900073B3B /* UpInvitation.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				A130FD591C01124B00B40829 /* BaseViewController.swift in Sources */,
 				49EFA4461C005B7A00D04B7D /* InitialViewController.swift in Sources */,
 				A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */,
+				A1393F941C0D692900073B3B /* UpInvitation.swift in Sources */,
 				A130FD721C011DB600B40829 /* UPViewController.swift in Sources */,
 				A130FD691C011D3800B40829 /* DealDetailsViewController.swift in Sources */,
 				A130FD5F1C01135100B40829 /* MenuViewController.swift in Sources */,
