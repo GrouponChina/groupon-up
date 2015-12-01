@@ -19,7 +19,7 @@
 		A130FD5F1C01135100B40829 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD5E1C01135100B40829 /* MenuViewController.swift */; };
 		A130FD641C0116A600B40829 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD631C0116A600B40829 /* ProfileViewController.swift */; };
 		A130FD661C01175400B40829 /* MenuEnabledNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD651C01175400B40829 /* MenuEnabledNavigationViewController.swift */; };
-		A130FD691C011D3800B40829 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD681C011D3800B40829 /* BrowseViewController.swift */; };
+		A130FD691C011D3800B40829 /* DealDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD681C011D3800B40829 /* DealDetailsViewController.swift */; };
 		A130FD6B1C011D6100B40829 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD6A1C011D6100B40829 /* OrderViewController.swift */; };
 		A130FD6D1C011D7800B40829 /* DealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */; };
 		A130FD701C011DAF00B40829 /* UPListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD6F1C011DAF00B40829 /* UPListViewController.swift */; };
@@ -27,6 +27,9 @@
 		A130FD741C01221A00B40829 /* parse.plist in Resources */ = {isa = PBXBuildFile; fileRef = A130FD731C01221A00B40829 /* parse.plist */; };
 		A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD751C0125A400B40829 /* LoginViewController.swift */; };
 		A199F25E1C021BF20008FB29 /* StringMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = A199F25D1C021BF20008FB29 /* StringMD5.swift */; };
+		EC44DA931C0137D2003CD93C /* DealClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA921C0137D2003CD93C /* DealClient.swift */; };
+		EC44DA961C01380A003CD93C /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA951C01380A003CD93C /* Deal.swift */; };
+		EC44DA981C014FED003CD93C /* DealDetailsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +47,7 @@
 		A130FD5E1C01135100B40829 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		A130FD631C0116A600B40829 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A130FD651C01175400B40829 /* MenuEnabledNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuEnabledNavigationViewController.swift; sourceTree = "<group>"; };
-		A130FD681C011D3800B40829 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		A130FD681C011D3800B40829 /* DealDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsViewController.swift; sourceTree = "<group>"; };
 		A130FD6A1C011D6100B40829 /* OrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealTableViewCell.swift; sourceTree = "<group>"; };
 		A130FD6F1C011DAF00B40829 /* UPListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPListViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +57,9 @@
 		A199F2591C021BCD0008FB29 /* Groupon UP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Groupon UP-Bridging-Header.h"; sourceTree = "<group>"; };
 		A199F25D1C021BF20008FB29 /* StringMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringMD5.swift; sourceTree = "<group>"; };
 		C39C97F5CA29441AEBD38DBF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EC44DA921C0137D2003CD93C /* DealClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealClient.swift; sourceTree = "<group>"; };
+		EC44DA951C01380A003CD93C /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
+		EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsConstants.swift; sourceTree = "<group>"; };
 		EF5DE927F9472D92EC326EC8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +97,8 @@
 		49EFA4421C005B7A00D04B7D /* Groupon UP */ = {
 			isa = PBXGroup;
 			children = (
+				EC44DA941C013801003CD93C /* Models */,
+				EC44DA911C0137C4003CD93C /* Lib */,
 				A130FD6E1C011D9900B40829 /* UP */,
 				A130FD671C011D2000B40829 /* Browse */,
 				A130FD601C0115E100B40829 /* LoginAndProfile */,
@@ -147,9 +155,10 @@
 		A130FD671C011D2000B40829 /* Browse */ = {
 			isa = PBXGroup;
 			children = (
-				A130FD681C011D3800B40829 /* BrowseViewController.swift */,
+				A130FD681C011D3800B40829 /* DealDetailsViewController.swift */,
 				A130FD6A1C011D6100B40829 /* OrderViewController.swift */,
 				A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */,
+				EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -178,6 +187,22 @@
 				C39C97F5CA29441AEBD38DBF /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EC44DA911C0137C4003CD93C /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				EC44DA921C0137D2003CD93C /* DealClient.swift */,
+			);
+			name = Lib;
+			sourceTree = "<group>";
+		};
+		EC44DA941C013801003CD93C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EC44DA951C01380A003CD93C /* Deal.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,12 +327,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC44DA931C0137D2003CD93C /* DealClient.swift in Sources */,
+				EC44DA981C014FED003CD93C /* DealDetailsConstants.swift in Sources */,
 				A130FD5C1C0112AD00B40829 /* HamburgerViewController.swift in Sources */,
 				A130FD591C01124B00B40829 /* BaseViewController.swift in Sources */,
 				49EFA4461C005B7A00D04B7D /* InitialViewController.swift in Sources */,
 				A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */,
 				A130FD721C011DB600B40829 /* UPViewController.swift in Sources */,
-				A130FD691C011D3800B40829 /* BrowseViewController.swift in Sources */,
+				A130FD691C011D3800B40829 /* DealDetailsViewController.swift in Sources */,
 				A130FD5F1C01135100B40829 /* MenuViewController.swift in Sources */,
 				A199F25E1C021BF20008FB29 /* StringMD5.swift in Sources */,
 				A130FD661C01175400B40829 /* MenuEnabledNavigationViewController.swift in Sources */,
@@ -317,6 +344,7 @@
 				A130FD6D1C011D7800B40829 /* DealTableViewCell.swift in Sources */,
 				A130FD701C011DAF00B40829 /* UPListViewController.swift in Sources */,
 				49EFA4441C005B7A00D04B7D /* AppDelegate.swift in Sources */,
+				EC44DA961C01380A003CD93C /* Deal.swift in Sources */,
 				A130FD6B1C011D6100B40829 /* OrderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
