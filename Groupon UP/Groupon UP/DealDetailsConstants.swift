@@ -11,6 +11,21 @@ import UIKit
 
 let screenSize = UIScreen.mainScreen().bounds
 
+struct UPDealDetailsBase {
+    static let imageHeight = 0.6 * screenSize.width
+    static let dealInfoHeight = imageHeight * 0.35
+    
+    static let offset = 0
+    static let titleOffset = 8
+    static let subOffset = 4
+    
+    static let bottomButtonHeight = 40
+    static let expiredAtFont = UIFont(name: "Avenir", size: 14)
+    static let expiredAtFontColor = UIColor.grayColor()
+    
+    static let titleFont = UIFont(name: "Avenir-Heavy", size: 15)
+}
+
 struct UPDeal {
     static let imageHeight = 0.6 * screenSize.width
     static let dealInfoHeight = imageHeight * 0.5

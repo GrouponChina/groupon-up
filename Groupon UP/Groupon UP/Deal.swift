@@ -21,6 +21,7 @@ class Deal {
     var value: String!
     var dealImages: DealImages!
     var divisionId: String!
+    var expiresAt: String = "Never Expires"
     
     init() {
         
@@ -37,6 +38,12 @@ class Deal {
         let options = dealData["options"]
         price = options[0]["price"]["formattedAmount"].stringValue
         value = options[0]["value"]["formattedAmount"].stringValue
+        
+        let fullLengthExpiresAt = options[0]["expiresAt"].stringValue
+        if !fullLengthExpiresAt.isEmpty {
+            let dataRange = fullLengthExpiresAt.startIndex..<fullLengthExpiresAt.startIndex.advancedBy(10)
+            expiresAt = "Expired at: " + fullLengthExpiresAt.substringWithRange(dataRange)
+        }
         dealImages = DealImages(dealData: dealData)
         divisionId = dealData["division"]["id"].stringValue
     }

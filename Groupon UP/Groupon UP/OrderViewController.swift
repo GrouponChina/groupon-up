@@ -70,7 +70,9 @@ extension OrderViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        NSLog("didSelect")
+        let dealDetailView = DealDetailsBaseViewController()
+        dealDetailView.selectedDeal = deals[indexPath.row]
+        navigationController?.pushViewController(dealDetailView, animated: true)
     }
 }
 
@@ -122,6 +124,7 @@ extension OrderViewController {
         dealImage.grid6ImageUrl = "https://img.grouponcdn.com/deal/sHHKA7Hp8ZxUfC9gyeH7/XT-2048x1229/v1/t460x279.jpg"
         deal.dealImages = dealImage
         deal.divisionId = "chicago"
+        deal.expiresAt = "2016-02-01T05:59:59Z"
         
         return [deal, deal, deal]
     }

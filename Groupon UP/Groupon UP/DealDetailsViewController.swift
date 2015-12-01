@@ -8,6 +8,6 @@
 
 import UIKit
 
-class DealDetailsViewController: BaseViewController {
+class DealDetailsViewController: DealDetailsBaseViewController {
 
 }
