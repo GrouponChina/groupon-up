@@ -16,7 +16,12 @@ class DealDetailsViewController: DealDetailsBaseViewController {
     }
     
     override func getBottomToolbar() -> UIView {
-        let v = UIToolbar()
+        let v = UIView()
+        v.backgroundColor = UPPrimaryTextColor
+        v.alpha = 0.8
+        v.snp_makeConstraints { (make) -> Void in
+            make.height.equalTo(80)
+        }
         return v
     }
     
@@ -33,58 +38,97 @@ class DealDetailsViewController: DealDetailsBaseViewController {
 }
 
 extension DealDetailsViewController {
+    private func buttonWith(title title: String, target: AnyObject?, action: Selector) -> UIButton {
+        let button = UIButton(type: .Custom)
+        button.setTitle(title, forState: .Normal)
+        button.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        button.backgroundColor = UPTintColor
+        return button
+    }
+    
     func updateToolbarAndUpStatus() {
-        switch self.selectedDeal.upStatus {
-        case .None:
-            self.toolbarForNone()
-        case .Created:
-            self.toolbarForCreated()
-        case .Active:
-            self.toolbarForActive()
-            self.showRSVP()
-        case .Confirmed, .Redeemed, .Expired:
+//        switch self.selectedDeal.upStatus {
+//        case .None:
+//            self.toolbarForNone()
+//        case .Created:
+//            self.toolbarForCreated()
+//        case .Active:
+//            self.toolbarForActive()
+//            self.showRSVP()
+//        case .Confirmed, .Redeemed, .Expired:
             self.toolbarWithConfirmedUp()
-            self.showRSVP()
-        }
+//            self.showRSVP()
+//        }
     }
     
     
     func toolbarForNone() {
-        let bar = bottomToolbar as! UIToolbar
-        let createButton = UIBarButtonItem(title: "Who's UP", style: .Plain, target: self, action: "createUp")
-        bar.items = [
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-            createButton
-        ]
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let createButton = buttonWith(title: "Who's UP", target: self, action: "createUp")
+        bar.addSubview(createButton)
+        createButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+            make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
     }
     
     func toolbarForCreated() {
-        let bar = bottomToolbar as! UIToolbar
-        let updateButton = UIBarButtonItem(title: "Update", style: .Plain, target: self, action: "updateUp")
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelUp")
-        bar.items = [
-            updateButton,
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-            cancelButton
-        ]
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let updateButton = buttonWith(title: "Update", target: self, action: "updateUp")
+        let cancelButton = buttonWith(title: "Cancel", target: self, action: "cancelUp")
+        bar.addSubview(updateButton)
+        bar.addSubview(cancelButton)
+        updateButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+        }
+        cancelButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+        }
     }
     
     func toolbarForActive() {
-        let bar = bottomToolbar as! UIToolbar
-        let confirmButton = UIBarButtonItem(title: "Let's Rock", style: .Plain, target: self, action: "confirmUp")
-        bar.items = [
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-            confirmButton
-        ]
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let confirmButton = buttonWith(title: "Let's Rock", target: self, action: "confirmUp")
+        bar.addSubview(confirmButton)
+        confirmButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
     }
     
     func toolbarWithConfirmedUp() {
-        let bar = bottomToolbar as! UIToolbar
-        let chatButton = UIBarButtonItem(title: "Group Chat", style: .Plain, target: self, action: "groupChat")
-        bar.items = [
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-            chatButton
-        ]
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let chatButton = buttonWith(title: "Group Chat", target: self, action: "groupChat")
+        bar.addSubview(chatButton)
+        chatButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
     }
     
     func showRSVP() {
