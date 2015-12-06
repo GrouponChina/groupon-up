@@ -10,6 +10,17 @@ import UIKit
 import Parse
 
 class DealDetailsViewController: DealDetailsBaseViewController {
+    private var _dateFormater: NSDateFormatter!
+    
+    var dateFormatter: NSDateFormatter {
+        if _dateFormater == nil {
+            _dateFormater = NSDateFormatter()
+            _dateFormater.dateStyle = .LongStyle
+            _dateFormater.timeStyle = .NoStyle
+        }
+        return _dateFormater
+    }
+    
     override func getDealStatusView() -> UIView {
         let v = super.getDealStatusView()
         return v
@@ -19,9 +30,6 @@ class DealDetailsViewController: DealDetailsBaseViewController {
         let v = UIView()
         v.backgroundColor = UPPrimaryTextColor
         v.alpha = 0.8
-        v.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(80)
-        }
         return v
     }
     
@@ -47,19 +55,29 @@ extension DealDetailsViewController {
         return button
     }
     
+    private func descriptionLabel(title title: String) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.textColor = UPTextColorOnDardBackground
+        label.font = UIFont(name: "Avenir-Hair", size: 13)
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }
+    
+    
     func updateToolbarAndUpStatus() {
-//        switch self.selectedDeal.upStatus {
-//        case .None:
-//            self.toolbarForNone()
-//        case .Created:
-//            self.toolbarForCreated()
-//        case .Active:
-//            self.toolbarForActive()
-//            self.showRSVP()
-//        case .Confirmed, .Redeemed, .Expired:
+        switch self.selectedDeal.upStatus {
+        case .None:
+            self.toolbarForNone()
+        case .Created:
+            self.toolbarForCreated()
+        case .Active:
+            self.toolbarForActive()
+            self.showRSVP()
+        case .Confirmed, .Redeemed, .Expired:
             self.toolbarWithConfirmedUp()
-//            self.showRSVP()
-//        }
+            self.showRSVP()
+        }
     }
     
     
@@ -69,12 +87,19 @@ extension DealDetailsViewController {
             subview.removeFromSuperview()
         }
         let createButton = buttonWith(title: "Who's UP", target: self, action: "createUp")
+        let label = descriptionLabel(title: "More people, more fun!")
         bar.addSubview(createButton)
+        bar.addSubview(label)
         createButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
             make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+        label.snp_makeConstraints { (make) -> Void in
+            make.centerY.equalTo(bar)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
         }
     }
     
@@ -85,16 +110,24 @@ extension DealDetailsViewController {
         }
         let updateButton = buttonWith(title: "Update", target: self, action: "updateUp")
         let cancelButton = buttonWith(title: "Cancel", target: self, action: "cancelUp")
+        let tips = descriptionLabel(title: "You've created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
+        tips.textAlignment = .Center
         bar.addSubview(updateButton)
         bar.addSubview(cancelButton)
-        updateButton.snp_makeConstraints { (make) -> Void in
+        bar.addSubview(tips)
+        tips.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+        updateButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
             make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
         }
         cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(bar).offset(UPSpanSize)
+            make.top.equalTo(updateButton)
             make.left.equalTo(bar).offset(UPSpanSize)
             make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
@@ -107,9 +140,17 @@ extension DealDetailsViewController {
             subview.removeFromSuperview()
         }
         let confirmButton = buttonWith(title: "Let's Rock", target: self, action: "confirmUp")
+        let tips = descriptionLabel(title: "You've created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
+        tips.textAlignment = .Center
         bar.addSubview(confirmButton)
-        confirmButton.snp_makeConstraints { (make) -> Void in
+        bar.addSubview(tips)
+        tips.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+        confirmButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
             make.left.equalTo(bar).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
@@ -122,9 +163,17 @@ extension DealDetailsViewController {
             subview.removeFromSuperview()
         }
         let chatButton = buttonWith(title: "Group Chat", target: self, action: "groupChat")
+        let tips = descriptionLabel(title: "We're UP to go on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))!")
+        tips.textAlignment = .Center
         bar.addSubview(chatButton)
-        chatButton.snp_makeConstraints { (make) -> Void in
+        bar.addSubview(tips)
+        tips.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+        chatButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
             make.left.equalTo(bar).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
