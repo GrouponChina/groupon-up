@@ -108,15 +108,25 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
         bar.subviews.forEach { (subview) -> () in
             subview.removeFromSuperview()
         }
+
         let saveButton = buttonWith(title: "Save", target: self, action: "saveUP")
+        let cancelButton = buttonWith(title: "Cancel", target: self, action: "onCancelButton")
 
         bar.addSubview(saveButton)
+        bar.addSubview(cancelButton)
 
         saveButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
             make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+
+        cancelButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(saveButton)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
         }
     }
 }
@@ -281,6 +291,10 @@ extension UPViewController {
 
     func datePickerValueChanged(sender:UIDatePicker) {
         updateDatePickerViewDate(sender, textField: grouponUPDate)
+    }
+
+    func onCancelButton() {
+        navigationController?.popViewControllerAnimated(true)
     }
 
     func saveUP() {
