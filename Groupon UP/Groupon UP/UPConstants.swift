@@ -15,3 +15,6 @@ let UPSpanSize = 15
 let UPPrimaryTextColor = UIColor(rgba: "#333333")
 let UPSecondaryTextColor = UIColor(rgba: "#888888")
 let UPContentFont = UIFont(name: "Avenir", size: 17)!
+let UPBorderRadius: CGFloat = 5
+let UPBorderWidth: CGFloat = 1.0
+let UPContainerMargin = 8

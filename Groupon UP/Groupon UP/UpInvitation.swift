@@ -15,7 +15,7 @@ class UpInvitation {
         return object.objectId!
     }
     var message: String! {
-        return object["message"].stringValue
+        return object["message"] as! String
     }
     var date: NSDate! {
         return object["grouponUPDate"] as! NSDate
@@ -33,13 +33,24 @@ class UpInvitation {
     
     init(up: PFObject) {
         object = up
+        fetchEnrolledUsers { (rsvps: [UpRSVP]?, error: NSError?) -> Void in
+            if (error != nil) {
+                print("[ERROR] Unable to fetch rsvps on existing Groupon UP")
+            }
+            else {
+                if (rsvps != nil) {
+                    print("[API-SUCCESS] Fetched \(rsvps!.count) rsvps on existing Groupon UP")
+                }
+            }
+        }
     }
-    
+
     func fetchEnrolledUsers(callback: ([UpRSVP]?, NSError?) -> Void) {
         PFQuery(className: "UserUP").whereKey("grouponUPID", equalTo: upId).findObjectsInBackgroundWithBlock({ (rsvps, error) -> Void in
             if let _ = error {
                 callback(nil, error)
             }
+
             if let rsvps = rsvps where rsvps.count > 0 {
                 self.rsvps = rsvps.map({ (rsvp) -> UpRSVP in
                     UpRSVP(rsvp: rsvp)
@@ -47,6 +58,7 @@ class UpInvitation {
             } else {
                 self.rsvps = [UpRSVP]()
             }
+
             callback(self.rsvps, nil)
         })
     }

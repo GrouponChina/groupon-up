@@ -11,6 +11,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         addSubviews()
         addLayouts()
         initializeUI()
@@ -19,6 +20,7 @@ class BaseViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
         refreshUI()
     }
     
