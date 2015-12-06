@@ -22,10 +22,12 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
     private var _grouponUPDateLabel: UILabel!
     private var _grouponUPDate: UITextField!
     private var _rsvpTableViewLabel: UILabel!
+    private var _bottomToolbar: UIView!
 
     override func refreshUI() {
         super.refreshUI()
         initData()
+        renderToolBar()
     }
 
     override func initializeUI() {
@@ -42,9 +44,17 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
         upContentView.addSubview(grouponUPDate)
 
         upContentView.addSubview(rsvpTableViewLabel)
+
+        view.addSubview(bottomToolbar)
     }
 
     override func addLayouts() {
+        bottomToolbar.snp_makeConstraints { (make) -> Void in
+            make.bottom.equalTo(snp_bottomLayoutGuideTop)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+        }
+
         upContentView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(snp_topLayoutGuideBottom)
             make.left.equalTo(view.snp_left)
@@ -90,6 +100,24 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
 
     func initData() {
         makeGetRsvpUsersRequest()
+    }
+
+    func renderToolBar() {
+        let bar = bottomToolbar
+
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let saveButton = buttonWith(title: "Save", target: self, action: "saveUP")
+
+        bar.addSubview(saveButton)
+
+        saveButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+            make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
     }
 }
 
@@ -186,7 +214,10 @@ extension UPViewController {
             v.layer.borderWidth = UPBorderWidth
             v.layer.borderColor = UIColor.lightGrayColor().CGColor
             v.layer.cornerRadius = UPBorderRadius
-            v.text = up.message
+            if up != nil {
+               v.text = up.message
+            }
+
             _message = v
         }
 
@@ -213,7 +244,7 @@ extension UPViewController {
             v.delegate = self
             v.addTarget(self, action: "grouponUPDateEditingDidBegin:", forControlEvents: UIControlEvents.EditingDidBegin)
 
-            if self.up.date != nil {
+            if self.up != nil && self.up.date != nil {
                 datePickerView.setDate(self.up.date, animated: false)
                 updateDatePickerViewDate(datePickerView, textField:v)
             }
@@ -233,6 +264,13 @@ extension UPViewController {
 
         return _rsvpTableViewLabel
     }
+
+    var bottomToolbar: UIView! {
+        if _bottomToolbar == nil {
+            _bottomToolbar = getBottomToolbar()
+        }
+        return _bottomToolbar
+    }
 }
 
 // MARK: event handlers
@@ -244,6 +282,23 @@ extension UPViewController {
     func datePickerValueChanged(sender:UIDatePicker) {
         updateDatePickerViewDate(sender, textField: grouponUPDate)
     }
+
+    func saveUP() {
+        self.up.object["message"] = self.message.text
+        self.up.object["grouponUPDate"] = self.datePickerView.date
+
+        print("Saving object...")
+        self.up.object.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                print("Groupon UP saved!")
+            } else {
+                print("[ERROR] Unable to save Groupon UP: \(error?.description)")
+            }
+        }
+
+        navigationController?.popViewControllerAnimated(true)
+    }
 }
 
 // MARK: helper functions
@@ -253,5 +308,23 @@ extension UPViewController {
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
         textField.text = dateFormatter.stringFromDate(sender.date)
+    }
+
+    func getBottomToolbar() -> UIView {
+        let v = UIView()
+        v.backgroundColor = UPPrimaryTextColor
+        v.alpha = 0.8
+
+        return v
+    }
+
+    private func buttonWith(title title: String, target: AnyObject?, action: Selector) -> UIButton {
+        let button = UIButton(type: .Custom)
+        button.setTitle(title, forState: .Normal)
+        button.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        button.backgroundColor = UPTintColor
+
+        return button
     }
 }
