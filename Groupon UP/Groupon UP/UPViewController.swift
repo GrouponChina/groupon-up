@@ -214,7 +214,6 @@ extension UPViewController {
             v.addTarget(self, action: "grouponUPDateEditingDidBegin:", forControlEvents: UIControlEvents.EditingDidBegin)
 
             if self.up.date != nil {
-                print(self.up.date)
                 datePickerView.setDate(self.up.date, animated: false)
                 updateDatePickerViewDate(datePickerView, textField:v)
             }
@@ -236,7 +235,7 @@ extension UPViewController {
     }
 }
 
-//event handlers
+// MARK: event handlers
 extension UPViewController {
     func grouponUPDateEditingDidBegin(sender:UITextField) {
         sender.inputView = datePickerView
@@ -247,6 +246,7 @@ extension UPViewController {
     }
 }
 
+// MARK: helper functions
 extension UPViewController {
     func updateDatePickerViewDate(sender:UIDatePicker, textField:UITextField) {
         let dateFormatter = NSDateFormatter()
