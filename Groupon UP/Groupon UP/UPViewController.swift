@@ -9,12 +9,13 @@
 import UIKit
 import Parse
 
-class UPViewController: BaseViewController {
+class UPViewController: BaseViewController, UITextFieldDelegate {
     var up: UpInvitation!
     var rsvpUsers: [PFUser?] = []
 
     private var _upContentView: UIView!
     private var _rsvpTableView: UITableView!
+    private var _datePickerView: UIDatePicker!
 
     private var _messageLabel: UILabel!
     private var _message: UITextView!
@@ -149,6 +150,16 @@ extension UPViewController {
         return _upContentView
     }
 
+    var datePickerView: UIDatePicker {
+        if _datePickerView == nil {
+            _datePickerView = UIDatePicker()
+            _datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
+            _datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        }
+
+        return _datePickerView
+    }
+
 //    var rsvpTableView: UITableView {
 //        if _rsvpTableView == nil {
 //            _rsvpTableView = UITableView()
@@ -198,7 +209,16 @@ extension UPViewController {
             v.layer.borderWidth = UPBorderWidth
             v.layer.borderColor = UIColor.lightGrayColor().CGColor
             v.layer.cornerRadius = UPBorderRadius
-            v.text = "Dec 5, 2015"
+
+            v.delegate = self
+            v.addTarget(self, action: "grouponUPDateEditingDidBegin:", forControlEvents: UIControlEvents.EditingDidBegin)
+
+            if self.up.date != nil {
+                print(self.up.date)
+                datePickerView.setDate(self.up.date, animated: false)
+                updateDatePickerViewDate(datePickerView, textField:v)
+            }
+
             _grouponUPDate = v
         }
         
@@ -211,7 +231,27 @@ extension UPViewController {
             v.text = "Who's UP"
             _rsvpTableViewLabel = v
         }
-        
+
         return _rsvpTableViewLabel
+    }
+}
+
+//event handlers
+extension UPViewController {
+    func grouponUPDateEditingDidBegin(sender:UITextField) {
+        sender.inputView = datePickerView
+    }
+
+    func datePickerValueChanged(sender:UIDatePicker) {
+        updateDatePickerViewDate(sender, textField: grouponUPDate)
+    }
+}
+
+extension UPViewController {
+    func updateDatePickerViewDate(sender:UIDatePicker, textField:UITextField) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
+        textField.text = dateFormatter.stringFromDate(sender.date)
     }
 }
