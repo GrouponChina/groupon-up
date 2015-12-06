@@ -22,6 +22,7 @@ class InitialViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+
         if PFUser.currentUser() == nil {
             presentViewController(LoginViewController(), animated: true, completion: nil)
         } else {

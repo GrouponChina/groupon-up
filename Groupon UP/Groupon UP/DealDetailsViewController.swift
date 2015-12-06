@@ -189,7 +189,9 @@ extension DealDetailsViewController {
     }
     
     func updateUp() {
-        debugPrint("implement me: update an Up \(selectedDeal.up!.upId)")
+        let upView = UPViewController()
+        upView.up = self.selectedDeal.up
+        navigationController?.pushViewController(upView, animated: true)
     }
     
     func cancelUp() {

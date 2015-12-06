@@ -11,6 +11,7 @@ import UIKit
 class MenuEnabledNavigationViewController: UINavigationController {
     
     private var _menuBarButton: UIBarButtonItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -18,6 +19,7 @@ class MenuEnabledNavigationViewController: UINavigationController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
         if topViewController == self.viewControllers[0] {
             topViewController!.navigationItem.leftBarButtonItem = menuBarButton
         }
@@ -28,6 +30,7 @@ class MenuEnabledNavigationViewController: UINavigationController {
             let v = UIBarButtonItem(image: UIImage(named: "Settings"), style: .Plain, target: self.navigationController?.parentViewController, action: "toggleLeftView")
             _menuBarButton = v
         }
+
         return _menuBarButton
     }
 }

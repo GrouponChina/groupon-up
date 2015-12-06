@@ -25,12 +25,12 @@ class OrderViewController: UIViewController {
         super.viewWillAppear(animated)
         initData()
     }
-    
+
     func addSubViews() {
         view.addSubview(tableView)
         tableView.addSubview(refreshController)
     }
-    
+
     func addLayout() {
         view.backgroundColor = UIColor.whiteColor()
         tableView.snp_makeConstraints { (make) -> Void in
@@ -101,11 +101,11 @@ extension OrderViewController {
 
 extension OrderViewController {
     func makeGetDealsRequest() {
-        //self.deals = fakeDeals()
-        DealClient.getDivisionDeals { (deals: [Deal]!) -> Void in
-            self.deals = deals
-            self.tableView.reloadData()
-        }
+        self.deals = fakeDeals()
+//        DealClient.getDivisionDeals { (deals: [Deal]!) -> Void in
+//            self.deals = deals
+//            self.tableView.reloadData()
+//        }
     }
     
     func fakeDeals() -> [Deal] {
@@ -125,8 +125,25 @@ extension OrderViewController {
         deal.dealImages = dealImage
         deal.divisionId = "chicago"
         deal.expiresAt = "2016-02-01T05:59:59Z"
+
+        let deal2 = Deal()
+
+        deal2.uuid = "5b1d966e-78b0-214c-1de7-0ce7b1eb0000"
+        deal2.title = "Medieval Times – Tournament Dinner and Show with Optional VIP Package through January 31"
+        deal2.announcementTitle = "Medieval Times – Tournament Dinner and Show with Optional VIP Package Up to 49% Off"
+        deal2.shortAnnouncementTitle = "Medieval Times"
+        deal2.soldQuantity = "1000"
+        deal2.soldQuantityMessage = "1,000 +"
+        deal2.status = "Open"
+        deal2.price = "$26.00"
+        deal2.value = "$43.78"
+        let dealImage2 = DealImages()
+        dealImage2.grid6ImageUrl = "https://img.grouponcdn.com/deal/v9PmBBAMideA7CzMedaa/Bf-2048x1229/v1/t460x279.jpg"
+        deal2.dealImages = dealImage2
+        deal2.divisionId = "chicago"
+        deal2.expiresAt = "2016-02-01T05:59:59Z"
         
-        return [deal, deal, deal]
+        return [deal, deal2, deal]
     }
     
     func refreshView() {
