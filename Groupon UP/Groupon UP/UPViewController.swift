@@ -22,13 +22,14 @@ class UPViewController: BaseViewController {
     private var _grouponUPDate: UITextField!
     private var _rsvpTableViewLabel: UILabel!
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func refreshUI() {
+        super.refreshUI()
         initData()
     }
 
     override func initializeUI() {
         title = "Groupon UP Detail"
+        view.backgroundColor = UIColor.whiteColor()
     }
 
     override func addSubviews() {
@@ -43,8 +44,6 @@ class UPViewController: BaseViewController {
     }
 
     override func addLayouts() {
-        view.backgroundColor = UIColor.whiteColor()
-
         upContentView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(snp_topLayoutGuideBottom)
             make.left.equalTo(view.snp_left)
