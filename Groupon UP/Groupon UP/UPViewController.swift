@@ -49,6 +49,7 @@ class UPViewController: BaseViewController {
             make.top.equalTo(snp_topLayoutGuideBottom)
             make.left.equalTo(view.snp_left)
             make.right.equalTo(view.snp_right)
+            make.height.equalTo(400)
         }
 
         messageLabel.snp_makeConstraints { (make) -> Void in
@@ -171,7 +172,7 @@ extension UPViewController {
 
     var message: UITextView {
         if _message == nil {
-            let v = UITextView(frame: CGRectMake(8, 8, 304, 50))
+            let v = UITextView()
             v.layer.borderWidth = UPBorderWidth
             v.layer.borderColor = UIColor.lightGrayColor().CGColor
             v.layer.cornerRadius = UPBorderRadius
