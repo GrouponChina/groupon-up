@@ -14,4 +14,5 @@ let UPTintColor = UIColor(rgba: "#82b548")
 let UPSpanSize = 15
 let UPPrimaryTextColor = UIColor(rgba: "#333333")
 let UPSecondaryTextColor = UIColor(rgba: "#888888")
+let UPTextColorOnDardBackground = UIColor(rgba: "#f2f2f2")
 let UPContentFont = UIFont(name: "Avenir", size: 17)!
