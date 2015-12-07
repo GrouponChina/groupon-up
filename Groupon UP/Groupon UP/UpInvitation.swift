@@ -12,7 +12,12 @@ import Parse
 class UpInvitation {
     var object: PFObject
     var upId: String! {
-        return object.objectId!
+        if object.objectId != nil {
+            return object.objectId!
+        } else {
+            return ""
+        }
+        
     }
     var message: String! {
         return object["message"] as! String

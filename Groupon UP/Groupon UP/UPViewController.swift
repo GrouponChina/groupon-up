@@ -11,6 +11,7 @@ import Parse
 
 class UPViewController: BaseViewController, UITextFieldDelegate {
     var up: UpInvitation!
+    var dealId: String = ""
     var rsvpUsers: [PFUser?] = []
 
     private var _upContentView: UIView!
@@ -254,8 +255,8 @@ extension UPViewController {
             v.delegate = self
             v.addTarget(self, action: "grouponUPDateEditingDidBegin:", forControlEvents: UIControlEvents.EditingDidBegin)
 
-            if let date = self.up.date {
-                datePickerView.setDate(date, animated: false)
+            if self.up != nil && self.up.date != nil {
+                datePickerView.setDate(self.up.date, animated: false)
                 updateDatePickerViewDate(datePickerView, textField:v)
             }
 
@@ -298,8 +299,20 @@ extension UPViewController {
     }
 
     func saveUP() {
-        self.up.object["message"] = self.message.text
-        self.up.object["grouponUPDate"] = self.datePickerView.date
+        if up != nil {
+            self.up.object["message"] = self.message.text
+            self.up.object["grouponUPDate"] = self.datePickerView.date
+        } else {
+            if let currentUserId = PFUser.currentUser()?.objectId {
+                self.up = UpInvitation(up: PFObject(className: "GrouponUP", dictionary: [
+                    "message": self.message.text,
+                    "grouponUPDate": self.datePickerView.date,
+                    "dealId": self.dealId,
+                    "openEnroll": true,
+                    "createdBy": currentUserId
+                    ]))
+            }
+        }
 
         print("Saving object...")
         self.up.object.saveInBackgroundWithBlock {

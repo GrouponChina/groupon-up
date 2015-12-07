@@ -184,8 +184,9 @@ extension DealDetailsViewController {
     }
 
     func createUp() {
-//        let upView = UPViewController()
-//        navigationController?.pushViewController(upView, animated: true)
+        let upView = UPViewController()
+        upView.dealId = self.selectedDeal.uuid
+        navigationController?.pushViewController(upView, animated: true)
     }
     
     func updateUp() {
