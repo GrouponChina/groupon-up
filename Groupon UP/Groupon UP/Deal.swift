@@ -10,6 +10,8 @@ import Foundation
 import SwiftyJSON
 import Parse
 
+
+
 class Deal {
     var uuid :String!
     var title :String!
