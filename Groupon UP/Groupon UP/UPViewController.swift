@@ -288,10 +288,22 @@ extension UPViewController {
 extension UPViewController {
     func grouponUPDateEditingDidBegin(sender:UITextField) {
         sender.inputView = datePickerView
+
+        let doneButton:UIButton = UIButton (frame: CGRectMake(100, 100, 100, 44))
+        doneButton.tintColor = UPTintColor
+        doneButton.setTitle("Done", forState: UIControlState.Normal)
+        doneButton.addTarget(self, action: "onDatePickerDoneButton", forControlEvents: UIControlEvents.TouchUpInside)
+        doneButton.backgroundColor = UPPrimaryTextColor
+
+        sender.inputAccessoryView = doneButton
     }
 
     func datePickerValueChanged(sender:UIDatePicker) {
         updateDatePickerViewDate(sender, textField: grouponUPDate)
+    }
+
+    func onDatePickerDoneButton() {
+        self.grouponUPDate.resignFirstResponder()
     }
 
     func onCancelButton() {
