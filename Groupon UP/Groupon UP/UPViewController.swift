@@ -255,8 +255,8 @@ extension UPViewController {
             v.delegate = self
             v.addTarget(self, action: "grouponUPDateEditingDidBegin:", forControlEvents: UIControlEvents.EditingDidBegin)
 
-            if self.up != nil && self.up.date != nil {
-                datePickerView.setDate(self.up.date, animated: false)
+            if let currentUp = self.up?.date {
+                datePickerView.setDate(currentUp, animated: false)
                 updateDatePickerViewDate(datePickerView, textField:v)
             }
 
