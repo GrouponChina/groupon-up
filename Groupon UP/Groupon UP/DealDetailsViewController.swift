@@ -8,13 +8,11 @@
 
 import UIKit
 import Parse
-import AlamofireImage
 import SnapKit
 
 class DealDetailsViewController: DealDetailsBaseViewController {
-    var messages = [(PFUser, String, NSDate)]()
+    var messages = [(PFUser, String)]()
     private var _dateFormater: NSDateFormatter!
-    private lazy var filter = RoundedCornersFilter(radius: 5)
 
     var dateFormatter: NSDateFormatter {
         if _dateFormater == nil {
@@ -29,6 +27,8 @@ class DealDetailsViewController: DealDetailsBaseViewController {
         let v = UITableView()
         v.scrollEnabled = false
         v.dataSource = self
+        v.delegate = self
+        v.rowHeight = 90
         return v
     }
     
@@ -59,6 +59,7 @@ extension DealDetailsViewController {
         button.addTarget(target, action: action, forControlEvents: .TouchUpInside)
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         button.backgroundColor = UPTintColor
+        button.layer.cornerRadius = UPBorderRadius
         return button
     }
     
@@ -192,7 +193,7 @@ extension DealDetailsViewController {
     func showUPMessage(callback: () -> Void) {
         messages.removeAll()
         if let up = selectedDeal.up {
-            messages.append((UserCache.getUserForId(up.createdByUserId), up.message, up.object.createdAt!))
+            messages.append((UserCache.getUserForId(up.createdByUserId), up.message))
             if let _ = up.rsvps {
                 showRSVP()
                 callback()
@@ -212,7 +213,7 @@ extension DealDetailsViewController {
             rsvps.sort({ (left, right) -> Bool in
                 left.object.createdAt!.timeIntervalSince1970 < right.object.createdAt!.timeIntervalSince1970
             }).forEach({ (rsvp) -> () in
-                messages.append((UserCache.getUserForId(rsvp.userId), "I'm UP", rsvp.object.createdAt!))
+                messages.append((UserCache.getUserForId(rsvp.userId), "I'm UP"))
             })
         }
     }
@@ -244,20 +245,15 @@ extension DealDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let (user, msg, date) = messages[indexPath.row]
-        let reuseId = "messsageCell"
-        let cell: UITableViewCell!
-        if let reuseCell = tableView.dequeueReusableCellWithIdentifier(reuseId) {
-            cell = reuseCell
-        } else {
-            cell = UITableViewCell(style: .Value1, reuseIdentifier: reuseId)
-        }
-        cell.imageView?.af_setImageWithURL(NSURL(string: "https://www.gravatar.com/avatar?s=200")!)
-        user.fetchIfNeededInBackgroundWithBlock({ (fetchedUser, error) -> Void in
-            cell.imageView?.af_setImageWithURL(NSURL(string: "https://www.gravatar.com/avatar/\(user.email!.md5())?s=200")!, filter: self.filter)
-            cell.textLabel?.text = user.username
-        })
-        cell.detailTextLabel?.text = msg + "-" + dateFormatter.stringFromDate(date)
+        let (user, message) = messages[indexPath.row]
+        let cell = ChatMessageTableViewCell(style: .Default, reuseIdentifier: nil)
+        cell.initializeWith(user: user, message: message)
         return cell
+    }
+}
+
+extension DealDetailsViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }

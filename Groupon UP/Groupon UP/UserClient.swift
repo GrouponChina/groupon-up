@@ -23,6 +23,14 @@ class UserClient {
             return user
         }
     }
+
+    class func getAvatarUrlFor(email email: String) -> NSURL {
+        return NSURL(string: "https://www.gravatar.com/avatar/\(email.md5())?s=200")!
+    }
+
+    class func getAvatarUrl() -> NSURL {
+        return NSURL(string: "https://www.gravatar.com/avatar?s=200")!
+    }
 }
 
 let UserCache = UserClient()
