@@ -12,6 +12,8 @@ import SnapKit
 
 class DealDetailsViewController: DealDetailsBaseViewController {
     var messages = [(PFUser, String)]()
+    var buyItNow = false
+
     private var _dateFormater: NSDateFormatter!
 
     var dateFormatter: NSDateFormatter {
@@ -73,28 +75,47 @@ extension DealDetailsViewController {
     }
 
     func updateToolbarAndUpStatus() {
-        switch self.selectedDeal.upStatus {
-        case .None:
-            self.toolbarForNone()
-        case .Created:
-            self.toolbarForCreated()
-            self.showChat()
-        case .Active:
-            self.toolbarForActive()
-            self.showChat()
-        case .Confirmed, .Redeemed, .Expired:
-            self.toolbarWithConfirmedUp()
-            self.showChat()
+        if buyItNow {
+            self.toolbarForBuy()
+        } else {
+            switch self.selectedDeal.upStatus {
+            case .None:
+                self.toolbarForNone()
+            case .Created:
+                self.toolbarForCreated()
+                self.showChat()
+            case .Active:
+                self.toolbarForActive()
+                self.showChat()
+            case .Confirmed, .Redeemed, .Expired:
+                self.toolbarWithConfirmedUp()
+                self.showChat()
+            }
         }
     }
-    
+
+    func toolbarForBuy() {
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let createButton = buttonWith(title: "Buy!", target: self, action: "onBuyButton")
+        bar.addSubview(createButton)
+
+        createButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+    }
     
     func toolbarForNone() {
         let bar = bottomToolbar
         bar.subviews.forEach { (subview) -> () in
             subview.removeFromSuperview()
         }
-        let createButton = buttonWith(title: "Who's UP", target: self, action: "createUp")
+        let createButton = buttonWith(title: "Groupon UP", target: self, action: "createUp")
         let label = descriptionLabel(title: "More people, more fun!")
         bar.addSubview(createButton)
         bar.addSubview(label)
@@ -215,6 +236,21 @@ extension DealDetailsViewController {
             }).forEach({ (rsvp) -> () in
                 messages.append((UserCache.getUserForId(rsvp.userId), "I'm UP"))
             })
+        }
+    }
+
+    func onBuyButton() {
+        let order = PFObject(className:"Order")
+        order["userID"] = PFUser.currentUser()?.objectId
+        order["dealID"] = self.selectedDeal.uuid
+        order.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                self.buyItNow = false
+                self.refreshUI()
+            } else {
+                print("[ERROR] Unable to submit the order: \(error)")
+            }
         }
     }
 
