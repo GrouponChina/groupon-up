@@ -1,29 +1,23 @@
 # Mac OS
 .DS_Store
-Groupon\ UP/.DS_Store
 
 # Xcode
 #
+
 build/
-Groupon\ UP/*.pbxuser
-Groupon\ UP/!default.pbxuser
-Groupon\ UP/*.mode1v3
-Groupon\ UP/!default.mode1v3
-Groupon\ UP/*.mode2v3
-Groupon\ UP/!default.mode2v3
-Groupon\ UP/*.perspectivev3
-Groupon\ UP/!default.perspectivev3
-Groupon\ UP/xcuserdata
-Groupon\ UP/*.xccheckout
-Groupon\ UP/*.moved-aside
-Groupon\ UP/DerivedData
-Groupon\ UP/*.hmap
-Groupon\ UP/*.ipa
-Groupon\ UP/*.xcuserstate
-Groupon\ UP.xcodeproj/project.pbxproj
-Groupon\ UP/Groupon\ UP.xcodeproj/project.pbxproj
-Groupon\ UP/Groupon\ UP.xcworkspace/*
-Groupon\ UP/Groupon\ UP.xcodeproj/project.xcworkspace/xcuserdata/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
+*.moved-aside
 
 # CocoaPods
 #
@@ -34,3 +28,4 @@ Groupon\ UP/Groupon\ UP.xcodeproj/project.xcworkspace/xcuserdata/*
 Groupon\ UP/Pods/
 
 Groupon UP/Groupon UP.xcworkspace/xcuserdata/rxue.xcuserdatad/UserInterfaceState.xcuserstate
+Groupon UP.xcodeproj/xcuserdata/Roboxue.xcuserdatad/
