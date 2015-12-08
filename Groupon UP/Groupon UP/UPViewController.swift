@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 class UPViewController: BaseViewController, UITextFieldDelegate {
-    var deal: Deal = Deal()
+    var deal: Deal!
     var rsvpUsers: [PFUser?] = []
 
     private var _upContentView: UIView!
@@ -228,9 +228,7 @@ extension UPViewController {
             v.layer.borderWidth = UPBorderWidth
             v.layer.borderColor = UIColor.lightGrayColor().CGColor
             v.layer.cornerRadius = UPBorderRadius
-            if self.deal.up != nil {
-               v.text = self.deal.up!.message
-            }
+            v.text = self.deal.up?.message
 
             _message = v
         }
