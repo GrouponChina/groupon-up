@@ -8,10 +8,14 @@
 
 import UIKit
 import Parse
+import AlamofireImage
+import SnapKit
 
 class DealDetailsViewController: DealDetailsBaseViewController {
+    var messages = [(PFUser, String, NSDate)]()
     private var _dateFormater: NSDateFormatter!
-    
+    private lazy var filter = RoundedCornersFilter(radius: 5)
+
     var dateFormatter: NSDateFormatter {
         if _dateFormater == nil {
             _dateFormater = NSDateFormatter()
@@ -22,7 +26,9 @@ class DealDetailsViewController: DealDetailsBaseViewController {
     }
     
     override func getDealStatusView() -> UIView {
-        let v = super.getDealStatusView()
+        let v = UITableView()
+        v.scrollEnabled = false
+        v.dataSource = self
         return v
     }
     
@@ -70,12 +76,13 @@ extension DealDetailsViewController {
             self.toolbarForNone()
         case .Created:
             self.toolbarForCreated()
+            self.showChat()
         case .Active:
             self.toolbarForActive()
-            self.showRSVP()
+            self.showChat()
         case .Confirmed, .Redeemed, .Expired:
             self.toolbarWithConfirmedUp()
-            self.showRSVP()
+            self.showChat()
         }
     }
     
@@ -108,11 +115,9 @@ extension DealDetailsViewController {
             subview.removeFromSuperview()
         }
         let updateButton = buttonWith(title: "Update", target: self, action: "updateUp")
-        let cancelButton = buttonWith(title: "Cancel", target: self, action: "cancelUp")
         let tips = descriptionLabel(title: "You've created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
         tips.textAlignment = .Center
         bar.addSubview(updateButton)
-        bar.addSubview(cancelButton)
         bar.addSubview(tips)
         tips.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
@@ -123,12 +128,6 @@ extension DealDetailsViewController {
             make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
             make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
-            make.bottom.equalTo(bar).offset(-UPSpanSize)
-        }
-        cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(updateButton)
-            make.left.equalTo(bar).offset(UPSpanSize)
-            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
         }
     }
@@ -178,9 +177,43 @@ extension DealDetailsViewController {
             make.right.equalTo(bar).offset(-UPSpanSize)
         }
     }
-    
+
+    func showChat() {
+        showUPMessage { () -> Void in
+            let tableView = self.dealStatusView as! UITableView
+            tableView.reloadData()
+            tableView.snp_updateConstraints(closure: { (make) -> Void in
+                make.height.equalTo(tableView.contentSize.height)
+            })
+        }
+    }
+
+    func showUPMessage(callback: () -> Void) {
+        messages.removeAll()
+        if let up = selectedDeal.up {
+            messages.append((UserCache.getUserForId(up.createdByUserId), up.message, up.object.createdAt!))
+            if let _ = up.rsvps {
+                showRSVP()
+                callback()
+            } else {
+                up.fetchEnrolledUsers({ (rsvps, error) -> Void in
+                    if let _ = rsvps {
+                        self.showRSVP()
+                        callback()
+                    }
+                })
+            }
+        }
+    }
+
     func showRSVP() {
-        // TODO: Implement me
+        if let rsvps = selectedDeal.up?.rsvps {
+            rsvps.sort({ (left, right) -> Bool in
+                left.object.createdAt!.timeIntervalSince1970 < right.object.createdAt!.timeIntervalSince1970
+            }).forEach({ (rsvp) -> () in
+                messages.append((UserCache.getUserForId(rsvp.userId), "I'm UP", rsvp.object.createdAt!))
+            })
+        }
     }
 
     func createUp() {
@@ -195,15 +228,35 @@ extension DealDetailsViewController {
         navigationController?.pushViewController(upView, animated: true)
     }
     
-    func cancelUp() {
-        debugPrint("implement me: cancel an Up \(selectedDeal.up!.upId)")
-    }
-    
     func confirmUP() {
         debugPrint("implement me: set the Up \(selectedDeal.up!.upId)'s open enrollment to false")
     }
     
     func groupChat() {
         debugPrint("implement me: shall we enable group chat function later?")
+    }
+}
+
+extension DealDetailsViewController: UITableViewDataSource {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let (user, msg, date) = messages[indexPath.row]
+        let reuseId = "messsageCell"
+        let cell: UITableViewCell!
+        if let reuseCell = tableView.dequeueReusableCellWithIdentifier(reuseId) {
+            cell = reuseCell
+        } else {
+            cell = UITableViewCell(style: .Value1, reuseIdentifier: reuseId)
+        }
+        cell.imageView?.af_setImageWithURL(NSURL(string: "https://www.gravatar.com/avatar?s=200")!)
+        user.fetchIfNeededInBackgroundWithBlock({ (fetchedUser, error) -> Void in
+            cell.imageView?.af_setImageWithURL(NSURL(string: "https://www.gravatar.com/avatar/\(user.email!.md5())?s=200")!, filter: self.filter)
+            cell.textLabel?.text = user.username
+        })
+        cell.detailTextLabel?.text = msg + "-" + dateFormatter.stringFromDate(date)
+        return cell
     }
 }
