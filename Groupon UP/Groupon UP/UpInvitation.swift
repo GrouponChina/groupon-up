@@ -89,7 +89,7 @@ class UpInvitation {
     func fetchEnrolledUsernames(completion: ([String], NSError?) -> Void) {
         let subquery = PFQuery(className: "UserUP")
         subquery.whereKey("grouponUPID", equalTo: upId)
-        
+
         let query = PFUser.query()!
         query.whereKey("objectId", matchesKey: "userID", inQuery: subquery)
         
@@ -111,9 +111,7 @@ class UpInvitation {
         let subquery = PFQuery(className: "UserUP")
         subquery.whereKey("grouponUPID", equalTo: upId)
         
-        let query = PFUser.query()!
-        query.whereKey("objectId", matchesKey: "userID", inQuery: subquery)
-        query.findObjectsInBackgroundWithBlock({ (rsvps: [PFObject]?, error: NSError?) -> Void in
+        subquery.findObjectsInBackgroundWithBlock({ (rsvps: [PFObject]?, error: NSError?) -> Void in
             if let _ = error {
                 callback(nil, error)
             }
@@ -135,13 +133,10 @@ class UpRSVP {
         return object.objectId!
     }
     var userId: String! {
-        return object["userID"].stringValue
-    }
-    var username: String! {
-        return object["username"] as! String
+        return object.objectForKey("userID") as! String
     }
     var upId: String! {
-        return object["grouponUPID"].stringValue
+        return object.objectForKey("grouponUPID") as! String
     }
     var rsvpedAt: NSDate! {
         return object.createdAt!
