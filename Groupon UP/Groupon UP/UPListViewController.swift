@@ -110,6 +110,12 @@ extension UPListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.setUpInfo(grouponUp, upType: UpType(rawValue: selectedSegmentIndex)!)
         return cell
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let dealDetailView = DealDetailsViewController()
+        dealDetailView.selectedDeal = grouponUps[indexPath.row].associatedDeal
+        navigationController?.pushViewController(dealDetailView, animated: true)
+    }
 }
 
 extension UPListViewController {

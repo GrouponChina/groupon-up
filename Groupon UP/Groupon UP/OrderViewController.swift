@@ -101,11 +101,10 @@ extension OrderViewController {
 
 extension OrderViewController {
     func makeGetDealsRequest() {
-        self.deals = fakeDeals()
-//        DealClient.getDivisionDeals { (deals: [Deal]!) -> Void in
-//            self.deals = deals
-//            self.tableView.reloadData()
-//        }
+        DealClient.getDivisionDeals { (deals: [Deal]!) -> Void in
+            self.deals = deals
+            self.tableView.reloadData()
+        }
     }
     
     func fakeDeals() -> [Deal] {
