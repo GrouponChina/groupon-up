@@ -10,8 +10,7 @@ import UIKit
 import Parse
 
 class UPViewController: BaseViewController, UITextFieldDelegate {
-    var up: UpInvitation!
-    var dealId: String = ""
+    var deal: Deal!
     var rsvpUsers: [PFUser?] = []
 
     private var _upContentView: UIView!
@@ -121,7 +120,7 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
             make.right.equalTo(bar).offset(-UPSpanSize)
         }
 
-        if self.up != nil {
+        if self.deal.up != nil {
             let deleteButton = buttonWith(title: "DELETE UP", target: self, action: "onDeleteButton")
 
             deleteButton.backgroundColor = UPDangerZoneColor
@@ -229,9 +228,7 @@ extension UPViewController {
             v.layer.borderWidth = UPBorderWidth
             v.layer.borderColor = UIColor.lightGrayColor().CGColor
             v.layer.cornerRadius = UPBorderRadius
-            if up != nil {
-               v.text = up.message
-            }
+            v.text = self.deal.up?.message
 
             _message = v
         }
@@ -259,7 +256,7 @@ extension UPViewController {
             v.delegate = self
             v.addTarget(self, action: "grouponUPDateEditingDidBegin:", forControlEvents: UIControlEvents.EditingDidBegin)
 
-            if let currentUp = self.up?.date {
+            if let currentUp = self.deal.up?.date {
                 datePickerView.setDate(currentUp, animated: false)
                 updateDatePickerViewDate(datePickerView, textField:v)
             }
@@ -316,20 +313,26 @@ extension UPViewController {
     }
 
     func onDeleteButton() {
-        self.up.object.deleteInBackground()
-        navigationController?.popViewControllerAnimated(true)
+        self.deal.up?.object.deleteInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                self.deal.up = nil
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                print("[ERROR] Unable to delete Groupon UP: \(error)")
+            }
+        }
     }
 
     func saveUP() {
-        if up != nil {
-            self.up.object["message"] = self.message.text
-            self.up.object["grouponUPDate"] = self.datePickerView.date
+        if self.deal.up != nil {
+            self.deal.up!.object["message"] = self.message.text
+            self.deal.up!.object["grouponUPDate"] = self.datePickerView.date
         } else {
             if let currentUserId = PFUser.currentUser()?.objectId {
-                self.up = UpInvitation(up: PFObject(className: "GrouponUP", dictionary: [
+                self.deal.up = UpInvitation(up: PFObject(className: "GrouponUP", dictionary: [
                     "message": self.message.text,
                     "grouponUPDate": self.datePickerView.date,
-                    "dealId": self.dealId,
+                    "dealId": self.deal.uuid,
                     "openEnroll": true,
                     "createdBy": currentUserId
                     ]))
@@ -337,7 +340,7 @@ extension UPViewController {
         }
 
         print("Saving object...")
-        self.up.object.saveInBackgroundWithBlock {
+        self.deal.up!.object.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
                 print("Groupon UP saved!")
