@@ -100,10 +100,14 @@ class UpListTableViewCell: UITableViewCell {
         
         switch upType {
         case .Inviting:
-            upStatusLabel.text = "Pending"
             up.fetchEnrolledUsernames { (usernames: [String], error: NSError?) in
-                let acceptedBy = usernames.joinWithSeparator(", ")
-                self.upStatusLabel.text = "Accepted by " + acceptedBy
+                if usernames.isEmpty {
+                    self.upStatusLabel.text = "Pending"
+                }
+                else {
+                    let acceptedBy = usernames.joinWithSeparator(", ")
+                    self.upStatusLabel.text = "Accepted by " + acceptedBy
+                }
             }
         case .Invited:
             upStatusLabel.text = "Created by " + up.createdByUsername
