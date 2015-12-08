@@ -111,10 +111,8 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
         }
 
         let saveButton = buttonWith(title: "Save", target: self, action: "saveUP")
-        let cancelButton = buttonWith(title: "Cancel", target: self, action: "onCancelButton")
 
         bar.addSubview(saveButton)
-        bar.addSubview(cancelButton)
 
         saveButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
@@ -123,11 +121,17 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
             make.right.equalTo(bar).offset(-UPSpanSize)
         }
 
-        cancelButton.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(saveButton)
-            make.left.equalTo(bar).offset(UPSpanSize)
-            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
-            make.bottom.equalTo(bar).offset(-UPSpanSize)
+        if self.up != nil {
+            let deleteButton = buttonWith(title: "DELETE UP", target: self, action: "onDeleteButton")
+
+            deleteButton.backgroundColor = UPDangerZoneColor
+            bar.addSubview(deleteButton)
+            deleteButton.snp_makeConstraints { (make) -> Void in
+                make.top.equalTo(saveButton)
+                make.left.equalTo(bar).offset(UPSpanSize)
+                make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
+                make.bottom.equalTo(bar).offset(-UPSpanSize)
+            }
         }
     }
 }
@@ -303,10 +307,16 @@ extension UPViewController {
     }
 
     func onDatePickerDoneButton() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
+        self.grouponUPDate.text = dateFormatter.stringFromDate(self.datePickerView.date)
+
         self.grouponUPDate.resignFirstResponder()
     }
 
-    func onCancelButton() {
+    func onDeleteButton() {
+        self.up.object.deleteInBackground()
         navigationController?.popViewControllerAnimated(true)
     }
 
