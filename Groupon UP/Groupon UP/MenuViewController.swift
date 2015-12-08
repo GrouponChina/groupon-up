@@ -14,6 +14,7 @@ class MenuViewController: BaseViewController {
     private var _tableView: UITableView!
     private var _userProfileScreen: ProfileViewController!
     private var _ordersScreen: OrderViewController!
+    private var _browseScreen: BrowseViewController!
     private var _upNotificationsScreen: UPListViewController!
     private var _viewControllers: [UIViewController]!
     
@@ -57,9 +58,12 @@ extension MenuViewController: UITableViewDataSource {
             // Profile cell
             cell.textLabel?.text = "My Profile"
         case 1:
+            // Browse Deals
+            cell.textLabel?.text = "Browse"
+        case 2:
             // Home timeline
             cell.textLabel?.text = "Orders"
-        case 2:
+        case 3:
             // Home timeline
             cell.textLabel?.text = "UP invitations"
         default:
@@ -95,6 +99,7 @@ extension MenuViewController {
         if _viewControllers == nil {
             _viewControllers = [
                 MenuEnabledNavigationViewController(rootViewController: userProfileScreen),
+                MenuEnabledNavigationViewController(rootViewController: browseScreen),
                 MenuEnabledNavigationViewController(rootViewController: ordersScreen),
                 MenuEnabledNavigationViewController(rootViewController: upNotificationsScreen)
             ]
@@ -116,6 +121,13 @@ extension MenuViewController {
             _ordersScreen = s
         }
         return _ordersScreen
+    }
+    
+    var browseScreen: BrowseViewController {
+        if _browseScreen == nil {
+            _browseScreen = BrowseViewController()
+        }
+        return _browseScreen
     }
     
     var upNotificationsScreen: UPListViewController {

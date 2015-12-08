@@ -76,6 +76,16 @@ class UpListTableViewCell: UITableViewCell {
         }
     }
     
+    func setDeal(deal: Deal) {
+        dealImage.af_setImageWithURL(NSURL(string: deal.dealImages.sidebarImageUrl)!)
+        dealNameLabel.text = deal.title
+        
+        upStatusLabel.text = deal.shortAnnouncementTitle
+        upDatelabel.text = deal.expiresAt
+        upDatelabel.textColor = UIColor(red:1, green:0.63, blue:0, alpha:1)
+    }
+    
+    
     func setUpInfo(up: UpInvitation, upType: UpType) {
         if up.associatedDeal == nil {
             DealClient.getDealByDealId(up.dealId) { (deal: Deal?, _) in

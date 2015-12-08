@@ -6,14 +6,16 @@
 //  Copyright © 2015 Chang Liu. All rights reserved.
 //
 
+
 import SnapKit
 import Alamofire
 import SwiftyJSON
+import Parse
 
 class OrderViewController: UIViewController {
     private var _tableView: UITableView!
     private var _refreshController: UIRefreshControl!
-    var deals: [Deal] = []
+    var orders: [Order] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,7 @@ class OrderViewController: UIViewController {
     }
 
     func addLayout() {
+        navigationItem.title = "My Groupons"
         view.backgroundColor = UIColor.whiteColor()
         tableView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(view)
@@ -42,7 +45,7 @@ class OrderViewController: UIViewController {
     }
     
     func initData() {
-        makeGetDealsRequest()
+        makeGetOrdersRequest()
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,26 +55,38 @@ class OrderViewController: UIViewController {
 
 extension OrderViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return deals.count
+        return orders.count
     }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let reuseId = "DealTableViewCell"
-        let cell: DealTableViewCell
-        if let reuseCell = tableView.dequeueReusableCellWithIdentifier(reuseId) as? DealTableViewCell {
+        
+        let reuseId = "UpListTableViewCell"
+        let cell: UpListTableViewCell
+        if let reuseCell = tableView.dequeueReusableCellWithIdentifier(reuseId) as? UpListTableViewCell {
             cell = reuseCell
         }
         else {
-            cell = DealTableViewCell(style: .Subtitle, reuseIdentifier: reuseId)
+            cell = UpListTableViewCell(style: .Subtitle, reuseIdentifier: reuseId)
         }
-        let deal = deals[indexPath.row]
-        cell.setDeal(deal)
+        let order = orders[indexPath.row]
+        if order.associatedDeal == nil {
+            DealClient.getDealByDealId(order.dealId) { (deal: Deal?, _) in
+                if let deal = deal {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        order.associatedDeal = deal
+                        cell.setDeal(order.associatedDeal!)
+                    }
+                }
+            }
+        }
+        else {
+            cell.setDeal(order.associatedDeal!)
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let dealDetailView = DealDetailsViewController()
-        dealDetailView.selectedDeal = deals[indexPath.row]
+        dealDetailView.selectedDeal = orders[indexPath.row].associatedDeal!
         navigationController?.pushViewController(dealDetailView, animated: true)
     }
 }
@@ -100,55 +115,17 @@ extension OrderViewController {
 }
 
 extension OrderViewController {
-    func makeGetDealsRequest() {
-        self.deals = fakeDeals()
-//        DealClient.getDivisionDeals { (deals: [Deal]!) -> Void in
-//            self.deals = deals
-//            self.tableView.reloadData()
-//        }
-    }
-    
-    func fakeDeals() -> [Deal] {
-        let deal = Deal()
-        
-        deal.uuid = "5b1d966e-78b0-214c-1de7-0ce7b1eb0323"
-        deal.title = "Medieval Times – Tournament Dinner and Show with Optional VIP Package through January 31"
-        deal.announcementTitle = "Medieval Times – Tournament Dinner and Show with Optional VIP Package Up to 49% Off"
-        deal.shortAnnouncementTitle = "Medieval Times"
-        deal.soldQuantity = "1000"
-        deal.soldQuantityMessage = "1,000 +"
-        deal.status = "Open"
-        deal.price = "$26.00"
-        deal.value = "$43.78"
-        let dealImage = DealImages()
-        dealImage.grid6ImageUrl = "https://img.grouponcdn.com/deal/sHHKA7Hp8ZxUfC9gyeH7/XT-2048x1229/v1/t460x279.jpg"
-        deal.dealImages = dealImage
-        deal.divisionId = "chicago"
-        deal.expiresAt = "2016-02-01T05:59:59Z"
-
-        let deal2 = Deal()
-
-        deal2.uuid = "5b1d966e-78b0-214c-1de7-0ce7b1eb0000"
-        deal2.title = "Medieval Times – Tournament Dinner and Show with Optional VIP Package through January 31"
-        deal2.announcementTitle = "Medieval Times – Tournament Dinner and Show with Optional VIP Package Up to 49% Off"
-        deal2.shortAnnouncementTitle = "Medieval Times"
-        deal2.soldQuantity = "1000"
-        deal2.soldQuantityMessage = "1,000 +"
-        deal2.status = "Open"
-        deal2.price = "$26.00"
-        deal2.value = "$43.78"
-        let dealImage2 = DealImages()
-        dealImage2.grid6ImageUrl = "https://img.grouponcdn.com/deal/v9PmBBAMideA7CzMedaa/Bf-2048x1229/v1/t460x279.jpg"
-        deal2.dealImages = dealImage2
-        deal2.divisionId = "chicago"
-        deal2.expiresAt = "2016-02-01T05:59:59Z"
-        
-        return [deal, deal2, deal]
+    func makeGetOrdersRequest() {
+        Order.findOrdersByUserId(PFUser.currentUser()!.objectId!) { (orders: [Order], error: NSError?) in
+            self.orders = orders
+            self.tableView.reloadData()
+            self.refreshController.endRefreshing()
+        }
     }
     
     func refreshView() {
         refreshController.beginRefreshing()
         initData()
-        refreshController.endRefreshing()
+        
     }
 }
