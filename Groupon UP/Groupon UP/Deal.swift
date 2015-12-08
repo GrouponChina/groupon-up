@@ -67,7 +67,7 @@ class Deal {
         let fullLengthExpiresAt = options[0]["expiresAt"].stringValue
         if !fullLengthExpiresAt.isEmpty {
             let dataRange = fullLengthExpiresAt.startIndex..<fullLengthExpiresAt.startIndex.advancedBy(10)
-            expiresAt = "Expired at: " + fullLengthExpiresAt.substringWithRange(dataRange)
+            expiresAt = "Expires at: " + fullLengthExpiresAt.substringWithRange(dataRange)
         }
         dealImages = DealImages(dealData: dealData)
         divisionId = dealData["division"]["id"].stringValue
