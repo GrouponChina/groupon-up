@@ -17,6 +17,7 @@ class UPListViewController: BaseViewController {
     var selectedSegmentIndex = 0
     var invitingUps: [UpInvitation] = []
     var invitedUps: [UpInvitation] = []
+    
     var grouponUps: [UpInvitation] {
         get {
             switch selectedSegmentIndex {
@@ -76,7 +77,14 @@ class UPListViewController: BaseViewController {
     func initData() {
         grouponUps = []
         tableView.reloadData()
-        loadInvitingUps()
+        switch selectedSegmentIndex {
+        case 0:
+            loadInvitingUps()
+        case 1:
+            loadInvitedUps()
+        default:
+            loadInvitingUps()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -120,41 +128,18 @@ extension UPListViewController {
         }
         tableView.reloadData()
     }
+    
     func loadInvitingUps() {
-        //PFUser.currentUser()!.objectId!
-        UpInvitation.findAllUpInvitationsCreatedByUser("qv41967wN8") { (upInvitations: [UpInvitation], _) in
-            for up in upInvitations {
-                DealClient.getDealByDealId(up.dealId) { (deal: Deal?, _) in
-                    if let deal = deal {
-                        up.associatedDeal = deal
-                        let lastCount = self.invitingUps.count
-                        self.invitingUps.append(up)
-                        let indexPaths = (lastCount..<self.invitingUps.count).map { NSIndexPath(forItem: $0, inSection: 0) }
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Bottom)
-                        }
-                    }
-                }
-            }
+        UpInvitation.findAllUpInvitationsCreatedByUser(PFUser.currentUser()!.objectId!) { (upInvitations: [UpInvitation], _) in
+            self.invitingUps = upInvitations
+            self.tableView.reloadData()
         }
     }
     
     func loadInvitedUps() {
-        //PFUser.currentUser()!.objectId!
-        UpRSVP.findAllUpRsvpReceivedByUser("qv41967wN8"){ (upInvitations: [UpInvitation], _) in
-            for up in upInvitations {
-                DealClient.getDealByDealId(up.dealId) { (deal: Deal?, _) in
-                    if let deal = deal {
-                        up.associatedDeal = deal
-                        let lastCount = self.invitingUps.count
-                        self.invitedUps.append(up)
-                        let indexPaths = (lastCount..<self.invitedUps.count).map { NSIndexPath(forItem: $0, inSection: 0) }
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Bottom)
-                        }
-                    }
-                }
-            }
+        UpRSVP.findAllUpRsvpReceivedByUser(PFUser.currentUser()!.objectId!){ (upInvitations: [UpInvitation], _) in
+            self.invitedUps = upInvitations
+            self.tableView.reloadData()
         }
     }
 }
@@ -201,9 +186,7 @@ extension UPListViewController {
 extension UPListViewController {
     func refreshView() {
         refreshController.beginRefreshing()
-        grouponUps = []
         initData()
-        tableView.reloadData()
         refreshController.endRefreshing()
     }
 }
