@@ -13,6 +13,7 @@
 		49EFA44E1C005B7A00D04B7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49EFA44C1C005B7A00D04B7D /* LaunchScreen.storyboard */; };
 		873D032E804B1DEBF7CC3259 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09D1EC767C220A220FC989D6 /* Pods.framework */; };
 		8B4DB5B11C167B1C00BCE408 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4DB5B01C167B1C00BCE408 /* UserClient.swift */; };
+		8B7628201C169FB70091E7FB /* ChatMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B76281F1C169FB70091E7FB /* ChatMessageTableViewCell.swift */; };
 		A130FD551C01113100B40829 /* UPConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD541C01113100B40829 /* UPConstants.swift */; };
 		A130FD571C01116A00B40829 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD561C01116A00B40829 /* HexColor.swift */; };
 		A130FD591C01124B00B40829 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD581C01124B00B40829 /* BaseViewController.swift */; };
@@ -48,6 +49,7 @@
 		49EFA44D1C005B7A00D04B7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49EFA44F1C005B7A00D04B7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B4DB5B01C167B1C00BCE408 /* UserClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
+		8B76281F1C169FB70091E7FB /* ChatMessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageTableViewCell.swift; sourceTree = "<group>"; };
 		A130FD541C01113100B40829 /* UPConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPConstants.swift; sourceTree = "<group>"; };
 		A130FD561C01116A00B40829 /* HexColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
 		A130FD581C01124B00B40829 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */,
 				EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */,
 				EC25203E1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift */,
+				8B76281F1C169FB70091E7FB /* ChatMessageTableViewCell.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				A130FD551C01113100B40829 /* UPConstants.swift in Sources */,
 				A130FD6D1C011D7800B40829 /* DealTableViewCell.swift in Sources */,
 				A130FD701C011DAF00B40829 /* UPListViewController.swift in Sources */,
+				8B7628201C169FB70091E7FB /* ChatMessageTableViewCell.swift in Sources */,
 				49EFA4441C005B7A00D04B7D /* AppDelegate.swift in Sources */,
 				ECE05C981C13C1E900A1778A /* UpListTableViewCell.swift in Sources */,
 				EC44DA961C01380A003CD93C /* Deal.swift in Sources */,

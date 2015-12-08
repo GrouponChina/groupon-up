@@ -47,7 +47,7 @@ class ProfileViewController: BaseViewController {
     override func refreshUI() {
         if let user = PFUser.currentUser() {
             if let email = user.email {
-                userProfile.af_setImageWithURL(NSURL(string: "https://www.gravatar.com/avatar/\(email.md5())?s=200")!, filter: filter)
+                userProfile.af_setImageWithURL(UserClient.getAvatarUrlFor(email: email), filter: filter)
             }
             usernameLabel.text = user.username
         }
