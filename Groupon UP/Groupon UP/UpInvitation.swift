@@ -51,7 +51,6 @@ class UpInvitation {
         return object["openEnroll"].boolValue
     }
     var rsvps: [UpRSVP]?
-    var acceptedByUsers: [String] = []
     
     init(up: PFObject) {
         object = up
@@ -61,9 +60,6 @@ class UpInvitation {
             }
             else {
                 if (rsvps != nil) {
-                    for rsvp in rsvps! {
-                        self.acceptedByUsers.append(UserCache.getUserForId(rsvp.userId).username!)
-                    }
                     print("[API-SUCCESS] Fetched \(rsvps!.count) rsvps on existing Groupon UP")
                 }
             }
@@ -89,10 +85,32 @@ class UpInvitation {
         }
     }
     
-    func fetchEnrolledUsers(callback: ([UpRSVP]?, NSError?) -> Void) {
+    
+    func fetchEnrolledUsernames(completion: ([String], NSError?) -> Void) {
         let subquery = PFQuery(className: "UserUP")
         subquery.whereKey("grouponUPID", equalTo: upId)
 
+        let query = PFUser.query()!
+        query.whereKey("objectId", matchesKey: "userID", inQuery: subquery)
+        
+        query.findObjectsInBackgroundWithBlock { (rsvps: [PFObject]?, error: NSError?) -> Void in
+            if let _ = error {
+                completion([], error)
+            }
+            var acceptedByUsers: [String] = []
+            if let rsvps = rsvps {
+                for rsvp in rsvps {
+                    acceptedByUsers.append(rsvp["username"] as! String)
+                }
+            }
+            completion(acceptedByUsers, nil)
+        }
+    }
+    
+    func fetchEnrolledUsers(callback: ([UpRSVP]?, NSError?) -> Void) {
+        let subquery = PFQuery(className: "UserUP")
+        subquery.whereKey("grouponUPID", equalTo: upId)
+        
         subquery.findObjectsInBackgroundWithBlock({ (rsvps: [PFObject]?, error: NSError?) -> Void in
             if let _ = error {
                 callback(nil, error)

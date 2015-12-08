@@ -77,20 +77,40 @@ class UpListTableViewCell: UITableViewCell {
     }
     
     func setUpInfo(up: UpInvitation, upType: UpType) {
-        if let associatedDeal = up.associatedDeal {
-            dealImage.af_setImageWithURL(NSURL(string: associatedDeal.dealImages.sidebarImageUrl)!)
-            dealNameLabel.text = associatedDeal.title
-            let upDate = up.date.description
-            let dataRange = upDate.startIndex..<upDate.startIndex.advancedBy(10)
-            upDatelabel.text = "Up date: " + upDate.substringWithRange(dataRange)
-            
-            switch upType {
-            case .Inviting:
-                let acceptedBy = up.acceptedByUsers.joinWithSeparator(", ")
-                upStatusLabel.text = "Accepted by " + acceptedBy
-            case .Invited:
-                upStatusLabel.text = "Created by " + up.createdByUsername
+        if up.associatedDeal == nil {
+            DealClient.getDealByDealId(up.dealId) { (deal: Deal?, _) in
+                if let deal = deal {
+                    up.associatedDeal = deal
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.dealImage.af_setImageWithURL(NSURL(string: up.associatedDeal!.dealImages.sidebarImageUrl)!)
+                        self.dealNameLabel.text = up.associatedDeal!.title
+                    }
+                }
             }
+        }
+        else {
+            dealImage.af_setImageWithURL(NSURL(string: up.associatedDeal!.dealImages.sidebarImageUrl)!)
+            dealNameLabel.text = up.associatedDeal!.title
+        }
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
+        upDatelabel.text = dateFormatter.stringFromDate(up.date)
+        
+        switch upType {
+        case .Inviting:
+            up.fetchEnrolledUsernames { (usernames: [String], error: NSError?) in
+                if usernames.isEmpty {
+                    self.upStatusLabel.text = "Pending"
+                }
+                else {
+                    let acceptedBy = usernames.joinWithSeparator(", ")
+                    self.upStatusLabel.text = "Accepted by " + acceptedBy
+                }
+            }
+        case .Invited:
+            upStatusLabel.text = "Created by " + up.createdByUsername
         }
     }
 }

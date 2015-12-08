@@ -38,9 +38,10 @@ class DealDetailsViewController: DealDetailsBaseViewController {
         v.alpha = 0.8
         return v
     }
-    
+
     override func refreshUI() {
         super.refreshUI()
+
         if let _ = selectedDeal.up {
             self.updateToolbarAndUpStatus()
         } else {
@@ -218,13 +219,13 @@ extension DealDetailsViewController {
 
     func createUp() {
         let upView = UPViewController()
-        upView.dealId = self.selectedDeal.uuid
+        upView.deal = self.selectedDeal
         navigationController?.pushViewController(upView, animated: true)
     }
     
     func updateUp() {
         let upView = UPViewController()
-        upView.up = self.selectedDeal.up
+        upView.deal = self.selectedDeal
         navigationController?.pushViewController(upView, animated: true)
     }
     
