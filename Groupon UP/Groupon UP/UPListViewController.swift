@@ -78,8 +78,6 @@ class UPListViewController: BaseViewController {
         grouponUps = []
         tableView.reloadData()
         switch selectedSegmentIndex {
-        case 0:
-            loadInvitingUps()
         case 1:
             loadInvitedUps()
         default:
@@ -122,9 +120,6 @@ extension UPListViewController {
     func didPressSegment(sender: UISegmentedControl) {
         grouponUps = []
         switch sender.selectedSegmentIndex {
-        case 0:
-            selectedSegmentIndex = 0
-            loadInvitingUps()
         case 1:
             selectedSegmentIndex = 1
             loadInvitedUps()
@@ -139,6 +134,7 @@ extension UPListViewController {
         UpInvitation.findAllUpInvitationsCreatedByUser(PFUser.currentUser()!.objectId!) { (upInvitations: [UpInvitation], _) in
             self.invitingUps = upInvitations
             self.tableView.reloadData()
+            self.refreshController.endRefreshing()
         }
     }
     
@@ -146,6 +142,7 @@ extension UPListViewController {
         UpRSVP.findAllUpRsvpReceivedByUser(PFUser.currentUser()!.objectId!){ (upInvitations: [UpInvitation], _) in
             self.invitedUps = upInvitations
             self.tableView.reloadData()
+            self.refreshController.endRefreshing()
         }
     }
 }
@@ -193,6 +190,5 @@ extension UPListViewController {
     func refreshView() {
         refreshController.beginRefreshing()
         initData()
-        refreshController.endRefreshing()
     }
 }

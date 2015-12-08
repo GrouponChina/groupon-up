@@ -93,9 +93,10 @@ class UpListTableViewCell: UITableViewCell {
             dealNameLabel.text = up.associatedDeal!.title
         }
         
-        let upDate = up.date.description
-        let dataRange = upDate.startIndex..<upDate.startIndex.advancedBy(10)
-        upDatelabel.text = "Up date: " + upDate.substringWithRange(dataRange)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
+        upDatelabel.text = dateFormatter.stringFromDate(up.date)
         
         switch upType {
         case .Inviting:
