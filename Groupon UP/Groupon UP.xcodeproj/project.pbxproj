@@ -33,6 +33,8 @@
 		EC44DA931C0137D2003CD93C /* DealClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA921C0137D2003CD93C /* DealClient.swift */; };
 		EC44DA961C01380A003CD93C /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA951C01380A003CD93C /* Deal.swift */; };
 		EC44DA981C014FED003CD93C /* DealDetailsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */; };
+		EC6BE4411C16988500C2361C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6BE4401C16988500C2361C /* BrowseViewController.swift */; };
+		EC6BE4431C169A0800C2361C /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6BE4421C169A0800C2361C /* Order.swift */; };
 		ECE05C981C13C1E900A1778A /* UpListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE05C971C13C1E900A1778A /* UpListTableViewCell.swift */; };
 		ECE05C9A1C13C39000A1778A /* UpListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE05C991C13C39000A1778A /* UpListConstants.swift */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,8 @@
 		EC44DA921C0137D2003CD93C /* DealClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealClient.swift; sourceTree = "<group>"; };
 		EC44DA951C01380A003CD93C /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsConstants.swift; sourceTree = "<group>"; };
+		EC6BE4401C16988500C2361C /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		EC6BE4421C169A0800C2361C /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		ECE05C971C13C1E900A1778A /* UpListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpListTableViewCell.swift; sourceTree = "<group>"; };
 		ECE05C991C13C39000A1778A /* UpListConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpListConstants.swift; sourceTree = "<group>"; };
 		EF5DE927F9472D92EC326EC8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				A130FD681C011D3800B40829 /* DealDetailsViewController.swift */,
+				EC6BE4401C16988500C2361C /* BrowseViewController.swift */,
 				A130FD6A1C011D6100B40829 /* OrderViewController.swift */,
 				A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */,
 				EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */,
@@ -216,6 +221,7 @@
 			children = (
 				EC44DA951C01380A003CD93C /* Deal.swift */,
 				A1393F931C0D692900073B3B /* UpInvitation.swift */,
+				EC6BE4421C169A0800C2361C /* Order.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -349,11 +355,13 @@
 				A130FD591C01124B00B40829 /* BaseViewController.swift in Sources */,
 				49EFA4461C005B7A00D04B7D /* InitialViewController.swift in Sources */,
 				A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */,
+				EC6BE4411C16988500C2361C /* BrowseViewController.swift in Sources */,
 				A1393F941C0D692900073B3B /* UpInvitation.swift in Sources */,
 				A130FD721C011DB600B40829 /* UPViewController.swift in Sources */,
 				A130FD691C011D3800B40829 /* DealDetailsViewController.swift in Sources */,
 				A130FD5F1C01135100B40829 /* MenuViewController.swift in Sources */,
 				A199F25E1C021BF20008FB29 /* StringMD5.swift in Sources */,
+				EC6BE4431C169A0800C2361C /* Order.swift in Sources */,
 				ECE05C9A1C13C39000A1778A /* UpListConstants.swift in Sources */,
 				A130FD661C01175400B40829 /* MenuEnabledNavigationViewController.swift in Sources */,
 				A130FD571C01116A00B40829 /* HexColor.swift in Sources */,
