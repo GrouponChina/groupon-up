@@ -63,8 +63,7 @@ extension DealDetailsViewController {
         label.adjustsFontSizeToFitWidth = true
         return label
     }
-    
-    
+
     func updateToolbarAndUpStatus() {
         switch self.selectedDeal.upStatus {
         case .None:
@@ -185,7 +184,9 @@ extension DealDetailsViewController {
     }
 
     func createUp() {
-        debugPrint("implement me: create an Up for dealId \(selectedDeal.uuid)")
+        let upView = UPViewController()
+        upView.dealId = self.selectedDeal.uuid
+        navigationController?.pushViewController(upView, animated: true)
     }
     
     func updateUp() {
