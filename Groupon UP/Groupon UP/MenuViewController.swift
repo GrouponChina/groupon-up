@@ -33,7 +33,7 @@ class MenuViewController: BaseViewController {
     
     override func initializeUI() {
         if let hamburgerVC = (navigationController ?? self).parentViewController as? HamburgerViewController where viewControllers.count > 0 {
-            hamburgerVC.centerViewController = viewControllers[0]
+            hamburgerVC.centerViewController = viewControllers[1]
         }
         automaticallyAdjustsScrollViewInsets = false
     }
