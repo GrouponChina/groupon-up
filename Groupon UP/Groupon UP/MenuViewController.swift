@@ -53,6 +53,9 @@ extension MenuViewController: UITableViewDataSource {
         } else {
             cell = UITableViewCell(style: .Default, reuseIdentifier: reuseId)
         }
+        cell.layoutMargins = UIEdgeInsetsZero
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsetsZero
         switch indexPath.row {
         case 0:
             // Profile cell
