@@ -98,7 +98,7 @@ class DealDetailsBaseViewController: BaseViewController {
         }
         
         dealStatusView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dealInfo.snp_bottom)
+            make.top.equalTo(dealInfo.snp_bottom).offset(6)
             make.left.equalTo(contentView)
             make.right.equalTo(contentView)
             make.bottom.equalTo(contentView)
