@@ -12,7 +12,7 @@ import SnapKit
 
 class DealDetailsViewController: DealDetailsBaseViewController {
     var messages = [(PFUser, String)]()
-    var buyItNow = false
+    var buyItNow = ""
 
     private var _dateFormater: NSDateFormatter!
 
@@ -75,8 +75,10 @@ extension DealDetailsViewController {
     }
 
     func updateToolbarAndUpStatus() {
-        if buyItNow {
+        if buyItNow == "buy" {
             self.toolbarForBuy()
+        } else if buyItNow == "accept" {
+            self.toolbarForAccept()
         } else {
             switch self.selectedDeal.upStatus {
             case .None:
@@ -103,6 +105,22 @@ extension DealDetailsViewController {
         let createButton = buttonWith(title: "Buy!", target: self, action: "onBuyButton")
         bar.addSubview(createButton)
 
+        createButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+    }
+
+    func toolbarForAccept() {
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let createButton = buttonWith(title: "Accept", target: self, action: "onAcceptButton")
+        bar.addSubview(createButton)
+        
         createButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)
@@ -245,12 +263,27 @@ extension DealDetailsViewController {
         order.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
-                self.buyItNow = false
+                self.buyItNow = ""
                 self.refreshUI()
             } else {
                 print("[ERROR] Unable to submit the order: \(error)")
             }
         }
+    }
+
+    func onAcceptButton() {
+//        let order = PFObject(className:"Order")
+//        order["userID"] = PFUser.currentUser()?.objectId
+//        order["dealID"] = self.selectedDeal.uuid
+//        order.saveInBackgroundWithBlock {
+//            (success: Bool, error: NSError?) -> Void in
+//            if (success) {
+//                self.buyItNow = ""
+//                self.refreshUI()
+//            } else {
+//                print("[ERROR] Unable to submit the order: \(error)")
+//            }
+//        }
     }
 
     func createUp() {
