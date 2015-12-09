@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import AlamofireImage
 
 class UpListTableViewCell: UITableViewCell {
     private var _dealImage: UIImageView!
@@ -77,7 +78,16 @@ class UpListTableViewCell: UITableViewCell {
     }
     
     func setDeal(deal: Deal) {
-        dealImage.af_setImageWithURL(NSURL(string: deal.dealImages.sidebarImageUrl)!)
+        let size = CGSize(width: 80, height: 100)
+        let filter = AspectScaledToFillSizeWithRoundedCornersFilter(
+            size: size,
+            radius: 0.0
+        )
+        dealImage.af_setImageWithURL(
+            NSURL(string: deal.dealImages.sidebarImageUrl)!,
+            filter: filter
+        )
+        
         dealNameLabel.text = deal.title
         
         upStatusLabel.text = deal.shortAnnouncementTitle
@@ -87,19 +97,31 @@ class UpListTableViewCell: UITableViewCell {
     
     
     func setUpInfo(up: UpInvitation, upType: UpType) {
+        let size = CGSize(width: 80, height: 100)
+        let filter = AspectScaledToFillSizeWithRoundedCornersFilter(
+            size: size,
+            radius: 0.0
+        )
+        
         if up.associatedDeal == nil {
             DealClient.getDealByDealId(up.dealId) { (deal: Deal?, _) in
                 if let deal = deal {
                     up.associatedDeal = deal
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.dealImage.af_setImageWithURL(NSURL(string: up.associatedDeal!.dealImages.sidebarImageUrl)!)
+                        self.dealImage.af_setImageWithURL(
+                            NSURL(string: up.associatedDeal!.dealImages.sidebarImageUrl)!,
+                            filter: filter
+                        )
                         self.dealNameLabel.text = up.associatedDeal!.title
                     }
                 }
             }
         }
         else {
-            dealImage.af_setImageWithURL(NSURL(string: up.associatedDeal!.dealImages.sidebarImageUrl)!)
+            dealImage.af_setImageWithURL(
+                NSURL(string: up.associatedDeal!.dealImages.sidebarImageUrl)!,
+                filter: filter
+            )
             dealNameLabel.text = up.associatedDeal!.title
         }
         

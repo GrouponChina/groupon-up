@@ -36,6 +36,7 @@
 		EC44DA981C014FED003CD93C /* DealDetailsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */; };
 		EC6BE4411C16988500C2361C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6BE4401C16988500C2361C /* BrowseViewController.swift */; };
 		EC6BE4431C169A0800C2361C /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6BE4421C169A0800C2361C /* Order.swift */; };
+		EC6BE4451C17B08500C2361C /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6BE4441C17B08500C2361C /* Image.swift */; };
 		ECE05C981C13C1E900A1778A /* UpListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE05C971C13C1E900A1778A /* UpListTableViewCell.swift */; };
 		ECE05C9A1C13C39000A1778A /* UpListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE05C991C13C39000A1778A /* UpListConstants.swift */; };
 /* End PBXBuildFile section */
@@ -74,6 +75,7 @@
 		EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsConstants.swift; sourceTree = "<group>"; };
 		EC6BE4401C16988500C2361C /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		EC6BE4421C169A0800C2361C /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		EC6BE4441C17B08500C2361C /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		ECE05C971C13C1E900A1778A /* UpListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpListTableViewCell.swift; sourceTree = "<group>"; };
 		ECE05C991C13C39000A1778A /* UpListConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpListConstants.swift; sourceTree = "<group>"; };
 		EF5DE927F9472D92EC326EC8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				EC44DA921C0137D2003CD93C /* DealClient.swift */,
 				8B4DB5B01C167B1C00BCE408 /* UserClient.swift */,
+				EC6BE4441C17B08500C2361C /* Image.swift */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				A130FD551C01113100B40829 /* UPConstants.swift in Sources */,
 				A130FD6D1C011D7800B40829 /* DealTableViewCell.swift in Sources */,
 				A130FD701C011DAF00B40829 /* UPListViewController.swift in Sources */,
+				EC6BE4451C17B08500C2361C /* Image.swift in Sources */,
 				8B7628201C169FB70091E7FB /* ChatMessageTableViewCell.swift in Sources */,
 				49EFA4441C005B7A00D04B7D /* AppDelegate.swift in Sources */,
 				ECE05C981C13C1E900A1778A /* UpListTableViewCell.swift in Sources */,
