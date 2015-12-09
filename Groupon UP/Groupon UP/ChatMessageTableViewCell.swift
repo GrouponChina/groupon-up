@@ -53,13 +53,18 @@ class ChatMessageTableViewCell: UITableViewCell {
         }
 
         messageLabel.snp_remakeConstraints { (make) -> Void in
-            make.top.equalTo(usernameLabel.snp_bottom).offset(UPSpanSize)
+            make.top.equalTo(usernameLabel.snp_bottom).offset(8)
             if leftAlign {
                 make.left.equalTo(usernameLabel)
+                make.right.equalTo(self).offset(-8)
             } else {
+                make.left.equalTo(self).offset(-8)
                 make.right.equalTo(usernameLabel)
             }
         }
+        layoutMargins = UIEdgeInsetsZero
+        preservesSuperviewLayoutMargins = false
+        separatorInset = UIEdgeInsetsZero
     }
 
     func initializeWith(user user: PFUser, message: String) {
@@ -76,7 +81,8 @@ extension ChatMessageTableViewCell {
     var messageLabel: UILabel! {
         if _messageLabel == nil {
             let v = UILabel()
-            v.font = UIFont(name: "Avenir", size: 15)
+            v.font = UIFont(name: "Avenir", size: 14)
+            v.numberOfLines = 2
             _messageLabel = v
         }
         return _messageLabel
