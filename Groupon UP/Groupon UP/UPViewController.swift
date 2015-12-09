@@ -141,48 +141,6 @@ extension UPViewController {
     }
 }
 
-//extension UPViewController: UITableViewDataSource, UITableViewDelegate {
-//    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.rsvpUsers.count
-//    }
-//    
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let reuseId = "RSVPUserCell"
-//        let cell: RSVPUserCell
-//        if let reuseCell = tableView.dequeueReusableCellWithIdentifier(reuseId) as? RSVPUserCell {
-//            cell = reuseCell
-//        }
-//        else {
-//            cell = RSVPUserCell(style: .Subtitle, reuseIdentifier: reuseId)
-//        }
-//
-//        let rsvpUser = self.rsvpUsers[indexPath.row]
-//        cell.setUser(rsvpUser)
-//
-//        return cell
-//    }
-//    
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-////        let dealDetailView = DealDetailsViewController()
-////        dealDetailView.selectedDeal = self.rsvpUsers[indexPath.row]
-////        navigationController?.pushViewController(dealDetailView, animated: true)
-//    }
-//}
-
-//extension UPViewController {
-//    var rsvpTableView: UITableView {
-//        if _rsvpTableView == nil {
-//            _rsvpTableView = UITableView()
-//            _rsvpTableView.delegate = self
-//            _rsvpTableView.dataSource = self
-//            _rsvpTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-//            _rsvpTableView.estimatedRowHeight = 100
-//            _rsvpTableView.rowHeight = UITableViewAutomaticDimension
-//        }
-//        return _rsvpTableView
-//    }
-//}
-
 extension UPViewController {
     var upContentView: UIView {
         if _upContentView == nil {
@@ -201,14 +159,6 @@ extension UPViewController {
 
         return _datePickerView
     }
-
-//    var rsvpTableView: UITableView {
-//        if _rsvpTableView == nil {
-//            _rsvpTableView = UITableView()
-//        }
-//
-//        return _rsvpTableView
-//    }
 }
 
 extension UPViewController {
@@ -267,16 +217,6 @@ extension UPViewController {
         return _grouponUPDate
     }
 
-//    var rsvpTableViewLabel: UILabel {
-//        if _rsvpTableViewLabel == nil {
-//            let v = UILabel()
-//            v.text = "Who's UP"
-//            _rsvpTableViewLabel = v
-//        }
-//
-//        return _rsvpTableViewLabel
-//    }
-
     var bottomToolbar: UIView! {
         if _bottomToolbar == nil {
             _bottomToolbar = getBottomToolbar()
@@ -313,7 +253,7 @@ extension UPViewController {
     }
 
     func onDeleteButton() {
-        self.deal.up?.object.deleteInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+        self.deal.up?.deleteInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if (success) {
                 self.deal.up = nil
                 self.navigationController?.popViewControllerAnimated(true)
@@ -325,22 +265,23 @@ extension UPViewController {
 
     func saveUP() {
         if self.deal.up != nil {
-            self.deal.up!.object["message"] = self.message.text
-            self.deal.up!.object["grouponUPDate"] = self.datePickerView.date
+            self.deal.up!.message = self.message.text
+            self.deal.up!.date = self.datePickerView.date
         } else {
-            if let currentUserId = PFUser.currentUser()?.objectId {
-                self.deal.up = UpInvitation(up: PFObject(className: "GrouponUP", dictionary: [
+            if let currentUser = PFUser.currentUser() {
+                self.deal.up = UpInvitation(className: "UpInvitation", dictionary: [
                     "message": self.message.text,
-                    "grouponUPDate": self.datePickerView.date,
+                    "date": self.datePickerView.date,
                     "dealId": self.deal.uuid,
                     "openEnroll": true,
-                    "createdBy": currentUserId
-                    ]))
+                    "createdBy": currentUser,
+                    "rsvps": [currentUser]
+                    ])
             }
         }
 
         print("Saving object...")
-        self.deal.up!.object.saveInBackgroundWithBlock {
+        self.deal.up!.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
                 print("Groupon UP saved!")

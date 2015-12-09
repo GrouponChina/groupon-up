@@ -14,6 +14,7 @@
 		873D032E804B1DEBF7CC3259 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09D1EC767C220A220FC989D6 /* Pods.framework */; };
 		8B4DB5B11C167B1C00BCE408 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4DB5B01C167B1C00BCE408 /* UserClient.swift */; };
 		8B7628201C169FB70091E7FB /* ChatMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B76281F1C169FB70091E7FB /* ChatMessageTableViewCell.swift */; };
+		A1243BDD1C17E3E000752B7F /* ChatLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1243BDC1C17E3E000752B7F /* ChatLog.swift */; };
 		A130FD551C01113100B40829 /* UPConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD541C01113100B40829 /* UPConstants.swift */; };
 		A130FD571C01116A00B40829 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD561C01116A00B40829 /* HexColor.swift */; };
 		A130FD591C01124B00B40829 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130FD581C01124B00B40829 /* BaseViewController.swift */; };
@@ -51,6 +52,7 @@
 		49EFA44F1C005B7A00D04B7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B4DB5B01C167B1C00BCE408 /* UserClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		8B76281F1C169FB70091E7FB /* ChatMessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageTableViewCell.swift; sourceTree = "<group>"; };
+		A1243BDC1C17E3E000752B7F /* ChatLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLog.swift; sourceTree = "<group>"; };
 		A130FD541C01113100B40829 /* UPConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPConstants.swift; sourceTree = "<group>"; };
 		A130FD561C01116A00B40829 /* HexColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
 		A130FD581C01124B00B40829 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				EC44DA951C01380A003CD93C /* Deal.swift */,
 				A1393F931C0D692900073B3B /* UpInvitation.swift */,
 				EC6BE4421C169A0800C2361C /* Order.swift */,
+				A1243BDC1C17E3E000752B7F /* ChatLog.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				49EFA4461C005B7A00D04B7D /* InitialViewController.swift in Sources */,
 				A130FD761C0125A400B40829 /* LoginViewController.swift in Sources */,
 				EC6BE4411C16988500C2361C /* BrowseViewController.swift in Sources */,
+				A1243BDD1C17E3E000752B7F /* ChatLog.swift in Sources */,
 				A1393F941C0D692900073B3B /* UpInvitation.swift in Sources */,
 				A130FD721C011DB600B40829 /* UPViewController.swift in Sources */,
 				A130FD691C011D3800B40829 /* DealDetailsViewController.swift in Sources */,

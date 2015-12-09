@@ -131,17 +131,21 @@ extension UPListViewController {
     }
     
     func loadInvitingUps() {
-        UpInvitation.findAllUpInvitationsCreatedByUser(PFUser.currentUser()!.objectId!) { (upInvitations: [UpInvitation], _) in
-            self.invitingUps = upInvitations
-            self.tableView.reloadData()
+        UpInvitation.fetchUpInvitationFor(user: PFUser.currentUser()!) { (upInvitations, _) in
+            if let upInvitations = upInvitations {
+                self.invitingUps = upInvitations
+                self.tableView.reloadData()
+            }
             self.refreshController.endRefreshing()
         }
     }
     
     func loadInvitedUps() {
-        UpRSVP.findAllUpRsvpReceivedByUser(PFUser.currentUser()!.objectId!){ (upInvitations: [UpInvitation], _) in
-            self.invitedUps = upInvitations
-            self.tableView.reloadData()
+        UpInvitation.fetchUpInvitationRSVPedBy(user: PFUser.currentUser()!){ (upInvitations, _) in
+            if let upInvitations = upInvitations {
+                self.invitedUps = upInvitations
+                self.tableView.reloadData()
+            }
             self.refreshController.endRefreshing()
         }
     }
