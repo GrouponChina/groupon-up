@@ -275,7 +275,7 @@ extension UPViewController {
                     "dealId": self.deal.uuid,
                     "openEnroll": true,
                     "createdBy": currentUser,
-                    "rsvps": [currentUser]
+                    "rsvps": []
                     ])
             }
         }
