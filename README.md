@@ -14,59 +14,60 @@ Life is so good with Groupon, isn't it?
 
 ### Hamburger menu
 - [ ] Dragging anywhere in the view should reveal the menu.
-- [ ] The menu should include links to Home page, Profile page, and My orders page.
+- [x] The menu should include links to Home page, Profile page, and My orders page.
 
-### Groupon UP instruction page
+### Groupon UP instruction page (optional)
 - [ ] Provide a basic walkthrough of Groupon UP feature
 - [ ] Return to the deal page at the end of the walkthrough
 
 ### Groupon UP creation page
-- [ ] A brief order information should be displayed on this page.
-- [ ] User should be able to enter some descriptions for the Groupon UP campaign.
-- [ ] User should be able to specify the date time and location of the Groupon UP campaign.
-- [ ] There should be a Groupon UP button to create the campaign and send out notification to the other users.
+- [x] A brief order information should be displayed on this page.
+- [x] User should be able to enter some descriptions for the Groupon UP campaign.
+- [x] User should be able to specify the date time and location of the Groupon UP campaign.
+- [x] There should be a Groupon UP button to create the campaign and send out notification to the other users.
 
-### Push notification
+### Push notification (optional)
 - [ ] User should receive a push notification if there's a matched Groupon UP campaign being created.
 - [ ] Original requester should be able to see a push notification whenever someone joined the Groupon UP campaign.
 - [ ] Click on the Groupon campaign should bring up the Groupon UP campaign details page.
 
 ### Groupon UP campaign details page
-- [ ] Display the details of the Groupon UP (e.g. who is also up for this Groupon, when everyone should show up at the Groupon location, etc).
-- [ ] User should be able to accept / reject the Groupon UP request.
+- [x] Display the details of the Groupon UP (e.g. who is also up for this Groupon, when everyone should show up at the Groupon location, etc).
+- [x] User should be able to accept / reject the Groupon UP request.
 - [ ] User should be able to edit the response once he accepted / rejected the Groupon UP request.
-- [ ] Click on the accept button should bring up the checkout page.
+- [ ] Click on the accept button should bring up the checkout page. (optional)
+
 Optional:
-- [ ] User should be able to chat with the user in this group by tapping a Chat button.
+- [x] User should be able to chat with the user in this group by tapping a Chat button.
 
 ### User Sessions page
-- [ ] User should be able to sign in with (fake) Groupon account. (via Parse)
+- [x] User should be able to sign in with (fake) Groupon account. (via Parse)
 Optional:
-- [ ] User should be able to register (fake) Groupon account. (via Parse)
+- [x] User should be able to register (fake) Groupon account. (via Parse)
 
 ### My Orders page
-- [ ] We will implement user order via Parse.
-- [ ] User should be able to see a list of orders in My Orders page.
-- [ ] Click an order should bring up the order details page.
+- [x] We will implement user order via Parse.
+- [x] User should be able to see a list of orders in My Orders page.
+- [x] Click an order should bring up the order details page.
 
 ### Order Details page
-- [ ] User should be able to see order details (e.g. title, image, purchase date, amount paid etc).
-- [ ] User should be able to see brief Groupon UP status (e.g. who is also up for this Groupon, when everyone should show up at the Groupon location, etc).
+- [x] User should be able to see order details (e.g. title, image, purchase date, amount paid etc).
+- [x] User should be able to see brief Groupon UP status (e.g. who is also up for this Groupon, when everyone should show up at the Groupon location, etc).
 - [ ] Tap on a user thumbnail in Groupon UP will bring up user profile.
 Optional:
-- [ ] User should be able to send Group messages to the Groupon UP group.
+- [x] User should be able to send Group messages to the Groupon UP group.
 
 ### User Profile page
-- [ ] Contains the user header view.
-- [ ] Contains a section with the users basic stats: name, gender, profile image, location / division.
+- [x] Contains the user header view.
+- [x] Contains a section with the users basic stats: name, gender, profile image, location / division.
 
 ### Home page (Optional)
-- [ ] User should be able to browse Groupon deals.
+- [x] User should be able to browse Groupon deals.
 - [ ] User should be able to perform search on the page.
 
 ### Deal page (Optional)
-- [ ] User should be able to view the details of Groupon deals.
-- [ ] There should be a buy button on the page
+- [x] User should be able to view the details of Groupon deals.
+- [x] There should be a buy button on the page
 - [ ] There should be a Groupon UP button on the page, click on the button will bring Groupon UP instruction page
 
 ### Checkout page (Optional)
@@ -78,14 +79,14 @@ Optional:
 - [ ] User should have the option of creating a Groupon UP campaign (maybe we need to create a separate view for this?)
 
 ### Optional:
-- [ ] User should be able to see a list of the last 5 or 10 Groupon UP request (use local storage maybe?)
-- [ ] Instant chat for users in the same Groupon UP group.
+- [x] User should be able to see a list of the last 5 or 10 Groupon UP request (use local storage maybe?)
+- [x] Instant chat for users in the same Groupon UP group.
 - [ ] Google Map to show user locations in the same Groupon UP group.
 - [ ] When creating Groupon UP, user can choose to notify people nearby or people who has viewed the same deal.
 
 
 ### Video Walkthrough
-![Video Walkthrough](https://github.com/buy/groupon-up/blob/master/Demo/groupon_up_demo.gif?raw=true)
+![Video Walkthrough](https://github.com/buy/groupon-up/blob/master/Demo/groupon-up-final-demo.gif?raw=true)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/)
 

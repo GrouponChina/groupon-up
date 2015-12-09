@@ -12,7 +12,7 @@ import SnapKit
 
 class DealDetailsViewController: DealDetailsBaseViewController {
     var messages = [(PFUser, String)]()
-    var buyItNow = false
+    var buyItNow = ""
 
     private var _dateFormater: NSDateFormatter!
 
@@ -75,7 +75,7 @@ extension DealDetailsViewController {
     }
 
     func updateToolbarAndUpStatus() {
-        if buyItNow {
+        if buyItNow == "buy" {
             self.toolbarForBuy()
         } else {
             if let up = selectedDeal.up where up.createdBy != PFUser.currentUser() {
@@ -299,8 +299,34 @@ extension DealDetailsViewController {
         order.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
-                self.buyItNow = false
+                self.buyItNow = ""
                 self.refreshUI()
+            } else {
+                print("[ERROR] Unable to submit the order: \(error)")
+            }
+        }
+    }
+
+    func onAcceptButton() {
+        let order = PFObject(className:"Order")
+        order["userID"] = PFUser.currentUser()?.objectId
+        order["dealID"] = self.selectedDeal.uuid
+        order.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                if let currentUser = PFUser.currentUser() {
+                    self.grouponUP.rsvps.append(currentUser)
+                    self.grouponUP.saveInBackgroundWithBlock {
+                        (success: Bool, error: NSError?) -> Void in
+                        if (success) {
+                            print("[API-SUCCESS] Groupon UP created")
+                            self.buyItNow = ""
+                            self.refreshUI()
+                        } else {
+                            print("[ERROR] Unable to create Groupon UP: \(error)")
+                        }
+                    }
+                }
             } else {
                 print("[ERROR] Unable to submit the order: \(error)")
             }

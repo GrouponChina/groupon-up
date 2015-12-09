@@ -73,7 +73,7 @@ extension BrowseViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let dealDetailView = DealDetailsViewController()
         dealDetailView.selectedDeal = deals[indexPath.row]
-        dealDetailView.buyItNow = true
+        dealDetailView.buyItNow = "buy"
         navigationController?.pushViewController(dealDetailView, animated: true)
     }
 }
