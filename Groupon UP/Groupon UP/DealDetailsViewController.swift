@@ -13,7 +13,6 @@ import SnapKit
 class DealDetailsViewController: DealDetailsBaseViewController {
     var messages = [(PFUser, String)]()
     var buyItNow = ""
-    var grouponUP = UpInvitation()
 
     private var _dateFormater: NSDateFormatter!
 
@@ -78,9 +77,6 @@ extension DealDetailsViewController {
     func updateToolbarAndUpStatus() {
         if buyItNow == "buy" {
             self.toolbarForBuy()
-        } else if buyItNow == "accept" {
-            self.toolbarForAccept()
-            self.showChat()
         } else {
             if let up = selectedDeal.up where up.createdBy != PFUser.currentUser() {
                 self.toolbarForRSVP()
@@ -112,22 +108,6 @@ extension DealDetailsViewController {
         let createButton = buttonWith(title: "Buy!", target: self, action: "onBuyButton")
         bar.addSubview(createButton)
 
-        createButton.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(bar).offset(UPSpanSize)
-            make.bottom.equalTo(bar).offset(-UPSpanSize)
-            make.left.equalTo(bar).offset(UPSpanSize)
-            make.right.equalTo(bar).offset(-UPSpanSize)
-        }
-    }
-
-    func toolbarForAccept() {
-        let bar = bottomToolbar
-        bar.subviews.forEach { (subview) -> () in
-            subview.removeFromSuperview()
-        }
-        let createButton = buttonWith(title: "Accept", target: self, action: "onAcceptButton")
-        bar.addSubview(createButton)
-        
         createButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
             make.bottom.equalTo(bar).offset(-UPSpanSize)

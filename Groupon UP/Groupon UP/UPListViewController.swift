@@ -13,7 +13,6 @@ class UPListViewController: BaseViewController {
     private var _segmentedControl: UISegmentedControl!
     private var _tableView: UITableView!
     private var _refreshController: UIRefreshControl!
-    private var isInvited = false
     
     var selectedSegmentIndex = 0
     var invitingUps: [UpInvitation] = []
@@ -116,9 +115,6 @@ extension UPListViewController: UITableViewDataSource, UITableViewDelegate {
         let dealDetailView = DealDetailsViewController()
         dealDetailView.selectedDeal = grouponUps[indexPath.row].associatedDeal
         dealDetailView.buyItNow = "invited"
-        if self.isInvited {
-            dealDetailView.grouponUP = grouponUps[indexPath.row]
-        }
 
         navigationController?.pushViewController(dealDetailView, animated: true)
     }
@@ -146,8 +142,6 @@ extension UPListViewController {
             }
             self.refreshController.endRefreshing()
         }
-
-        self.isInvited = false
     }
     
     func loadInvitedUps() {
@@ -158,8 +152,6 @@ extension UPListViewController {
             }
             self.refreshController.endRefreshing()
         }
-
-        self.isInvited = true
     }
 }
 
