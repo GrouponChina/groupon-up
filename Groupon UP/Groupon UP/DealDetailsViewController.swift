@@ -48,7 +48,7 @@ class DealDetailsViewController: DealDetailsBaseViewController {
         if let _ = selectedDeal.up {
             self.updateToolbarAndUpStatus()
         } else {
-            selectedDeal.getUpCreatedByUser(PFUser.currentUser()!) {_,_ in
+            selectedDeal.getUpForDeal {_,_ in
                 self.updateToolbarAndUpStatus()
             }
         }
@@ -81,19 +81,24 @@ extension DealDetailsViewController {
         } else if buyItNow == "accept" {
             self.toolbarForAccept()
         } else {
-            switch self.selectedDeal.upStatus {
-            case .None:
-                self.toolbarForNone()
-            case .Active:
-                if selectedDeal.up?.rsvps.count > 0 {
-                    self.toolbarForActive()
-                } else {
-                    self.toolbarForCreated()
+            if let up = selectedDeal.up where up.createdBy != PFUser.currentUser() {
+                self.toolbarForRSVP()
+                self.showChat()
+            } else {
+                switch self.selectedDeal.upStatus {
+                case .None:
+                    self.toolbarForNone()
+                case .Active:
+                    if selectedDeal.up?.rsvps.count > 0 {
+                        self.toolbarForActive()
+                    } else {
+                        self.toolbarForCreated()
+                    }
+                    self.showChat()
+                case .Confirmed, .Redeemed, .Expired:
+                    self.toolbarWithConfirmedUp()
+                    self.showChat()
                 }
-                self.showChat()
-            case .Confirmed, .Redeemed, .Expired:
-                self.toolbarWithConfirmedUp()
-                self.showChat()
             }
         }
     }
@@ -149,6 +154,39 @@ extension DealDetailsViewController {
             make.centerY.equalTo(bar)
             make.left.equalTo(bar).offset(UPSpanSize)
             make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
+        }
+    }
+    
+    func toolbarForRSVP() {
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let chatButton = buttonWith(title: "Chat", target: self, action: "groupChat")
+        let rsvpButton = buttonWith(title: "RSVP", target: self, action: "rsvp:")
+        let tips = descriptionLabel(title: "\(selectedDeal.up!.createdBy.username) created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
+        tips.textAlignment = .Center
+        bar.addSubview(chatButton)
+        bar.addSubview(tips)
+        tips.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+        chatButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+        }
+        if !selectedDeal.up!.rsvps.contains(PFUser.currentUser()!) {
+            bar.addSubview(rsvpButton)
+            rsvpButton.snp_makeConstraints { (make) -> Void in
+                make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
+                make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
+                make.right.equalTo(bar).offset(-UPSpanSize)
+                make.bottom.equalTo(bar).offset(-UPSpanSize)
+            }
         }
     }
     
@@ -351,6 +389,17 @@ extension DealDetailsViewController {
             }
         }))
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func rsvp(sender: UIButton) {
+        sender.enabled = false
+        let me = PFUser.currentUser()!
+        if !selectedDeal.up!.rsvps.contains(me) {
+            selectedDeal.up!.rsvps.append(me)
+            selectedDeal.up!.saveInBackgroundWithBlock({ (success, error) -> Void in
+                self.updateToolbarAndUpStatus()
+            })
+        }
     }
 }
 
