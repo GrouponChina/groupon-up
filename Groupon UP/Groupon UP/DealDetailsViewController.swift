@@ -164,7 +164,7 @@ extension DealDetailsViewController {
         }
         let chatButton = buttonWith(title: "Chat", target: self, action: "groupChat")
         let rsvpButton = buttonWith(title: "RSVP", target: self, action: "rsvp:")
-        let tips = descriptionLabel(title: "\(selectedDeal.up!.createdBy.username) created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
+        let tips = descriptionLabel(title: "\(selectedDeal.up!.createdBy.username!) created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
         tips.textAlignment = .Center
         bar.addSubview(chatButton)
         bar.addSubview(tips)
