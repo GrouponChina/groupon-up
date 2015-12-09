@@ -66,7 +66,7 @@ class Deal {
             expiresAt = "Expires at: " + fullLengthExpiresAt.substringWithRange(dataRange)
         }
         dealImages = DealImages(dealData: dealData)
-        divisionId = dealData["division"]["id"].stringValue
+        divisionId = dealData["division"]["name"].stringValue
     }
     
     static func deals(dealDataArray: JSON) -> [Deal] {

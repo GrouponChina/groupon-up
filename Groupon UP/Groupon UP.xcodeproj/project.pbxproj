@@ -95,6 +95,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		499EF48B1C17D69D00323D9E /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				A130FD6A1C011D6100B40829 /* OrderViewController.swift */,
+			);
+			name = Order;
+			sourceTree = "<group>";
+		};
+		499EF48C1C17D6B400323D9E /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8B76281F1C169FB70091E7FB /* ChatMessageTableViewCell.swift */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
 		49EFA4371C005B7A00D04B7D = {
 			isa = PBXGroup;
 			children = (
@@ -118,8 +134,10 @@
 			isa = PBXGroup;
 			children = (
 				49EFA4431C005B7A00D04B7D /* AppDelegate.swift */,
+				499EF48C1C17D6B400323D9E /* Chat */,
 				EC44DA941C013801003CD93C /* Models */,
 				EC44DA911C0137C4003CD93C /* Lib */,
+				499EF48B1C17D69D00323D9E /* Order */,
 				A130FD6E1C011D9900B40829 /* UP */,
 				A130FD671C011D2000B40829 /* Browse */,
 				A130FD601C0115E100B40829 /* LoginAndProfile */,
@@ -138,6 +156,8 @@
 		A130FD531C01111C00B40829 /* LayoutConstants */ = {
 			isa = PBXGroup;
 			children = (
+				EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */,
+				ECE05C991C13C39000A1778A /* UpListConstants.swift */,
 				A130FD541C01113100B40829 /* UPConstants.swift */,
 			);
 			name = LayoutConstants;
@@ -177,11 +197,8 @@
 			children = (
 				A130FD681C011D3800B40829 /* DealDetailsViewController.swift */,
 				EC6BE4401C16988500C2361C /* BrowseViewController.swift */,
-				A130FD6A1C011D6100B40829 /* OrderViewController.swift */,
 				A130FD6C1C011D7800B40829 /* DealTableViewCell.swift */,
-				EC44DA971C014FED003CD93C /* DealDetailsConstants.swift */,
 				EC25203E1C0B6BF8005CA31A /* DealDetailsBaseViewController.swift */,
-				8B76281F1C169FB70091E7FB /* ChatMessageTableViewCell.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -192,7 +209,6 @@
 				A130FD711C011DB600B40829 /* UPViewController.swift */,
 				A130FD6F1C011DAF00B40829 /* UPListViewController.swift */,
 				ECE05C971C13C1E900A1778A /* UpListTableViewCell.swift */,
-				ECE05C991C13C39000A1778A /* UpListConstants.swift */,
 			);
 			name = UP;
 			sourceTree = "<group>";

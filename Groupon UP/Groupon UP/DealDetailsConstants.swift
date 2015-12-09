@@ -19,10 +19,10 @@ struct UPDealDetailsBase {
     static let titleOffset = 8
     static let subOffset = 4
     
-    static let expiredAtFont = UIFont(name: "Avenir", size: 14)
-    static let expiredAtFontColor = UIColor.grayColor()
+    static let expiredAtFont = UIFont(name: UPFont, size: 14)
+    static let expiredAtFontColor = UPDarkGray
     
-    static let titleFont = UIFont(name: "Avenir-Heavy", size: 15)
+    static let titleFont = UIFont(name: UPFontBold, size: 18)
 }
 
 struct UPDeal {
@@ -38,12 +38,12 @@ struct UPDeal {
     static let subOffset = 4
     static let bottomInfoOffset = 8
     
-    static let titleFont = UIFont(name: "Avenir-Heavy", size: 15)
-    static let otherFont = UIFont(name: "Avenir", size: 14)
-    static let otherFontColor = UIColor.lightGrayColor()
+    static let titleFont = UIFont(name: UPFontBold, size: 15)
+    static let otherFont = UIFont(name: UPFont, size: 14)
+    static let otherFontColor = UPDarkGray
     
-    static let priceFont = UIFont(name: "Avenir-Heavy", size: 16)
-    static let priceFontColor = UIColor(hue:0.25, saturation:1, brightness:0.7, alpha:1)
+    static let priceFont = UIFont(name: UPFontBold, size: 18)
+    static let priceFontColor = UIColor(rgba: "#53a318")
     
     static let backgroundColor = UIColor.whiteColor()
 }

@@ -42,6 +42,8 @@ class UPListViewController: BaseViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UPBackgroundGrayColor
+
         addSubViews()
         addLayout()
     }
@@ -52,25 +54,25 @@ class UPListViewController: BaseViewController {
     }
     
     func addSubViews() {
-        navigationItem.title = "My Groupon UP"
+        navigationItem.title = "MY GROUPON UP"
         view.addSubview(segmentedControl)
         view.addSubview(tableView)
         tableView.addSubview(refreshController)
     }
     
     func addLayout() {
-        view.backgroundColor = UIColor.whiteColor()
         segmentedControl.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(snp_topLayoutGuideBottom).offset(UPDeal.offset)
-            make.left.equalTo(view).offset(UPDeal.offset)
-            make.right.equalTo(view).offset(-UPDeal.offset)
+            make.top.equalTo(snp_topLayoutGuideBottom).offset(-1)
+            make.left.equalTo(view).offset(-UPDeal.offset)
+            make.right.equalTo(view).offset(UPDeal.offset)
             make.height.equalTo(40)
         }
+
         tableView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(segmentedControl.snp_bottom).offset(1)
+            make.top.equalTo(segmentedControl.snp_bottom).offset(0)
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.bottom.equalTo(snp_bottomLayoutGuideTop)
+            make.bottom.equalTo(snp_bottomLayoutGuideTop).offset(-10)
         }
     }
     
@@ -157,9 +159,10 @@ extension UPListViewController {
             let controls = ["Inviting", "Invited"]
             _segmentedControl = UISegmentedControl(items: controls)
             _segmentedControl.selectedSegmentIndex = 0
-            _segmentedControl.layer.borderWidth = 0.5
+            _segmentedControl.layer.borderWidth = 0
             _segmentedControl.layer.borderColor = UPTintColor.CGColor
-            _segmentedControl.tintColor = UpListCell.segmentTintColor
+            _segmentedControl.tintColor = UPBackgroundGrayColor
+            _segmentedControl.backgroundColor = UPTintColor
             _segmentedControl.setTitleTextAttributes([NSFontAttributeName: UpListCell.segmentFont!],
                 forState: UIControlState.Normal)
             _segmentedControl.addTarget(self, action: "didPressSegment:", forControlEvents: .ValueChanged)
@@ -175,6 +178,7 @@ extension UPListViewController {
             _tableView.separatorStyle = UITableViewCellSeparatorStyle.None
             _tableView.estimatedRowHeight = 200
             _tableView.rowHeight = UITableViewAutomaticDimension
+            _tableView.backgroundColor = UIColor.clearColor()
         }
         return _tableView
     }
