@@ -52,13 +52,14 @@ class ChatMessageTableViewCell: UITableViewCell {
             make.top.equalTo(avatarImageView)
         }
 
+        messageLabel.textAlignment = leftAlign ? .Left : .Right
         messageLabel.snp_remakeConstraints { (make) -> Void in
             make.top.equalTo(usernameLabel.snp_bottom).offset(8)
             if leftAlign {
                 make.left.equalTo(usernameLabel)
                 make.right.equalTo(self).offset(-8)
             } else {
-                make.left.equalTo(self).offset(-8)
+                make.left.equalTo(self).offset(8)
                 make.right.equalTo(usernameLabel)
             }
         }
