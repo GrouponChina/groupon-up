@@ -34,7 +34,7 @@ class OrderViewController: UIViewController {
     }
 
     func addLayout() {
-        navigationItem.title = "My Groupons"
+        navigationItem.title = "MY GROUPONS"
         view.backgroundColor = UPBackgroundGrayColor
         tableView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(view)

@@ -77,7 +77,7 @@ class ProfileViewController: BaseViewController {
     }
     
     override func initializeUI() {
-        title = "Profile"
+        title = "PROFILE"
     }
 }
 

@@ -54,7 +54,7 @@ class UPListViewController: BaseViewController {
     }
     
     func addSubViews() {
-        navigationItem.title = "My Groupon UP"
+        navigationItem.title = "MY GROUPON UP"
         view.addSubview(segmentedControl)
         view.addSubview(tableView)
         tableView.addSubview(refreshController)

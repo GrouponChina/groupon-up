@@ -56,16 +56,16 @@ extension MenuViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             // Profile cell
-            cell.textLabel?.text = "My Profile"
+            cell.textLabel?.text = "PROFILE"
         case 1:
             // Browse Deals
-            cell.textLabel?.text = "Browse"
+            cell.textLabel?.text = "DEALS"
         case 2:
             // Home timeline
-            cell.textLabel?.text = "Orders"
+            cell.textLabel?.text = "ORDERS"
         case 3:
             // Home timeline
-            cell.textLabel?.text = "UP invitations"
+            cell.textLabel?.text = "GROUPON UP"
         default:
             break
         }
