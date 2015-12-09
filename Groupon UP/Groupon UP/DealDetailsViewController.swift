@@ -85,7 +85,8 @@ extension DealDetailsViewController {
                 self.toolbarForCreated()
                 self.showChat()
             case .Active:
-                self.toolbarForActive()
+//                self.toolbarForActive()
+                self.toolbarForCreated()
                 self.showChat()
             case .Confirmed, .Redeemed, .Expired:
                 self.toolbarWithConfirmedUp()
