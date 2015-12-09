@@ -58,7 +58,7 @@ class ChatMessageTableViewCell: UITableViewCell {
                 make.left.equalTo(usernameLabel)
                 make.right.equalTo(self).offset(-8)
             } else {
-                make.left.equalTo(self).offset(-8)
+                make.left.equalTo(self).offset(8)
                 make.right.equalTo(usernameLabel)
             }
         }
