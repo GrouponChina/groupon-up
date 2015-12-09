@@ -143,7 +143,7 @@ extension UPListViewController {
     }
     
     func loadInvitedUps() {
-        UpInvitation.fetchUpInvitationRSVPedBy(user: PFUser.currentUser()!){ (upInvitations, _) in
+        UpInvitation.fetchUpInvitationsNotBy(user: PFUser.currentUser()!){ (upInvitations, _) in
             if let upInvitations = upInvitations {
                 self.invitedUps = upInvitations
                 self.tableView.reloadData()
