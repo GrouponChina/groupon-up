@@ -53,27 +53,26 @@ class UpListTableViewCell: UITableViewCell {
         dealNameLabel.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(contentView).offset(4)
             make.left.equalTo(dealImage.snp_right).offset(UpListCell.span)
-            make.right.equalTo(contentView).offset(-8)
+            make.right.equalTo(contentView).offset(-UPDeal.offset)
+        }
+
+        upDatelabel.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(dealNameLabel)
+            make.right.greaterThanOrEqualTo(contentView).offset(-UPDeal.offset)
+            make.bottom.equalTo(contentView).offset(-4)
         }
 
         upStatusLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dealNameLabel.snp_bottom)
             make.left.equalTo(dealNameLabel)
-            make.right.greaterThanOrEqualTo(contentView).offset(-8)
+            make.right.greaterThanOrEqualTo(contentView).offset(-UPDeal.offset)
+            make.bottom.equalTo(upDatelabel.snp_top)
         }
         
-        upDatelabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(upStatusLabel.snp_bottom)
-            make.left.equalTo(dealNameLabel)
-            make.right.greaterThanOrEqualTo(contentView).offset(-8)
-            make.bottom.lessThanOrEqualTo(contentView).offset(-8)
-        }
-        
-        contentView.layer.borderColor = UIColor.blackColor().CGColor
-        contentView.layer.borderWidth = 0.5
-        contentView.layer.cornerRadius = 3
+        contentView.layer.borderColor = UIColor.grayColor().CGColor
+        contentView.layer.borderWidth = 1
+
         contentView.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(self).inset(UIEdgeInsetsMake(10.5, 15, 0.5, CGFloat(15)))
+            make.edges.equalTo(self).inset(UIEdgeInsetsMake(8.0, 8.0, 0.0, 8.0))
         }
     }
     
@@ -152,6 +151,7 @@ extension UpListTableViewCell {
         if _dealImage == nil {
             _dealImage = UIImageView()
         }
+
         return _dealImage
     }
     

@@ -18,7 +18,7 @@ class MenuEnabledNavigationViewController: UINavigationController {
         navigationBar.barTintColor = grouponGreen
         navigationItem.rightBarButtonItem?.tintColor = grouponGreen
         navigationBar.tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Heavy", size: 17)!,  NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 20)!,  NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -31,7 +31,8 @@ class MenuEnabledNavigationViewController: UINavigationController {
     
     var menuBarButton: UIBarButtonItem {
         if _menuBarButton == nil {
-            let v = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: self.navigationController?.parentViewController, action: "toggleLeftView")
+            let v = UIBarButtonItem(image: UIImage(named: "Menu"), style: .Plain, target: self.navigationController?.parentViewController, action: "toggleLeftView")
+
             _menuBarButton = v
         }
 

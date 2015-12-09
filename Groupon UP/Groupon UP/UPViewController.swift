@@ -21,7 +21,7 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
     private var _message: UITextView!
     private var _grouponUPDateLabel: UILabel!
     private var _grouponUPDate: UITextField!
-    private var _rsvpTableViewLabel: UILabel!
+//    private var _rsvpTableViewLabel: UILabel!
     private var _bottomToolbar: UIView!
 
     override func refreshUI() {
@@ -43,7 +43,7 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
         upContentView.addSubview(grouponUPDateLabel)
         upContentView.addSubview(grouponUPDate)
 
-        upContentView.addSubview(rsvpTableViewLabel)
+//        upContentView.addSubview(rsvpTableViewLabel)
 
         view.addSubview(bottomToolbar)
     }
@@ -90,12 +90,12 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
             make.height.equalTo(30)
         }
 
-        rsvpTableViewLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(grouponUPDate.snp_bottom).offset(UPContainerMargin)
-            make.left.equalTo(upContentView.snp_left).offset(UPContainerMargin)
-            make.right.equalTo(upContentView.snp_right).offset(-UPContainerMargin)
-            make.height.equalTo(30)
-        }
+//        rsvpTableViewLabel.snp_makeConstraints { (make) -> Void in
+//            make.top.equalTo(grouponUPDate.snp_bottom).offset(UPContainerMargin)
+//            make.left.equalTo(upContentView.snp_left).offset(UPContainerMargin)
+//            make.right.equalTo(upContentView.snp_right).offset(-UPContainerMargin)
+//            make.height.equalTo(30)
+//        }
     }
 
     func initData() {
@@ -267,15 +267,15 @@ extension UPViewController {
         return _grouponUPDate
     }
 
-    var rsvpTableViewLabel: UILabel {
-        if _rsvpTableViewLabel == nil {
-            let v = UILabel()
-            v.text = "Who's UP"
-            _rsvpTableViewLabel = v
-        }
-
-        return _rsvpTableViewLabel
-    }
+//    var rsvpTableViewLabel: UILabel {
+//        if _rsvpTableViewLabel == nil {
+//            let v = UILabel()
+//            v.text = "Who's UP"
+//            _rsvpTableViewLabel = v
+//        }
+//
+//        return _rsvpTableViewLabel
+//    }
 
     var bottomToolbar: UIView! {
         if _bottomToolbar == nil {

@@ -32,8 +32,8 @@ struct UPDeal {
     static let divisionHeight = 15
     static let valueHeight = divisionHeight
     static let priceHeight = 20
-    
-    static let offset = 0
+
+    static let offset = 8
     static let titleOffset = 8
     static let subOffset = 4
     static let bottomInfoOffset = 8

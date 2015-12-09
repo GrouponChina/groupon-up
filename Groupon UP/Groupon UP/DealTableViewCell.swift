@@ -12,6 +12,7 @@ import SnapKit
 import AlamofireImage
 
 class DealTableViewCell: UITableViewCell {
+    private var _cellContentView: UIView!
     private var _dealImageView: UIImageView!
     private var _dealInfo: UIView!
     private var _dealTitle: UILabel!
@@ -27,8 +28,10 @@ class DealTableViewCell: UITableViewCell {
     }
     
     func addSubviews() {
-        addSubview(dealImageView)
-        addSubview(dealInfo)
+        addSubview(cellContentView)
+
+        cellContentView.addSubview(dealImageView)
+        cellContentView.addSubview(dealInfo)
         
         dealInfo.addSubview(dealTitle)
         dealInfo.addSubview(dealDivision)
@@ -38,10 +41,17 @@ class DealTableViewCell: UITableViewCell {
     }
     
     func addLayout() {
-        dealImageView.snp_makeConstraints { (make) -> Void in
+        cellContentView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(self).offset(UPDeal.offset)
             make.left.equalTo(self).offset(UPDeal.offset)
             make.right.equalTo(self).offset(-UPDeal.offset)
+            make.bottom.equalTo(self).offset(-UPDeal.offset)
+        }
+
+        dealImageView.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(cellContentView)
+            make.left.equalTo(cellContentView)
+            make.right.equalTo(cellContentView)
             make.height.equalTo(UPDeal.imageHeight)
             make.bottom.lessThanOrEqualTo(self).offset(-UPDeal.dealInfoHeight)
         }
@@ -119,11 +129,25 @@ class DealTableViewCell: UITableViewCell {
 
 
 extension DealTableViewCell {
+    var cellContentView: UIView {
+        if _cellContentView == nil {
+            _cellContentView = UIView()
+            _cellContentView.backgroundColor = UIColor.whiteColor()
+
+            _cellContentView.layer.shadowColor = UIColor.grayColor().CGColor
+            _cellContentView.layer.shadowOpacity = 0.5
+            _cellContentView.layer.shadowOffset = CGSizeZero
+            _cellContentView.layer.shadowRadius = 5
+        }
+        return _cellContentView
+    }
+
     var dealImageView: UIImageView {
         if _dealImageView == nil {
             _dealImageView = UIImageView()
             _dealImageView.contentMode = .ScaleToFill
         }
+
         return _dealImageView
     }
     
