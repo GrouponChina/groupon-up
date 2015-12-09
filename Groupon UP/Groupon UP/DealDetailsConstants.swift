@@ -43,7 +43,7 @@ struct UPDeal {
     static let otherFontColor = UIColor.lightGrayColor()
     
     static let priceFont = UIFont(name: "Avenir-Heavy", size: 16)
-    static let priceFontColor = UIColor(hue:0.25, saturation:1, brightness:0.7, alpha:1)
+    static let priceFontColor = UIColor(rgba: "#53a318")
     
     static let backgroundColor = UIColor.whiteColor()
 }

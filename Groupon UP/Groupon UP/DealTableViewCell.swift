@@ -90,7 +90,7 @@ class DealTableViewCell: UITableViewCell {
             make.right.equalTo(dealTitle.snp_right)
         }
         
-        backgroundColor = UPDeal.backgroundColor
+        backgroundColor = UIColor.clearColor()
         selectionStyle = .None
     }
     

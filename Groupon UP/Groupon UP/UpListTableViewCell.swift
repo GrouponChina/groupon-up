@@ -21,7 +21,7 @@ class UpListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
         addLayout()
-        
+
         backgroundColor = UIColor.clearColor()
         selectionStyle = .None
     }
@@ -35,6 +35,7 @@ class UpListTableViewCell: UITableViewCell {
     }
     
     func addSubviews() {
+        self.addSubview(contentView)
         contentView.addSubview(dealImage)
         contentView.addSubview(dealNameLabel)
         contentView.addSubview(upStatusLabel)
@@ -67,12 +68,18 @@ class UpListTableViewCell: UITableViewCell {
             make.right.greaterThanOrEqualTo(contentView).offset(-UPDeal.offset)
             make.bottom.equalTo(upDatelabel.snp_top)
         }
-        
-        contentView.layer.borderColor = UIColor.grayColor().CGColor
-        contentView.layer.borderWidth = 1
+
+        contentView.backgroundColor = UPDeal.backgroundColor
+        contentView.layer.shadowColor = UIColor.grayColor().CGColor
+        contentView.layer.shadowOpacity = 0.3
+        contentView.layer.shadowOffset = CGSizeZero
+        contentView.layer.shadowRadius = 3
 
         contentView.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(self).inset(UIEdgeInsetsMake(8.0, 8.0, 0.0, 8.0))
+            make.top.equalTo(self).offset(10)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+            make.bottom.equalTo(self)
         }
     }
     
@@ -91,7 +98,7 @@ class UpListTableViewCell: UITableViewCell {
         
         upStatusLabel.text = deal.shortAnnouncementTitle
         upDatelabel.text = deal.expiresAt
-        upDatelabel.textColor = UIColor(red:1, green:0.63, blue:0, alpha:1)
+        upDatelabel.textColor = UPUrgencyOrange
     }
     
     
