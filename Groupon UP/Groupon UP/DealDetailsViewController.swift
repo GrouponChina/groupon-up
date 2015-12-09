@@ -80,6 +80,7 @@ extension DealDetailsViewController {
             self.toolbarForBuy()
         } else if buyItNow == "accept" {
             self.toolbarForAccept()
+            self.showChat()
         } else {
             if let up = selectedDeal.up where up.createdBy != PFUser.currentUser() {
                 self.toolbarForRSVP()
