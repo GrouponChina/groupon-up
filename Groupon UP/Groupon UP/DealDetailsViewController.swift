@@ -81,12 +81,12 @@ extension DealDetailsViewController {
             switch self.selectedDeal.upStatus {
             case .None:
                 self.toolbarForNone()
-            case .Created:
-                self.toolbarForCreated()
-                self.showChat()
             case .Active:
-//                self.toolbarForActive()
-                self.toolbarForCreated()
+                if selectedDeal.up?.rsvps.count > 0 {
+                    self.toolbarForActive()
+                } else {
+                    self.toolbarForCreated()
+                }
                 self.showChat()
             case .Confirmed, .Redeemed, .Expired:
                 self.toolbarWithConfirmedUp()
@@ -215,28 +215,26 @@ extension DealDetailsViewController {
     func showUPMessage(callback: () -> Void) {
         messages.removeAll()
         if let up = selectedDeal.up {
-            messages.append((UserCache.getUserForId(up.createdByUserId), up.message))
-            if let _ = up.rsvps {
-                showRSVP()
-                callback()
-            } else {
-                up.fetchEnrolledUsers({ (rsvps, error) -> Void in
-                    if let _ = rsvps {
-                        self.showRSVP()
-                        callback()
-                    }
-                })
-            }
+            messages.append((up.createdBy, up.message))
+            showRSVP(callback)
         }
     }
 
-    func showRSVP() {
-        if let rsvps = selectedDeal.up?.rsvps {
-            rsvps.sort({ (left, right) -> Bool in
-                left.object.createdAt!.timeIntervalSince1970 < right.object.createdAt!.timeIntervalSince1970
-            }).forEach({ (rsvp) -> () in
-                messages.append((UserCache.getUserForId(rsvp.userId), "I'm UP"))
-            })
+    func showRSVP(callback: () -> Void) {
+        selectedDeal.up?.rsvps.forEach({ (rsvp) -> () in
+            messages.append((rsvp, "I'm UP"))
+        })
+        showChatLog(callback)
+    }
+    
+    func showChatLog(callback: () -> Void) {
+        ChatLog.fetchChatFor(invitation: selectedDeal.up!) { (chatLogs, error) -> Void in
+            if let chatLogs = chatLogs {
+                chatLogs.forEach({ (chatLog) -> () in
+                    self.messages.append((chatLog.user, chatLog.message))
+                })
+            }
+            callback()
         }
     }
 
@@ -268,7 +266,7 @@ extension DealDetailsViewController {
     }
     
     func confirmUP() {
-        debugPrint("implement me: set the Up \(selectedDeal.up!.upId)'s open enrollment to false")
+        debugPrint("implement me: set the Up \(selectedDeal.up!.objectId)'s open enrollment to false")
     }
     
     func groupChat() {

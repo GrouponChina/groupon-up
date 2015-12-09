@@ -41,11 +41,7 @@ class Deal {
         if !up.openEnroll {
             return .Confirmed
         }
-        if let rsvps = up.rsvps where !rsvps.isEmpty {
-            return .Active
-        } else {
-            return .Created
-        }
+        return .Active
     }
     
     init() {
@@ -90,7 +86,7 @@ class Deal {
                 callback(nil, error)
             }
             if let up = up {
-                self.up = UpInvitation(up: up)
+                self.up = up as? UpInvitation
             }
             callback(self.up, error)
         }
@@ -125,10 +121,6 @@ class DealImages {
 enum DealUpStatus {
     // Nothing has happened at this state
     case None
-    // Up has been created, no one responded yet. Can cancel
-    // `Cancel` -> None
-    // Other user `Accept` -> Active
-    case Created
     // Up has been created, some user has responded already. Can not cancel
     // `Confirm` -> Confirmed
     case Active
@@ -142,13 +134,4 @@ enum DealUpStatus {
     // Up has been created, users are onboard, enrollment ended, groupon redeemed
     // Final state
     case Redeemed
-    
-    var canCancel: Bool {
-        switch self {
-        case .Created:
-            return true
-        default:
-            return false
-        }
-    }
 }

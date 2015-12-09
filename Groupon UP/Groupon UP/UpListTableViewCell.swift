@@ -138,17 +138,15 @@ class UpListTableViewCell: UITableViewCell {
         
         switch upType {
         case .Inviting:
-            up.fetchEnrolledUsernames { (usernames: [String], error: NSError?) in
-                if usernames.isEmpty {
-                    self.upStatusLabel.text = "Pending"
-                }
-                else {
-                    let acceptedBy = usernames.joinWithSeparator(", ")
-                    self.upStatusLabel.text = "Accepted by " + acceptedBy
-                }
+            let usernames = up.rsvps.map({ return $0.username! })
+            if usernames.isEmpty {
+                self.upStatusLabel.text = "Pending"
+            } else {
+                let acceptedBy = usernames.joinWithSeparator(", ")
+                self.upStatusLabel.text = "Accepted by " + acceptedBy
             }
         case .Invited:
-            upStatusLabel.text = "Created by " + up.createdByUsername
+            upStatusLabel.text = "Created by " + up.createdBy.username!
         }
     }
 }
