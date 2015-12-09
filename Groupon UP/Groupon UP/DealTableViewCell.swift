@@ -46,6 +46,7 @@ class DealTableViewCell: UITableViewCell {
             make.left.equalTo(self).offset(UPDeal.offset)
             make.right.equalTo(self).offset(-UPDeal.offset)
             make.bottom.equalTo(self).offset(-UPDeal.offset)
+            make.height.equalTo(300)
         }
 
         dealImageView.snp_makeConstraints { (make) -> Void in
@@ -69,28 +70,28 @@ class DealTableViewCell: UITableViewCell {
         }
         
         dealDivision.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dealTitle.snp_bottom).offset(UPDeal.subOffset)
+            make.bottom.equalTo(soldQuantityMessage.snp_top).offset(-3)
             make.left.equalTo(dealTitle.snp_left)
             make.height.equalTo(UPDeal.divisionHeight)
         }
         
         value.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dealTitle.snp_bottom).offset(UPDeal.subOffset)
+            make.bottom.equalTo(dealPrice.snp_top)
             make.right.equalTo(dealTitle.snp_right)
             make.height.equalTo(UPDeal.valueHeight)
         }
         
         soldQuantityMessage.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dealDivision.snp_bottom).offset(UPDeal.subOffset)
+            make.bottom.equalTo(cellContentView.snp_bottom).offset(-12)
             make.left.equalTo(dealDivision.snp_left)
         }
         
         dealPrice.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(value.snp_bottom).offset(UPDeal.subOffset)
             make.right.equalTo(dealTitle.snp_right)
+            make.bottom.equalTo(cellContentView.snp_bottom).offset(-UPDeal.offset)
         }
         
-        backgroundColor = UPDeal.backgroundColor
+        backgroundColor = UIColor.clearColor()
         selectionStyle = .None
     }
     

@@ -34,13 +34,13 @@ class OrderViewController: UIViewController {
     }
 
     func addLayout() {
-        navigationItem.title = "My Groupons"
-        view.backgroundColor = UIColor.whiteColor()
+        navigationItem.title = "MY GROUPONS"
+        view.backgroundColor = UPBackgroundGrayColor
         tableView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(view)
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.bottom.equalTo(snp_bottomLayoutGuideTop)
+            make.bottom.equalTo(snp_bottomLayoutGuideTop).offset(-10)
         }
     }
     
@@ -100,6 +100,7 @@ extension OrderViewController {
             _tableView.separatorStyle = UITableViewCellSeparatorStyle.None
             _tableView.estimatedRowHeight = 300
             _tableView.rowHeight = UITableViewAutomaticDimension
+            _tableView.backgroundColor = UIColor.clearColor()
         }
         return _tableView
     }

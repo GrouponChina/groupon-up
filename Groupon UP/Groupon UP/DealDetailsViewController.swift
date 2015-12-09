@@ -61,7 +61,7 @@ extension DealDetailsViewController {
         button.addTarget(target, action: action, forControlEvents: .TouchUpInside)
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         button.backgroundColor = UPTintColor
-//        button.layer.cornerRadius = UPBorderRadius
+
         return button
     }
     
@@ -85,7 +85,8 @@ extension DealDetailsViewController {
                 self.toolbarForCreated()
                 self.showChat()
             case .Active:
-                self.toolbarForActive()
+//                self.toolbarForActive()
+                self.toolbarForCreated()
                 self.showChat()
             case .Confirmed, .Redeemed, .Expired:
                 self.toolbarWithConfirmedUp()
