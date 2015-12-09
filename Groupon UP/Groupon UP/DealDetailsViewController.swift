@@ -156,15 +156,23 @@ extension DealDetailsViewController {
         bar.subviews.forEach { (subview) -> () in
             subview.removeFromSuperview()
         }
+        let chatButton = buttonWith(title: "Chat", target: self, action: "groupChat")
         let updateButton = buttonWith(title: "Update", target: self, action: "updateUp")
         let tips = descriptionLabel(title: "You've created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
         tips.textAlignment = .Center
         bar.addSubview(updateButton)
+        bar.addSubview(chatButton)
         bar.addSubview(tips)
         tips.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
             make.left.equalTo(bar).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+        chatButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
         }
         updateButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
@@ -179,21 +187,29 @@ extension DealDetailsViewController {
         bar.subviews.forEach { (subview) -> () in
             subview.removeFromSuperview()
         }
+        let chatButton = buttonWith(title: "Chat", target: self, action: "groupChat")
         let confirmButton = buttonWith(title: "Let's Rock", target: self, action: "confirmUp")
         let tips = descriptionLabel(title: "You've created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
         tips.textAlignment = .Center
         bar.addSubview(confirmButton)
+        bar.addSubview(chatButton)
         bar.addSubview(tips)
         tips.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(bar).offset(UPSpanSize)
             make.left.equalTo(bar).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
         }
+        chatButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar.snp_centerX).offset(-UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+        }
         confirmButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
-            make.bottom.equalTo(bar).offset(-UPSpanSize)
-            make.left.equalTo(bar).offset(UPSpanSize)
+            make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
             make.right.equalTo(bar).offset(-UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
         }
     }
     
@@ -299,11 +315,30 @@ extension DealDetailsViewController {
     }
     
     func confirmUP() {
-        debugPrint("implement me: set the Up \(selectedDeal.up!.objectId)'s open enrollment to false")
+        selectedDeal.up?.openEnroll = false
+        selectedDeal.up?.saveInBackground()
     }
     
     func groupChat() {
-        debugPrint("implement me: shall we enable group chat function later?")
+        let alertController = UIAlertController(title: "Leave a message", message: nil, preferredStyle: .Alert)
+        alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Your message here..."
+        }
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Send", style: .Default, handler: { (action) in
+            let message = alertController.textFields![0].text!
+            if !message.isEmpty {
+                let newChatLog = ChatLog(className: "Chat", dictionary: [
+                        "user": PFUser.currentUser()!,
+                        "message": message,
+                        "invitation": self.selectedDeal.up!
+                    ])
+                newChatLog.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    self.showChat()
+                })
+            }
+        }))
+        presentViewController(alertController, animated: true, completion: nil)
     }
 }
 
