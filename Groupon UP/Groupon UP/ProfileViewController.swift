@@ -86,8 +86,10 @@ class ProfileViewController: BaseViewController {
             Order.findOrdersByUserId(user.objectId!) { (orders: [Order], error: NSError?) in
                 self.numberOfGroupons.text = orders.count.description
             }
-            UpInvitation.findAllUpInvitationsCreatedByUser(user.objectId!) { (ups: [UpInvitation], error: NSError?) in
-                self.numberOfUps.text = ups.count.description
+            UpInvitation.fetchUpInvitationFor(user: user) { (ups: [UpInvitation]?, error: NSError?) in
+                if let ups = ups {
+                    self.numberOfUps.text = ups.count.description
+                }
             }
         }
         locationLabel.text = "Chicago, IL"
