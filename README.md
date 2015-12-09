@@ -86,7 +86,7 @@ Optional:
 
 
 ### Video Walkthrough
-![Video Walkthrough](https://github.com/buy/groupon-up/blob/master/Demo/groupon-up-final-demo.gif?raw=true)
+![Video Walkthrough](https://github.com/GrouponChina/groupon-up/blob/master/Demo/groupon-up-final-demo.gif?raw=true)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/)
 
