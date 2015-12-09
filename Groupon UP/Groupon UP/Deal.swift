@@ -77,10 +77,9 @@ class Deal {
         return deals
     }
     
-    func getUpCreatedByUser(user: PFUser, callback: (UpInvitation?, NSError?) -> Void) {
+    func getUpForDeal(callback: (UpInvitation?, NSError?) -> Void) {
         let query = UpInvitation.query()!
         query.whereKey("dealId", equalTo: uuid)
-        query.whereKey("createdBy", equalTo: user)
         query.getFirstObjectInBackgroundWithBlock { (up, error) -> Void in
             if let _ = error {
                 callback(nil, error)

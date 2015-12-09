@@ -33,8 +33,13 @@ class UpInvitation: PFObject, PFSubclassing {
     var associatedDeal: Deal?
     
     static func fetchUpInvitationFor(user user: PFUser, callback: ([UpInvitation]?, NSError?) -> Void) {
-        let query = UpInvitation.query()!
-        query.whereKey("createdBy", equalTo: user)
+        let myUpQuery = UpInvitation.query()!
+        myUpQuery.whereKey("createdBy", equalTo: user)
+        let myRSVPQuery = UpInvitation.query()!
+        myRSVPQuery.whereKey("rsvps", equalTo: user)
+        let query = PFQuery.orQueryWithSubqueries([myRSVPQuery, myUpQuery])
+        query.includeKey("rsvps")
+        query.includeKey("createdBy")
         query.findObjectsInBackgroundWithBlock { (upInvitations, error) -> Void in
             if let upInvitations = upInvitations?.map({ $0 as! UpInvitation}) {
                 callback(upInvitations, nil)
@@ -44,10 +49,12 @@ class UpInvitation: PFObject, PFSubclassing {
         }
     }
 
-    static func fetchUpInvitationRSVPedBy(user user: PFUser, callback: ([UpInvitation]?, NSError?) -> Void) {
+    static func fetchUpInvitationsNotBy(user user: PFUser, callback: ([UpInvitation]?, NSError?) -> Void) {
         let query = UpInvitation.query()!
-        query.whereKey("rsvps", equalTo: user)
+        query.whereKey("createdBy", notEqualTo: user)
+        query.whereKey("rsvps", notEqualTo: user)
         query.includeKey("rsvps")
+        query.includeKey("createdBy")
         query.findObjectsInBackgroundWithBlock { (upInvitations, error) -> Void in
             if let upInvitations = upInvitations?.map({ $0 as! UpInvitation}) {
                 callback(upInvitations, nil)
