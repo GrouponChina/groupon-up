@@ -47,7 +47,7 @@ class DealDetailsViewController: DealDetailsBaseViewController {
         if let _ = selectedDeal.up {
             self.updateToolbarAndUpStatus()
         } else {
-            selectedDeal.getUpCreatedByUser(PFUser.currentUser()!.objectId!) {_,_ in
+            selectedDeal.getUpCreatedByUser(PFUser.currentUser()!) {_,_ in
                 self.updateToolbarAndUpStatus()
             }
         }
