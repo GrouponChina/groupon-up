@@ -47,6 +47,7 @@ class UpInvitation: PFObject, PFSubclassing {
     static func fetchUpInvitationRSVPedBy(user user: PFUser, callback: ([UpInvitation]?, NSError?) -> Void) {
         let query = UpInvitation.query()!
         query.whereKey("rsvps", equalTo: user)
+        query.includeKey("rsvps")
         query.findObjectsInBackgroundWithBlock { (upInvitations, error) -> Void in
             if let upInvitations = upInvitations?.map({ $0 as! UpInvitation}) {
                 callback(upInvitations, nil)
