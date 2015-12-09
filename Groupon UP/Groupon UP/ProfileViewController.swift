@@ -18,13 +18,24 @@ class ProfileViewController: BaseViewController {
     private var _locationLabel: UILabel!
     private let profileImageDimension = 100
     private var _locationManager: CLLocationManager!
+    private var _locationIndicator: UIImageView!
+    private var _numberOfGroupons: UILabel!
+    private var _groupons: UILabel!
+    private var _numberOfUps: UILabel!
+    private var _ups: UILabel!
+    
     private lazy var filter = RoundedCornersFilter(radius: 5)
     
     override func addSubviews() {
         navigationItem.rightBarButtonItem = logoutButton
         view.addSubview(userProfile)
         view.addSubview(usernameLabel)
+        view.addSubview(locationIndicator)
         view.addSubview(locationLabel)
+        view.addSubview(numberOfGroupons)
+        view.addSubview(groupons)
+        view.addSubview(numberOfUps)
+        view.addSubview(ups)
     }
     
     override func addLayouts() {
@@ -38,9 +49,31 @@ class ProfileViewController: BaseViewController {
             make.top.equalTo(userProfile.snp_bottom).offset(UPSpanSize)
             make.centerX.equalTo(view)
         }
+        locationIndicator.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(usernameLabel.snp_bottom).offset(UPSpanSize)
+            make.right.equalTo(locationLabel.snp_left)
+            make.height.equalTo(locationLabel.snp_height)
+            make.width.equalTo(locationLabel.snp_height)
+        }
         locationLabel.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(usernameLabel.snp_bottom).offset(UPSpanSize)
             make.centerX.equalTo(view)
+        }
+        numberOfGroupons.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(locationLabel.snp_bottom).offset(30)
+            make.left.equalTo(view).offset(80)
+        }
+        groupons.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(numberOfGroupons.snp_bottom).offset(8)
+            make.centerX.equalTo(numberOfGroupons)
+        }
+        numberOfUps.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(locationLabel.snp_bottom).offset(30)
+            make.right.equalTo(view).offset(-80)
+        }
+        ups.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(numberOfUps.snp_bottom).offset(8)
+            make.centerX.equalTo(numberOfUps)
         }
     }
     
@@ -50,7 +83,14 @@ class ProfileViewController: BaseViewController {
                 userProfile.af_setImageWithURL(UserClient.getAvatarUrlFor(email: email), filter: filter)
             }
             usernameLabel.text = user.username
+            Order.findOrdersByUserId(user.objectId!) { (orders: [Order], error: NSError?) in
+                self.numberOfGroupons.text = orders.count.description
+            }
+            UpInvitation.findAllUpInvitationsCreatedByUser(user.objectId!) { (ups: [UpInvitation], error: NSError?) in
+                self.numberOfUps.text = ups.count.description
+            }
         }
+        locationLabel.text = "Chicago, IL"
         switch CLLocationManager.authorizationStatus() {
             case .AuthorizedWhenInUse, .Authorized:
                 locationManager
@@ -141,6 +181,35 @@ extension ProfileViewController {
         return _usernameLabel
     }
     
+    var numberOfGroupons: UILabel {
+        if _numberOfGroupons == nil {
+            _numberOfGroupons = UILabel()
+            _numberOfGroupons.text = "0"
+        }
+        return _numberOfGroupons
+    }
+    var groupons: UILabel {
+        if _groupons == nil {
+            _groupons = UILabel()
+            _groupons.text = "Groupons"
+        }
+        return _groupons
+    }
+    var numberOfUps: UILabel {
+        if _numberOfUps == nil {
+            _numberOfUps = UILabel()
+            _numberOfUps.text = "0"
+        }
+        return _numberOfUps
+    }
+    var ups: UILabel {
+        if _ups == nil {
+            _ups = UILabel()
+            _ups.text = "UPs"
+        }
+        return _ups
+    }
+    
     var locationLabel: UILabel {
         if _locationLabel == nil {
             let v = UILabel()
@@ -150,6 +219,12 @@ extension ProfileViewController {
         return _locationLabel
     }
     
+    var locationIndicator: UIImageView {
+        if _locationIndicator == nil {
+            _locationIndicator = UIImageView(image: UIImage(named: "map")!)
+        }
+        return _locationIndicator
+    }
     var locationManager: CLLocationManager {
         if _locationManager == nil {
             let manager = CLLocationManager()
