@@ -52,7 +52,7 @@ class UPListViewController: BaseViewController {
     }
     
     func addSubViews() {
-        navigationItem.title = "My Groupon Ups"
+        navigationItem.title = "My Groupon UP"
         view.addSubview(segmentedControl)
         view.addSubview(tableView)
         tableView.addSubview(refreshController)
@@ -61,9 +61,9 @@ class UPListViewController: BaseViewController {
     func addLayout() {
         view.backgroundColor = UIColor.whiteColor()
         segmentedControl.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(snp_topLayoutGuideBottom).offset(2)
-            make.left.equalTo(view).offset(15)
-            make.right.equalTo(view).offset(-15)
+            make.top.equalTo(snp_topLayoutGuideBottom).offset(UPDeal.offset)
+            make.left.equalTo(view).offset(UPDeal.offset)
+            make.right.equalTo(view).offset(-UPDeal.offset)
             make.height.equalTo(40)
         }
         tableView.snp_makeConstraints { (make) -> Void in
@@ -154,8 +154,7 @@ extension UPListViewController {
             _segmentedControl = UISegmentedControl(items: controls)
             _segmentedControl.selectedSegmentIndex = 0
             _segmentedControl.layer.borderWidth = 0.5
-            _segmentedControl.layer.borderColor = UIColor.blackColor().CGColor
-            _segmentedControl.layer.cornerRadius = 3.0
+            _segmentedControl.layer.borderColor = UPTintColor.CGColor
             _segmentedControl.tintColor = UpListCell.segmentTintColor
             _segmentedControl.setTitleTextAttributes([NSFontAttributeName: UpListCell.segmentFont!],
                 forState: UIControlState.Normal)

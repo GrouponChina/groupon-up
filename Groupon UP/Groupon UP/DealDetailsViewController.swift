@@ -61,7 +61,7 @@ extension DealDetailsViewController {
         button.addTarget(target, action: action, forControlEvents: .TouchUpInside)
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         button.backgroundColor = UPTintColor
-        button.layer.cornerRadius = UPBorderRadius
+//        button.layer.cornerRadius = UPBorderRadius
         return button
     }
     

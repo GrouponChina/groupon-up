@@ -32,7 +32,7 @@ class BrowseViewController: UIViewController {
     }
     
     func addLayout() {
-        navigationItem.title = "Deals"
+        navigationItem.title = "GROUPON"
         view.backgroundColor = UIColor.whiteColor()
         tableView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(view)

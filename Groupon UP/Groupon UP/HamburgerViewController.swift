@@ -83,6 +83,7 @@ extension HamburgerViewController {
             self.leftView.layoutIfNeeded()
             self.centerView.layoutIfNeeded()
             self.centerView.removeGestureRecognizer(self.closeMenuGR)
+
             self.centerView.subviews.forEach({ (v) -> () in
                 v.userInteractionEnabled = true
             })
@@ -95,6 +96,7 @@ extension HamburgerViewController {
             self.leftView.layoutIfNeeded()
             self.centerView.layoutIfNeeded()
             self.centerView.addGestureRecognizer(self.closeMenuGR)
+
             self.centerView.subviews.forEach({ (v) -> () in
                 v.userInteractionEnabled = false
             })
@@ -136,6 +138,7 @@ extension HamburgerViewController {
             let v = UIView()
             _leftView = v
         }
+
         return _leftView
     }
     

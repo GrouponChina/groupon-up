@@ -106,7 +106,7 @@ extension MenuViewController {
         }
         return _viewControllers
     }
-    
+
     var userProfileScreen: ProfileViewController {
         if _userProfileScreen == nil {
             let s = ProfileViewController()
