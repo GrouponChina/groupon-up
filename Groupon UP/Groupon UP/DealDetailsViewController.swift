@@ -307,32 +307,6 @@ extension DealDetailsViewController {
         }
     }
 
-    func onAcceptButton() {
-        let order = PFObject(className:"Order")
-        order["userID"] = PFUser.currentUser()?.objectId
-        order["dealID"] = self.selectedDeal.uuid
-        order.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if (success) {
-                if let currentUser = PFUser.currentUser() {
-                    self.grouponUP.rsvps.append(currentUser)
-                    self.grouponUP.saveInBackgroundWithBlock {
-                        (success: Bool, error: NSError?) -> Void in
-                        if (success) {
-                            print("[API-SUCCESS] Groupon UP created")
-                            self.buyItNow = ""
-                            self.refreshUI()
-                        } else {
-                            print("[ERROR] Unable to create Groupon UP: \(error)")
-                        }
-                    }
-                }
-            } else {
-                print("[ERROR] Unable to submit the order: \(error)")
-            }
-        }
-    }
-
     func createUp() {
         let upView = UPViewController()
         upView.deal = self.selectedDeal
