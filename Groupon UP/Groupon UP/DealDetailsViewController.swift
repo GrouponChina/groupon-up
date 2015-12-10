@@ -43,14 +43,7 @@ class DealDetailsViewController: DealDetailsBaseViewController {
 
     override func refreshUI() {
         super.refreshUI()
-
-        if let _ = selectedDeal.up {
-            self.updateToolbarAndUpStatus()
-        } else {
-            selectedDeal.getUpForDeal {_,_ in
-                self.updateToolbarAndUpStatus()
-            }
-        }
+        self.updateToolbarAndUpStatus()
     }
 }
 

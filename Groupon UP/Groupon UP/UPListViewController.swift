@@ -114,6 +114,7 @@ extension UPListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let dealDetailView = DealDetailsViewController()
         dealDetailView.selectedDeal = grouponUps[indexPath.row].associatedDeal
+        dealDetailView.selectedDeal.up = grouponUps[indexPath.row]
         dealDetailView.buyItNow = "invited"
 
         navigationController?.pushViewController(dealDetailView, animated: true)
