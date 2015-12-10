@@ -11,9 +11,10 @@ import Parse
 import SnapKit
 
 class DealDetailsViewController: DealDetailsBaseViewController {
-    var messages = [(PFUser, String)]()
+    var messages = [(PFUser, String, NSDate)]()
     var buyItNow = ""
     var alert: UIAlertView!
+    var timer: NSTimer?
 
     private var _dateFormater: NSDateFormatter!
 
@@ -44,6 +45,16 @@ class DealDetailsViewController: DealDetailsBaseViewController {
 
     override func refreshUI() {
         self.updateToolbarAndUpStatus()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "refreshUI", userInfo: nil, repeats: true)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
     }
 }
 
@@ -275,6 +286,9 @@ extension DealDetailsViewController {
 
     func showChat() {
         showUPMessage { () -> Void in
+            self.messages = self.messages.sort { (left, right) -> Bool in
+                return left.2.timeIntervalSince1970 > right.2.timeIntervalSince1970
+            }
             self.refreshChat()
         }
     }
@@ -295,7 +309,7 @@ extension DealDetailsViewController {
     func showDealDescription() {
         let tableView = self.dealStatusView as! UITableView
         tableView.separatorStyle = .None
-        self.messages = [(PFUser.currentUser()!, selectedDeal.finePrint)]
+        self.messages = [(PFUser.currentUser()!, selectedDeal.finePrint, NSDate())]
         tableView.reloadData()
         tableView.snp_updateConstraints(closure: { (make) -> Void in
             make.height.equalTo(tableView.contentSize.height)
@@ -305,24 +319,28 @@ extension DealDetailsViewController {
     func showUPMessage(callback: () -> Void) {
         messages.removeAll()
         if let up = selectedDeal.up {
-            messages.append((up.createdBy, up.message))
+            messages.append((up.createdBy, up.message, up.createdAt!))
             showRSVP(callback)
         }
     }
 
     func showRSVP(callback: () -> Void) {
-        selectedDeal.up?.rsvps.forEach({ (rsvp) -> () in
-            messages.append((rsvp, "I'm UP"))
+        selectedDeal.up?.fetchInBackgroundWithBlock({ (up, error) -> Void in
+            if let up = up as? UpInvitation {
+                up.rsvps.forEach({ (rsvp) -> () in
+                    self.messages.append((rsvp, "I'm UP", up.date))
+                })
+            }
+            self.showChatLog(callback)
         })
-        showChatLog(callback)
     }
     
     func showChatLog(callback: () -> Void) {
         ChatLog.fetchChatFor(invitation: selectedDeal.up!) { (chatLogs, error) -> Void in
             if let chatLogs = chatLogs {
-                chatLogs.forEach({ (chatLog) -> () in
-                    self.messages.append((chatLog.user, chatLog.message))
-                })
+                chatLogs.forEach { (chatLog) -> () in
+                    self.messages.append((chatLog.user, chatLog.message, chatLog.createdAt!))
+                }
             }
             callback()
         }
@@ -436,7 +454,7 @@ extension DealDetailsViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if buyItNow == "buy" || buyItNow == "success" {
-            let (_, message) = messages[indexPath.row]
+            let (_, message, _) = messages[indexPath.row]
             let cell = UITableViewCell()
             cell.addSubview(dealFinePrint)
             dealFinePrint.snp_makeConstraints { (make)->  Void in
@@ -448,7 +466,7 @@ extension DealDetailsViewController: UITableViewDataSource {
             dealFinePrint.text = message
             return cell
         } else {
-            let (user, message) = messages[indexPath.row]
+            let (user, message, _) = messages[indexPath.row]
             let cell = ChatMessageTableViewCell(style: .Default, reuseIdentifier: nil)
             cell.initializeWith(user: user, message: message)
             return cell
