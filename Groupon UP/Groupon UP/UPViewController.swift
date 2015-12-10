@@ -24,6 +24,8 @@ class UPViewController: BaseViewController, UITextFieldDelegate, UITextViewDeleg
     private var _grouponUPDate: UITextField!
 
     private var _bottomToolbar: UIView!
+    
+    private let defaultInterval = 15
 
     override func refreshUI() {
         super.refreshUI()
@@ -153,6 +155,7 @@ extension UPViewController {
         if _datePickerView == nil {
             _datePickerView = UIDatePicker()
             _datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
+            _datePickerView.minuteInterval = defaultInterval
             _datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
         }
 
@@ -230,6 +233,11 @@ extension UPViewController {
 
             if let currentUp = self.deal.up?.date {
                 datePickerView.setDate(currentUp, animated: false)
+                updateDatePickerViewDate(datePickerView, textField:v)
+            } else {
+                let secondsToAdd = defaultInterval * 60 - Int(NSDate().timeIntervalSince1970) % (defaultInterval * 60)
+                let defaultDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(secondsToAdd + 24 * 3600))
+                datePickerView.setDate(defaultDate, animated: false)
                 updateDatePickerViewDate(datePickerView, textField:v)
             }
 
