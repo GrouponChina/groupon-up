@@ -14,6 +14,7 @@ class DealDetailsViewController: DealDetailsBaseViewController {
     var messages = [(PFUser, String)]()
     var buyItNow = ""
     var alert: UIAlertView!
+    var timer:NSTimer? = nil;
 
     private var _dateFormater: NSDateFormatter!
 
@@ -44,6 +45,14 @@ class DealDetailsViewController: DealDetailsBaseViewController {
 
     override func refreshUI() {
         self.updateToolbarAndUpStatus()
+    }
+
+    func liveChat() {
+        timer = NSTimer.scheduledTimerWithTimeInterval(3,
+            target: self,
+            selector: "scrollToBottom",
+            userInfo: nil,
+            repeats: true)
     }
 }
 
@@ -290,6 +299,7 @@ extension DealDetailsViewController {
         tableView.snp_updateConstraints(closure: { (make) -> Void in
             make.height.equalTo(tableView.contentSize.height)
         })
+        self.scrollToBottom()
     }
     
     func showDealDescription() {
@@ -388,7 +398,7 @@ extension DealDetailsViewController {
                     ])
                 newChatLog.saveInBackgroundWithBlock({ (success, error) -> Void in
                     self.showChat()
-                    self.scrollToBottom()
+                    self.liveChat()
                 })
             }
         default:
@@ -466,7 +476,7 @@ extension DealDetailsViewController: UITableViewDelegate {
 extension DealDetailsViewController {
     func scrollToBottom() {
         UIView.animateWithDuration(0.2, animations: {() -> Void in
-            let bottomOffset: CGPoint = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height + 90)
+            let bottomOffset: CGPoint = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
             self.scrollView.setContentOffset(bottomOffset, animated: true)
             self.view.layoutIfNeeded()
             }, completion: nil)
