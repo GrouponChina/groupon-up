@@ -376,6 +376,16 @@ extension DealDetailsViewController: UITableViewDataSource {
         return messages.count
     }
 
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        if buyItNow == "buy" {
+            return 180.0
+        }
+        else {
+            return 90
+        }
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if buyItNow == "buy" {
             let (_, message) = messages[indexPath.row]

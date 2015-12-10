@@ -37,6 +37,7 @@ class DealDetailsBaseViewController: BaseViewController {
         contentView.addSubview(dealImageView)
         contentView.addSubview(dealInfo)
         dealInfo.addSubview(dealTitle)
+        dealInfo.addSubview(dealPrice)
         dealInfo.addSubview(dealExpireDate)
         contentView.addSubview(dealStatusView)
         
@@ -95,6 +96,10 @@ class DealDetailsBaseViewController: BaseViewController {
             make.left.equalTo(dealInfo).offset(UPDealDetailsBase.titleOffset)
             make.right.equalTo(dealInfo).offset(-UPDealDetailsBase.titleOffset)
         }
+        dealPrice.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(dealTitle.snp_left)
+            make.top.equalTo(dealTitle.snp_bottom).offset(UPDealDetailsBase.subOffset)
+        }
         dealExpireDate.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(dealTitle.snp_bottom).offset(UPDealDetailsBase.subOffset)
             make.right.equalTo(dealTitle.snp_right)
@@ -123,6 +128,7 @@ extension DealDetailsBaseViewController {
         dealImageView.af_setImageWithURL(imageNsUrl)
         dealTitle.text = deal.announcementTitle
         dealExpireDate.text = deal.expiresAt
+        dealPrice.text = deal.price
     }
 }
 
@@ -173,6 +179,15 @@ extension DealDetailsBaseViewController {
             _dealTitle.numberOfLines = 2
         }
         return _dealTitle
+    }
+    
+    var dealPrice: UILabel {
+        if _dealPrice == nil {
+            _dealPrice = UILabel()
+            _dealPrice.font = UPDeal.priceFont
+            _dealPrice.textColor = UPDeal.priceFontColor
+        }
+        return _dealPrice
     }
     
     var dealExpireDate: UILabel {
