@@ -13,6 +13,7 @@ import SnapKit
 class DealDetailsViewController: DealDetailsBaseViewController {
     var messages = [(PFUser, String)]()
     var buyItNow = ""
+    var timer: NSTimer?
     var alert: UIAlertView!
 
     private var _dateFormater: NSDateFormatter!
@@ -44,6 +45,16 @@ class DealDetailsViewController: DealDetailsBaseViewController {
 
     override func refreshUI() {
         self.updateToolbarAndUpStatus()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "showChatAndScrollToBottom", userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
     }
 }
 
@@ -77,7 +88,7 @@ extension DealDetailsViewController {
         } else {
             if let up = selectedDeal.up where up.createdBy != PFUser.currentUser() {
                 self.toolbarForRSVP()
-                self.showChat()
+                self.showChat(nil)
             } else {
                 switch self.selectedDeal.upStatus {
                 case .None:
@@ -85,7 +96,7 @@ extension DealDetailsViewController {
                     self.clearChat()
                 case .Active, .Confirmed, .Redeemed, .Expired:
                     self.toolbarForCreated()
-                    self.showChat()
+                    self.showChat(nil)
                 }
             }
         }
@@ -272,10 +283,18 @@ extension DealDetailsViewController {
             make.right.equalTo(bar).offset(-UPSpanSize)
         }
     }
+    
+    func showChatAndScrollToBottom() {
+        debugPrint("refreshing...")
+        self.showChat({ () -> Void in
+            self.scrollToBottom()
+        })
+    }
 
-    func showChat() {
+    func showChat(callback: (() -> Void)?) {
         showUPMessage { () -> Void in
             self.refreshChat()
+            callback?()
         }
     }
     
@@ -286,7 +305,7 @@ extension DealDetailsViewController {
     
     func refreshChat() {
         let tableView = self.dealStatusView as! UITableView
-        tableView.reloadData()
+        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
         tableView.snp_updateConstraints(closure: { (make) -> Void in
             make.height.equalTo(tableView.contentSize.height)
         })
@@ -387,8 +406,7 @@ extension DealDetailsViewController {
                     "invitation": self.selectedDeal.up!
                     ])
                 newChatLog.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    self.showChat()
-                    self.scrollToBottom()
+                    self.showChatAndScrollToBottom()
                 })
             }
         default:
