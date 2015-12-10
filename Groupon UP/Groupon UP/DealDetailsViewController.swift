@@ -83,16 +83,7 @@ extension DealDetailsViewController {
                 case .None:
                     self.toolbarForNone()
                     self.clearChat()
-                case .Active:
-                    if selectedDeal.up?.rsvps.count > 0 {
-//                        self.toolbarForActive()
-                        self.toolbarForCreated()
-                    } else {
-                        self.toolbarForCreated()
-                    }
-                    self.showChat()
-                case .Confirmed, .Redeemed, .Expired:
-//                    self.toolbarWithConfirmedUp()
+                case .Active, .Confirmed, .Redeemed, .Expired:
                     self.toolbarForCreated()
                     self.showChat()
                 }
@@ -338,7 +329,8 @@ extension DealDetailsViewController {
     }
 
     func onSuccessButton() {
-        print("[INFO] Order placed!")
+        buyItNow = ""
+        refreshUI()
     }
     
     func onBuyButton() {
