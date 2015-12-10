@@ -14,8 +14,7 @@ class MenuEnabledNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let grouponGreen = UIColor(red: 120/255, green: 181/255, blue: 72/255, alpha: 1)
-        navigationBar.barTintColor = grouponGreen
+        navigationBar.barTintColor = UPTintColor
         navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
         navigationBar.tintColor = UIColor.whiteColor()
         navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 20)!,  NSForegroundColorAttributeName: UIColor.whiteColor()]

@@ -40,27 +40,23 @@ class UPListViewController: BaseViewController {
             }
         }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func initializeUI() {
         view.backgroundColor = UPBackgroundGrayColor
-
-        addSubViews()
-        addLayout()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func refreshUI() {
+        refreshController.beginRefreshing()
         initData()
     }
     
-    func addSubViews() {
+    override func addSubviews() {
         navigationItem.title = "MY GROUPON UP"
         view.addSubview(segmentedControl)
         view.addSubview(tableView)
         tableView.addSubview(refreshController)
     }
     
-    func addLayout() {
+    override func addLayouts() {
         segmentedControl.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(snp_topLayoutGuideBottom).offset(-1)
             make.left.equalTo(view).offset(-UPDeal.offset)
@@ -188,16 +184,9 @@ extension UPListViewController {
     var refreshController: UIRefreshControl {
         if _refreshController == nil {
             _refreshController = UIRefreshControl()
-            _refreshController.tintColor = UIColor.whiteColor()
-            _refreshController.addTarget(self, action: "refreshView", forControlEvents: .ValueChanged)
+            _refreshController.tintColor = UPTintColor
+            _refreshController.addTarget(self, action: "refreshUI", forControlEvents: .ValueChanged)
         }
         return _refreshController
-    }
-}
-
-extension UPListViewController {
-    func refreshView() {
-        refreshController.beginRefreshing()
-        initData()
     }
 }
