@@ -65,7 +65,7 @@ extension MenuViewController: UITableViewDataSource {
             cell.textLabel?.text = "DEALS"
         case 2:
             // Home timeline
-            cell.textLabel?.text = "ORDERS"
+            cell.textLabel?.text = "MY GROUPON"
         case 3:
             // Home timeline
             cell.textLabel?.text = "GROUPON UP"

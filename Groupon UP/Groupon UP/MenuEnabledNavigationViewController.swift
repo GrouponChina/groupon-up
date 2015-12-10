@@ -31,7 +31,7 @@ class MenuEnabledNavigationViewController: UINavigationController {
     
     var menuBarButton: UIBarButtonItem {
         if _menuBarButton == nil {
-            let v = UIBarButtonItem(image: UIImage(named: "Menu"), style: .Plain, target: self.navigationController?.parentViewController, action: "toggleLeftView")
+            let v = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: self.navigationController?.parentViewController, action: "toggleLeftView")
             //v.tintColor = UIColor.whiteColor()
             _menuBarButton = v
         }

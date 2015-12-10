@@ -19,9 +19,9 @@ class ProfileViewController: BaseViewController {
     private let profileImageDimension = 100
     private var _locationManager: CLLocationManager!
     private var _locationIndicator: UIImageView!
-    private var _numberOfGroupons: UILabel!
+    private var _numberOfGrouponsButton: UIButton!
     private var _groupons: UILabel!
-    private var _numberOfUps: UILabel!
+    private var _numberOfUpsButton: UIButton!
     private var _ups: UILabel!
     
     private lazy var filter = RoundedCornersFilter(radius: 5)
@@ -32,10 +32,10 @@ class ProfileViewController: BaseViewController {
         view.addSubview(usernameLabel)
         view.addSubview(locationIndicator)
         view.addSubview(locationLabel)
-        view.addSubview(numberOfGroupons)
+        view.addSubview(numberOfGrouponsButton)
         view.addSubview(groupons)
-        view.addSubview(numberOfUps)
-        view.addSubview(ups)
+        view.addSubview(numberOfUpsButton)
+        view.addSubview(upLabel)
     }
     
     override func addLayouts() {
@@ -59,21 +59,21 @@ class ProfileViewController: BaseViewController {
             make.top.equalTo(usernameLabel.snp_bottom).offset(UPSpanSize)
             make.centerX.equalTo(view)
         }
-        numberOfGroupons.snp_makeConstraints { (make) -> Void in
+        numberOfGrouponsButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(locationLabel.snp_bottom).offset(30)
             make.left.equalTo(view).offset(80)
         }
         groupons.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(numberOfGroupons.snp_bottom).offset(8)
-            make.centerX.equalTo(numberOfGroupons)
+            make.top.equalTo(numberOfGrouponsButton.snp_bottom).offset(8)
+            make.centerX.equalTo(numberOfGrouponsButton)
         }
-        numberOfUps.snp_makeConstraints { (make) -> Void in
+        numberOfUpsButton.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(locationLabel.snp_bottom).offset(30)
             make.right.equalTo(view).offset(-80)
         }
-        ups.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(numberOfUps.snp_bottom).offset(8)
-            make.centerX.equalTo(numberOfUps)
+        upLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(numberOfUpsButton.snp_bottom).offset(8)
+            make.centerX.equalTo(numberOfUpsButton)
         }
     }
     
@@ -84,11 +84,13 @@ class ProfileViewController: BaseViewController {
             }
             usernameLabel.text = user.username
             Order.findOrdersByUserId(user.objectId!) { (orders: [Order], error: NSError?) in
-                self.numberOfGroupons.text = orders.count.description
+                self.numberOfGrouponsButton.setTitle(String(orders.count), forState: .Normal)
             }
             UpInvitation.fetchUpInvitationFor(user: user) { (ups: [UpInvitation]?, error: NSError?) in
                 if let ups = ups {
-                    self.numberOfUps.text = ups.count.description
+                    self.numberOfUpsButton.hidden = false
+                    self.upLabel.hidden = false
+                    self.numberOfUpsButton.setTitle(String(ups.count), forState: .Normal)
                 }
             }
         }
@@ -127,6 +129,20 @@ extension ProfileViewController {
     func didPressedLogOutButton() {
         PFUser.logOut()
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func gotoMyGrouponScreen() {
+        if let hamburgerVC = (navigationController ?? self).parentViewController as? HamburgerViewController, menu = (hamburgerVC.leftViewController as? UINavigationController)?.topViewController as? MenuViewController {
+            hamburgerVC.centerViewController = menu.viewControllers[2]
+            hamburgerVC.closeLeftView()
+        }
+    }
+    
+    func gotoUpScreen() {
+        if let hamburgerVC = (navigationController ?? self).parentViewController as? HamburgerViewController, menu = (hamburgerVC.leftViewController as? UINavigationController)?.topViewController as? MenuViewController {
+            hamburgerVC.centerViewController = menu.viewControllers[3]
+            hamburgerVC.closeLeftView()
+        }
     }
     
     private func composeStrings(left: String, right: String) -> NSAttributedString {
@@ -183,12 +199,15 @@ extension ProfileViewController {
         return _usernameLabel
     }
     
-    var numberOfGroupons: UILabel {
-        if _numberOfGroupons == nil {
-            _numberOfGroupons = UILabel()
-            _numberOfGroupons.text = "0"
+    var numberOfGrouponsButton: UIButton {
+        if _numberOfGrouponsButton == nil {
+            _numberOfGrouponsButton = UIButton()
+            _numberOfGrouponsButton.setTitle("0", forState: .Normal)
+            _numberOfGrouponsButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 60)
+            _numberOfGrouponsButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            _numberOfGrouponsButton.addTarget(self, action: "gotoMyGrouponScreen", forControlEvents: .TouchUpInside)
         }
-        return _numberOfGroupons
+        return _numberOfGrouponsButton
     }
     var groupons: UILabel {
         if _groupons == nil {
@@ -197,14 +216,17 @@ extension ProfileViewController {
         }
         return _groupons
     }
-    var numberOfUps: UILabel {
-        if _numberOfUps == nil {
-            _numberOfUps = UILabel()
-            _numberOfUps.text = "0"
+    var numberOfUpsButton: UIButton {
+        if _numberOfUpsButton == nil {
+            _numberOfUpsButton = UIButton(type: .Custom)
+            _numberOfUpsButton.setTitle("0", forState: .Normal)
+            _numberOfUpsButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 60)
+            _numberOfUpsButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            _numberOfUpsButton.addTarget(self, action: "gotoUpScreen", forControlEvents: .TouchUpInside)
         }
-        return _numberOfUps
+        return _numberOfUpsButton
     }
-    var ups: UILabel {
+    var upLabel: UILabel {
         if _ups == nil {
             _ups = UILabel()
             _ups.text = "UPs"
