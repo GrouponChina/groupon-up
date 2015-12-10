@@ -406,7 +406,6 @@ extension DealDetailsViewController {
                     ])
                 newChatLog.saveInBackgroundWithBlock({ (success, error) -> Void in
                     self.showChat()
-                    self.scrollToBottom()
                 })
             }
         default:
