@@ -169,7 +169,6 @@ extension UPListViewController {
             _segmentedControl.setTitleTextAttributes([NSFontAttributeName: UpListCell.segmentFont!],
                 forState: UIControlState.Normal)
             _segmentedControl.addTarget(self, action: "didPressSegment:", forControlEvents: .ValueChanged)
-            
         }
         return _segmentedControl
     }
