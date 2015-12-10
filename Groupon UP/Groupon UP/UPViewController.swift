@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class UPViewController: BaseViewController, UITextFieldDelegate {
+class UPViewController: BaseViewController, UITextFieldDelegate, UITextViewDelegate {
     var deal: Deal!
     var rsvpUsers: [PFUser?] = []
 
@@ -18,10 +18,11 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
     private var _datePickerView: UIDatePicker!
 
     private var _messageLabel: UILabel!
+    private var _placeholderLabel : UILabel!
     private var _message: UITextView!
     private var _grouponUPDateLabel: UILabel!
     private var _grouponUPDate: UITextField!
-//    private var _rsvpTableViewLabel: UILabel!
+
     private var _bottomToolbar: UIView!
 
     override func refreshUI() {
@@ -31,7 +32,7 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
     }
 
     override func initializeUI() {
-        title = "Groupon UP Detail"
+        title = "UP Detail"
         view.backgroundColor = UIColor.whiteColor()
     }
 
@@ -40,10 +41,9 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
 
         upContentView.addSubview(messageLabel)
         upContentView.addSubview(message)
+        upContentView.addSubview(placeholderLabel)
         upContentView.addSubview(grouponUPDateLabel)
         upContentView.addSubview(grouponUPDate)
-
-//        upContentView.addSubview(rsvpTableViewLabel)
 
         view.addSubview(bottomToolbar)
     }
@@ -70,10 +70,16 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
         }
 
         message.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(messageLabel.snp_bottom).offset(UPContainerMargin)
+            make.top.equalTo(messageLabel.snp_bottom).offset(4)
             make.left.equalTo(upContentView).offset(UPContainerMargin)
             make.right.equalTo(upContentView).offset(-UPContainerMargin)
-            make.height.equalTo(120)
+            make.height.equalTo(80)
+        }
+
+        placeholderLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(messageLabel.snp_bottom).offset(4)
+            make.left.equalTo(upContentView).offset(UPContainerMargin)
+            make.right.equalTo(upContentView).offset(-UPContainerMargin)
         }
 
         grouponUPDateLabel.snp_makeConstraints { (make) -> Void in
@@ -84,18 +90,11 @@ class UPViewController: BaseViewController, UITextFieldDelegate {
         }
 
         grouponUPDate.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(grouponUPDateLabel.snp_bottom).offset(8)
+            make.top.equalTo(grouponUPDateLabel.snp_bottom)
             make.left.equalTo(upContentView).offset(UPContainerMargin)
             make.right.equalTo(upContentView).offset(-UPContainerMargin)
             make.height.equalTo(30)
         }
-
-//        rsvpTableViewLabel.snp_makeConstraints { (make) -> Void in
-//            make.top.equalTo(grouponUPDate.snp_bottom).offset(UPContainerMargin)
-//            make.left.equalTo(upContentView.snp_left).offset(UPContainerMargin)
-//            make.right.equalTo(upContentView.snp_right).offset(-UPContainerMargin)
-//            make.height.equalTo(30)
-//        }
     }
 
     func initData() {
@@ -165,20 +164,41 @@ extension UPViewController {
     var messageLabel: UILabel {
         if _messageLabel == nil {
             let v = UILabel()
+            v.textColor = UPDarkGray
             v.text = "What's UP"
+            v.font = UIFont(name: UPFont, size: 14)
+
             _messageLabel = v
         }
 
         return _messageLabel
     }
 
+    var placeholderLabel: UILabel {
+        if _placeholderLabel == nil {
+            let v = UILabel()
+            v.text = "What is it about?"
+            v.font = UIFont(name: UPFont, size: 14)
+            v.sizeToFit()
+            v.frame.origin = CGPointMake(5, 6)
+            v.textColor = UIColor(white: 0, alpha: 0.2)
+            v.hidden = !self.message.text.isEmpty
+
+            _placeholderLabel = v
+        }
+
+        return _placeholderLabel
+    }
+
     var message: UITextView {
         if _message == nil {
             let v = UITextView()
-            v.layer.borderWidth = UPBorderWidth
-            v.layer.borderColor = UIColor.lightGrayColor().CGColor
-            v.layer.cornerRadius = UPBorderRadius
+            v.font = UIFont(name: UPFont, size: 14)
+            v.setContentOffset(CGPointZero, animated: false)
+            v.textContainerInset = UIEdgeInsetsZero
+            v.textContainer.lineFragmentPadding = 0
             v.text = self.deal.up?.message
+            v.delegate = self
 
             _message = v
         }
@@ -190,6 +210,9 @@ extension UPViewController {
         if _grouponUPDateLabel == nil {
             let v = UILabel()
             v.text = "When's UP"
+            v.textColor = UPDarkGray
+            v.font = UIFont(name: UPFont, size: 14)
+
             _grouponUPDateLabel = v
         }
         
@@ -199,9 +222,8 @@ extension UPViewController {
     var grouponUPDate: UITextField {
         if _grouponUPDate == nil {
             let v = UITextField()
-            v.layer.borderWidth = UPBorderWidth
-            v.layer.borderColor = UIColor.lightGrayColor().CGColor
-            v.layer.cornerRadius = UPBorderRadius
+            v.font = UIFont(name: UPFont, size: 14)
+            v.placeholder = "When is it?"
 
             v.delegate = self
             v.addTarget(self, action: "grouponUPDateEditingDidBegin:", forControlEvents: UIControlEvents.EditingDidBegin)
@@ -227,6 +249,10 @@ extension UPViewController {
 
 // MARK: event handlers
 extension UPViewController {
+    func textViewDidChange(textView: UITextView) {
+        placeholderLabel.hidden = !textView.text.isEmpty
+    }
+
     func grouponUPDateEditingDidBegin(sender:UITextField) {
         sender.inputView = datePickerView
 

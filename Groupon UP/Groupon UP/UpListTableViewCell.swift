@@ -50,7 +50,7 @@ class UpListTableViewCell: UITableViewCell {
             make.height.equalTo(100)
             make.bottom.equalTo(contentView)
         }
-        
+
         dealNameLabel.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(contentView).offset(4)
             make.left.equalTo(dealImage.snp_right).offset(UpListCell.span)
@@ -60,7 +60,7 @@ class UpListTableViewCell: UITableViewCell {
         upDatelabel.snp_makeConstraints { (make) -> Void in
             make.left.equalTo(dealNameLabel)
             make.right.greaterThanOrEqualTo(contentView).offset(-UPDeal.offset)
-            make.bottom.equalTo(contentView).offset(-4)
+            make.bottom.equalTo(contentView.snp_bottom).offset(-4)
         }
 
         upStatusLabel.snp_makeConstraints { (make) -> Void in
@@ -71,9 +71,9 @@ class UpListTableViewCell: UITableViewCell {
 
         contentView.backgroundColor = UPDeal.backgroundColor
         contentView.layer.shadowColor = UIColor.grayColor().CGColor
-        contentView.layer.shadowOpacity = 0.3
+        contentView.layer.shadowOpacity = 1
         contentView.layer.shadowOffset = CGSizeZero
-        contentView.layer.shadowRadius = 3
+        contentView.layer.shadowRadius = 1.5
 
         contentView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(self).offset(10)

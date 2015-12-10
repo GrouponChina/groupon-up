@@ -15,7 +15,6 @@ class BaseViewController: UIViewController {
         addSubviews()
         addLayouts()
         initializeUI()
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {

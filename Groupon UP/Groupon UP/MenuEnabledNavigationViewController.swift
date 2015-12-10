@@ -20,7 +20,7 @@ class MenuEnabledNavigationViewController: UINavigationController {
         navigationBar.tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 20)!,  NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 

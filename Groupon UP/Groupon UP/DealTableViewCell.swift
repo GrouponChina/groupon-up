@@ -46,7 +46,7 @@ class DealTableViewCell: UITableViewCell {
             make.left.equalTo(self).offset(UPDeal.offset)
             make.right.equalTo(self).offset(-UPDeal.offset)
             make.bottom.equalTo(self).offset(-UPDeal.offset)
-            make.height.equalTo(300)
+            make.height.equalTo(285)
         }
 
         dealImageView.snp_makeConstraints { (make) -> Void in
@@ -70,7 +70,7 @@ class DealTableViewCell: UITableViewCell {
         }
         
         dealDivision.snp_makeConstraints { (make) -> Void in
-            make.bottom.equalTo(soldQuantityMessage.snp_top).offset(-3)
+            make.bottom.equalTo(soldQuantityMessage.snp_top).offset(-2)
             make.left.equalTo(dealTitle.snp_left)
             make.height.equalTo(UPDeal.divisionHeight)
         }
@@ -136,9 +136,11 @@ extension DealTableViewCell {
             _cellContentView.backgroundColor = UIColor.whiteColor()
 
             _cellContentView.layer.shadowColor = UIColor.grayColor().CGColor
-            _cellContentView.layer.shadowOpacity = 0.5
+            _cellContentView.layer.shadowOpacity = 1
             _cellContentView.layer.shadowOffset = CGSizeZero
-            _cellContentView.layer.shadowRadius = 5
+            _cellContentView.layer.shadowRadius = 2
+
+            _cellContentView.translatesAutoresizingMaskIntoConstraints = true
         }
         return _cellContentView
     }

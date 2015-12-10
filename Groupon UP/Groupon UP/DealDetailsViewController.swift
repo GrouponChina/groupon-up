@@ -13,6 +13,7 @@ import SnapKit
 class DealDetailsViewController: DealDetailsBaseViewController {
     var messages = [(PFUser, String)]()
     var buyItNow = ""
+    var alert: UIAlertView!
 
     private var _dateFormater: NSDateFormatter!
 
@@ -87,13 +88,15 @@ extension DealDetailsViewController {
                     self.toolbarForNone()
                 case .Active:
                     if selectedDeal.up?.rsvps.count > 0 {
-                        self.toolbarForActive()
+//                        self.toolbarForActive()
+                        self.toolbarForCreated()
                     } else {
                         self.toolbarForCreated()
                     }
                     self.showChat()
                 case .Confirmed, .Redeemed, .Expired:
-                    self.toolbarWithConfirmedUp()
+//                    self.toolbarWithConfirmedUp()
+                    self.toolbarForCreated()
                     self.showChat()
                 }
             }
@@ -325,27 +328,33 @@ extension DealDetailsViewController {
     }
     
     func groupChat() {
-        let alertController = UIAlertController(title: "Leave a message", message: nil, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
-            textField.placeholder = "Your message here..."
-        }
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Send", style: .Default, handler: { (action) in
-            let message = alertController.textFields![0].text!
+        alert = UIAlertView(title: "Leave a message", message: "", delegate: self, cancelButtonTitle:"Cancel")
+        alert.delegate = self
+        alert.addButtonWithTitle("Send")
+        alert.alertViewStyle = UIAlertViewStyle.PlainTextInput
+        alert.textFieldAtIndex(0)!.placeholder = "Your message here ..."
+        alert.show()
+    }
+
+    func alertView(View: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
+        switch buttonIndex{
+        case 1:
+            let message = alert.textFieldAtIndex(0)!.text!
             if !message.isEmpty {
                 let newChatLog = ChatLog(className: "Chat", dictionary: [
-                        "user": PFUser.currentUser()!,
-                        "message": message,
-                        "invitation": self.selectedDeal.up!
+                    "user": PFUser.currentUser()!,
+                    "message": message,
+                    "invitation": self.selectedDeal.up!
                     ])
                 newChatLog.saveInBackgroundWithBlock({ (success, error) -> Void in
                     self.showChat()
                 })
             }
-        }))
-        presentViewController(alertController, animated: true, completion: nil)
+        default:
+            print("Whatever!")
+        }
     }
-    
+
     func rsvp(sender: UIButton) {
         sender.enabled = false
         let me = PFUser.currentUser()!
