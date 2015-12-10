@@ -97,12 +97,12 @@ class DealDetailsBaseViewController: BaseViewController {
             make.right.equalTo(dealInfo).offset(-UPDealDetailsBase.titleOffset)
         }
         dealPrice.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(dealTitle.snp_left)
+            make.right.equalTo(dealTitle.snp_right)
             make.top.equalTo(dealTitle.snp_bottom).offset(UPDealDetailsBase.subOffset)
         }
         dealExpireDate.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dealTitle.snp_bottom).offset(UPDealDetailsBase.subOffset)
-            make.right.equalTo(dealTitle.snp_right)
+            make.top.equalTo(dealTitle.snp_bottom).offset(8)
+            make.left.equalTo(dealTitle.snp_left)
         }
         dealStatusView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(dealInfo.snp_bottom).offset(6)
