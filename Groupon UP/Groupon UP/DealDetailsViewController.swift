@@ -43,7 +43,6 @@ class DealDetailsViewController: DealDetailsBaseViewController {
     }
 
     override func refreshUI() {
-        super.refreshUI()
         self.updateToolbarAndUpStatus()
     }
 }
@@ -83,16 +82,8 @@ extension DealDetailsViewController {
                 switch self.selectedDeal.upStatus {
                 case .None:
                     self.toolbarForNone()
-                case .Active:
-                    if selectedDeal.up?.rsvps.count > 0 {
-//                        self.toolbarForActive()
-                        self.toolbarForCreated()
-                    } else {
-                        self.toolbarForCreated()
-                    }
-                    self.showChat()
-                case .Confirmed, .Redeemed, .Expired:
-//                    self.toolbarWithConfirmedUp()
+                    self.clearChat()
+                case .Active, .Confirmed, .Redeemed, .Expired:
                     self.toolbarForCreated()
                     self.showChat()
                 }
@@ -121,7 +112,7 @@ extension DealDetailsViewController {
         bar.subviews.forEach { (subview) -> () in
             subview.removeFromSuperview()
         }
-        let createButton = buttonWith(title: "Instant Buy!", target: self, action: "onBuyButton")
+        let createButton = buttonWith(title: "Instant Buy!", target: self, action: "onBuyButton:")
         bar.addSubview(createButton)
 
         createButton.snp_makeConstraints { (make) -> Void in
@@ -284,12 +275,21 @@ extension DealDetailsViewController {
 
     func showChat() {
         showUPMessage { () -> Void in
-            let tableView = self.dealStatusView as! UITableView
-            tableView.reloadData()
-            tableView.snp_updateConstraints(closure: { (make) -> Void in
-                make.height.equalTo(tableView.contentSize.height)
-            })
+            self.refreshChat()
         }
+    }
+    
+    func clearChat() {
+        messages.removeAll()
+        refreshChat()
+    }
+    
+    func refreshChat() {
+        let tableView = self.dealStatusView as! UITableView
+        tableView.reloadData()
+        tableView.snp_updateConstraints(closure: { (make) -> Void in
+            make.height.equalTo(tableView.contentSize.height)
+        })
     }
     
     func showDealDescription() {
@@ -329,13 +329,16 @@ extension DealDetailsViewController {
     }
 
     func onSuccessButton() {
-        print("[INFO] Order placed!")
+        buyItNow = ""
+        refreshUI()
     }
     
-    func onBuyButton() {
+    func onBuyButton(sender: UIButton) {
         let order = PFObject(className:"Order")
         order["userID"] = PFUser.currentUser()?.objectId
         order["dealID"] = self.selectedDeal.uuid
+        sender.setTitle("Confirming...", forState: .Normal)
+        sender.enabled = false
         order.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {

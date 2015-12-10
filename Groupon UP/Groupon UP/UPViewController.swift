@@ -24,6 +24,8 @@ class UPViewController: BaseViewController, UITextFieldDelegate, UITextViewDeleg
     private var _grouponUPDate: UITextField!
 
     private var _bottomToolbar: UIView!
+    
+    private let defaultInterval = 15
 
     override func refreshUI() {
         super.refreshUI()
@@ -108,7 +110,7 @@ class UPViewController: BaseViewController, UITextFieldDelegate, UITextViewDeleg
             subview.removeFromSuperview()
         }
 
-        let saveButton = buttonWith(title: "Save", target: self, action: "saveUP")
+        let saveButton = buttonWith(title: "Save", target: self, action: "saveUP:")
 
         bar.addSubview(saveButton)
 
@@ -153,6 +155,7 @@ extension UPViewController {
         if _datePickerView == nil {
             _datePickerView = UIDatePicker()
             _datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
+            _datePickerView.minuteInterval = defaultInterval
             _datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
         }
 
@@ -231,6 +234,11 @@ extension UPViewController {
             if let currentUp = self.deal.up?.date {
                 datePickerView.setDate(currentUp, animated: false)
                 updateDatePickerViewDate(datePickerView, textField:v)
+            } else {
+                let secondsToAdd = defaultInterval * 60 - Int(NSDate().timeIntervalSince1970) % (defaultInterval * 60)
+                let defaultDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(secondsToAdd + 24 * 3600))
+                datePickerView.setDate(defaultDate, animated: false)
+                updateDatePickerViewDate(datePickerView, textField:v)
             }
 
             _grouponUPDate = v
@@ -289,7 +297,7 @@ extension UPViewController {
         }
     }
 
-    func saveUP() {
+    func saveUP(sender: UIButton) {
         if self.deal.up != nil {
             self.deal.up!.message = self.message.text
             self.deal.up!.date = self.datePickerView.date
@@ -307,16 +315,18 @@ extension UPViewController {
         }
 
         print("Saving object...")
-        self.deal.up!.saveInBackgroundWithBlock {
+        sender.setTitle("Saving...", forState: .Normal)
+        sender.enabled = false
+        deal.up!.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
+                sender.setTitle("Saved", forState: .Normal)
                 print("Groupon UP saved!")
             } else {
                 print("[ERROR] Unable to save Groupon UP: \(error?.description)")
             }
+            self.navigationController?.popViewControllerAnimated(true)
         }
-
-        navigationController?.popViewControllerAnimated(true)
     }
 }
 
