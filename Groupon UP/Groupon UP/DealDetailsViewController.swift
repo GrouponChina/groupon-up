@@ -72,6 +72,9 @@ extension DealDetailsViewController {
         if buyItNow == "buy" {
             self.toolbarForBuy()
             self.showDealDescription()
+        } else if buyItNow == "success" {
+            self.toolbarForSuccess()
+            self.showDealDescription()
         } else {
             if let up = selectedDeal.up where up.createdBy != PFUser.currentUser() {
                 self.toolbarForRSVP()
@@ -97,12 +100,28 @@ extension DealDetailsViewController {
         }
     }
 
+    func toolbarForSuccess() {
+        let bar = bottomToolbar
+        bar.subviews.forEach { (subview) -> () in
+            subview.removeFromSuperview()
+        }
+        let createButton = buttonWith(title: "Order confirmed!", target: self, action: "onSuccessButton")
+        bar.addSubview(createButton)
+        
+        createButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(bar).offset(UPSpanSize)
+            make.bottom.equalTo(bar).offset(-UPSpanSize)
+            make.left.equalTo(bar).offset(UPSpanSize)
+            make.right.equalTo(bar).offset(-UPSpanSize)
+        }
+    }
+
     func toolbarForBuy() {
         let bar = bottomToolbar
         bar.subviews.forEach { (subview) -> () in
             subview.removeFromSuperview()
         }
-        let createButton = buttonWith(title: "Buy!", target: self, action: "onBuyButton")
+        let createButton = buttonWith(title: "Instant Buy!", target: self, action: "onBuyButton")
         bar.addSubview(createButton)
 
         createButton.snp_makeConstraints { (make) -> Void in
@@ -142,6 +161,8 @@ extension DealDetailsViewController {
         }
         let chatButton = buttonWith(title: "Chat", target: self, action: "groupChat")
         let rsvpButton = buttonWith(title: "RSVP", target: self, action: "rsvp:")
+        let deleteRsvpButton = buttonWith(title: "RAGE QUIT", target: self, action: "deleteRsvp:")
+        deleteRsvpButton.backgroundColor = UPDangerZoneColor
         let tips = descriptionLabel(title: "\(selectedDeal.up!.createdBy.username!) created an UP on \(dateFormatter.stringFromDate(self.selectedDeal.up!.date))")
         tips.textAlignment = .Center
         bar.addSubview(chatButton)
@@ -160,6 +181,14 @@ extension DealDetailsViewController {
         if !selectedDeal.up!.rsvps.contains(PFUser.currentUser()!) {
             bar.addSubview(rsvpButton)
             rsvpButton.snp_makeConstraints { (make) -> Void in
+                make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
+                make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
+                make.right.equalTo(bar).offset(-UPSpanSize)
+                make.bottom.equalTo(bar).offset(-UPSpanSize)
+            }
+        } else {
+            bar.addSubview(deleteRsvpButton)
+            deleteRsvpButton.snp_makeConstraints { (make) -> Void in
                 make.top.equalTo(tips.snp_bottom).offset(UPSpanSize)
                 make.left.equalTo(bar.snp_centerX).offset(UPSpanSize)
                 make.right.equalTo(bar).offset(-UPSpanSize)
@@ -299,6 +328,10 @@ extension DealDetailsViewController {
         }
     }
 
+    func onSuccessButton() {
+        print("[INFO] Order placed!")
+    }
+    
     func onBuyButton() {
         let order = PFObject(className:"Order")
         order["userID"] = PFUser.currentUser()?.objectId
@@ -306,7 +339,7 @@ extension DealDetailsViewController {
         order.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
-                self.buyItNow = ""
+                self.buyItNow = "success"
                 self.refreshUI()
             } else {
                 print("[ERROR] Unable to submit the order: \(error)")
@@ -352,6 +385,7 @@ extension DealDetailsViewController {
                     ])
                 newChatLog.saveInBackgroundWithBlock({ (success, error) -> Void in
                     self.showChat()
+                    self.scrollToBottom()
                 })
             }
         default:
@@ -369,6 +403,17 @@ extension DealDetailsViewController {
             })
         }
     }
+
+    func deleteRsvp(sender: UIButton) {
+        sender.enabled = false
+        let me = PFUser.currentUser()!
+        if selectedDeal.up!.rsvps.contains(me) {
+            selectedDeal.up!.rsvps = selectedDeal.up!.rsvps.filter() {$0 != me}
+            selectedDeal.up!.saveInBackgroundWithBlock({ (success, error) -> Void in
+                self.updateToolbarAndUpStatus()
+            })
+        }
+    }
 }
 
 extension DealDetailsViewController: UITableViewDataSource {
@@ -378,7 +423,7 @@ extension DealDetailsViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        if buyItNow == "buy" {
+        if buyItNow == "buy" || buyItNow == "success" {
             return 180.0
         }
         else {
@@ -387,20 +432,19 @@ extension DealDetailsViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if buyItNow == "buy" {
+        if buyItNow == "buy" || buyItNow == "success" {
             let (_, message) = messages[indexPath.row]
             let cell = UITableViewCell()
             cell.addSubview(dealFinePrint)
             dealFinePrint.snp_makeConstraints { (make)->  Void in
                 make.top.equalTo(cell)
-                make.left.equalTo(cell)
-                make.right.equalTo(cell)
+                make.left.equalTo(cell).offset(4)
+                make.right.equalTo(cell).offset(4)
                 make.bottom.equalTo(cell)
             }
             dealFinePrint.text = message
             return cell
-        }
-        else {
+        } else {
             let (user, message) = messages[indexPath.row]
             let cell = ChatMessageTableViewCell(style: .Default, reuseIdentifier: nil)
             cell.initializeWith(user: user, message: message)
@@ -412,5 +456,16 @@ extension DealDetailsViewController: UITableViewDataSource {
 extension DealDetailsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+
+// MARK: helper
+extension DealDetailsViewController {
+    func scrollToBottom() {
+        UIView.animateWithDuration(0.2, animations: {() -> Void in
+            let bottomOffset: CGPoint = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height + 90)
+            self.scrollView.setContentOffset(bottomOffset, animated: true)
+            self.view.layoutIfNeeded()
+            }, completion: nil)
     }
 }
