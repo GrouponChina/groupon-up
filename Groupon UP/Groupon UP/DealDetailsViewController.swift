@@ -43,7 +43,6 @@ class DealDetailsViewController: DealDetailsBaseViewController {
     }
 
     override func refreshUI() {
-        super.refreshUI()
         self.updateToolbarAndUpStatus()
     }
 }
@@ -83,6 +82,7 @@ extension DealDetailsViewController {
                 switch self.selectedDeal.upStatus {
                 case .None:
                     self.toolbarForNone()
+                    self.clearChat()
                 case .Active:
                     if selectedDeal.up?.rsvps.count > 0 {
 //                        self.toolbarForActive()
@@ -284,12 +284,21 @@ extension DealDetailsViewController {
 
     func showChat() {
         showUPMessage { () -> Void in
-            let tableView = self.dealStatusView as! UITableView
-            tableView.reloadData()
-            tableView.snp_updateConstraints(closure: { (make) -> Void in
-                make.height.equalTo(tableView.contentSize.height)
-            })
+            self.refreshChat()
         }
+    }
+    
+    func clearChat() {
+        messages.removeAll()
+        refreshChat()
+    }
+    
+    func refreshChat() {
+        let tableView = self.dealStatusView as! UITableView
+        tableView.reloadData()
+        tableView.snp_updateConstraints(closure: { (make) -> Void in
+            make.height.equalTo(tableView.contentSize.height)
+        })
     }
     
     func showDealDescription() {

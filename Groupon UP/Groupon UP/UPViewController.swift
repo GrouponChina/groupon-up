@@ -315,16 +315,15 @@ extension UPViewController {
         }
 
         print("Saving object...")
-        self.deal.up!.saveInBackgroundWithBlock {
+        deal.up!.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
                 print("Groupon UP saved!")
             } else {
                 print("[ERROR] Unable to save Groupon UP: \(error?.description)")
             }
+            self.navigationController?.popViewControllerAnimated(true)
         }
-
-        navigationController?.popViewControllerAnimated(true)
     }
 }
 
