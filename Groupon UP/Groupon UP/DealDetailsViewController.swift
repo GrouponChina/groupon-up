@@ -47,11 +47,6 @@ class DealDetailsViewController: DealDetailsBaseViewController {
         self.updateToolbarAndUpStatus()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "showChatAndScrollToBottom", userInfo: nil, repeats: true)
-    }
-    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         timer?.invalidate()
@@ -305,7 +300,7 @@ extension DealDetailsViewController {
     
     func refreshChat() {
         let tableView = self.dealStatusView as! UITableView
-        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.None)
         tableView.snp_updateConstraints(closure: { (make) -> Void in
             make.height.equalTo(tableView.contentSize.height)
         })
@@ -406,7 +401,10 @@ extension DealDetailsViewController {
                     "invitation": self.selectedDeal.up!
                     ])
                 newChatLog.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    self.showChatAndScrollToBottom()
+                    if self.timer == nil {
+                        self.timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "showChatAndScrollToBottom", userInfo: nil, repeats: true)
+                    }
+                    self.scrollToBottom()
                 })
             }
         default:
@@ -484,9 +482,13 @@ extension DealDetailsViewController: UITableViewDelegate {
 extension DealDetailsViewController {
     func scrollToBottom() {
         UIView.animateWithDuration(0.2, animations: {() -> Void in
-            let bottomOffset: CGPoint = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height + 90)
-            self.scrollView.setContentOffset(bottomOffset, animated: true)
-            self.view.layoutIfNeeded()
-            }, completion: nil)
+            let offset = self.scrollView.contentSize.height - self.scrollView.bounds.size.height
+            debugPrint(offset)
+            if offset > 0 {
+                let bottomOffset: CGPoint = CGPointMake(0, offset)
+                self.scrollView.setContentOffset(bottomOffset, animated: true)
+                self.view.layoutIfNeeded()
+            }
+        }, completion: nil)
     }
 }
