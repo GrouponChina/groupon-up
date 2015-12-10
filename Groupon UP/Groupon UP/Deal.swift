@@ -26,6 +26,7 @@ class Deal {
     var divisionId: String!
     var expiresAt: String = "Never Expires"
     var up: UpInvitation?
+    var finePrint: String!
     
     var upStatus: DealUpStatus {
         guard let up = up else {
@@ -51,6 +52,7 @@ class Deal {
     init(dealData: JSON) {
         uuid = dealData["uuid"].stringValue
         title = dealData["title"].stringValue
+        finePrint = dealData["finePrint"].stringValue
         announcementTitle = dealData["announcementTitle"].stringValue
         shortAnnouncementTitle = dealData["shortAnnouncementTitle"].stringValue
         soldQuantity = dealData["soldQuantity"].stringValue
@@ -59,7 +61,6 @@ class Deal {
         let options = dealData["options"]
         price = options[0]["price"]["formattedAmount"].stringValue
         value = options[0]["value"]["formattedAmount"].stringValue
-        
         let fullLengthExpiresAt = options[0]["expiresAt"].stringValue
         if !fullLengthExpiresAt.isEmpty {
             let dataRange = fullLengthExpiresAt.startIndex..<fullLengthExpiresAt.startIndex.advancedBy(10)

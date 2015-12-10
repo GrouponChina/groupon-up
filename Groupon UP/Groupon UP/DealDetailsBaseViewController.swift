@@ -16,9 +16,11 @@ class DealDetailsBaseViewController: BaseViewController {
     private var _dealImageView: UIImageView!
     private var _dealInfo: UIView!
     private var _dealTitle: UILabel!
+    private var _dealPrice: UILabel!
     private var _dealExpireDate: UILabel!
     private var _dealStatusView: UIView!
     private var _bottomToolbar: UIView!
+    private var _dealFinePrint: UITextView!
     
     var selectedDeal: Deal!
     
@@ -37,6 +39,7 @@ class DealDetailsBaseViewController: BaseViewController {
         dealInfo.addSubview(dealTitle)
         dealInfo.addSubview(dealExpireDate)
         contentView.addSubview(dealStatusView)
+        
         view.addSubview(bottomToolbar)
     }
     
@@ -96,7 +99,6 @@ class DealDetailsBaseViewController: BaseViewController {
             make.top.equalTo(dealTitle.snp_bottom).offset(UPDealDetailsBase.subOffset)
             make.right.equalTo(dealTitle.snp_right)
         }
-        
         dealStatusView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(dealInfo.snp_bottom).offset(6)
             make.left.equalTo(contentView)
@@ -104,6 +106,7 @@ class DealDetailsBaseViewController: BaseViewController {
             make.bottom.equalTo(contentView)
         }
     }
+
     
     override func initializeUI() {
         setDeal(selectedDeal)
@@ -193,6 +196,17 @@ extension DealDetailsBaseViewController {
             _bottomToolbar = getBottomToolbar()
         }
         return _bottomToolbar
+    }
+    
+    var dealFinePrint: UITextView {
+        if _dealFinePrint == nil {
+            _dealFinePrint = UITextView()
+            _dealFinePrint.font = UPDealDetailsBase.expiredAtFont
+            _dealFinePrint.textColor = UIColor.lightGrayColor()
+            _dealFinePrint.editable = false
+            _dealFinePrint.selectable = false
+        }
+        return _dealFinePrint
     }
     
     // Override point for providing a deal specific status view

@@ -13,7 +13,7 @@ let screenSize = UIScreen.mainScreen().bounds
 
 struct UPDealDetailsBase {
     static let imageHeight = 0.6 * screenSize.width
-    static let dealInfoHeight = imageHeight * 0.35
+    static let dealInfoHeight = imageHeight * 0.40
     
     static let offset = 0
     static let titleOffset = 8

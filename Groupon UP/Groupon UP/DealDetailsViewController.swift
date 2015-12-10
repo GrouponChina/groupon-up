@@ -71,6 +71,7 @@ extension DealDetailsViewController {
     func updateToolbarAndUpStatus() {
         if buyItNow == "buy" {
             self.toolbarForBuy()
+            self.showDealDescription()
         } else {
             if let up = selectedDeal.up where up.createdBy != PFUser.currentUser() {
                 self.toolbarForRSVP()
@@ -261,6 +262,16 @@ extension DealDetailsViewController {
             })
         }
     }
+    
+    func showDealDescription() {
+        let tableView = self.dealStatusView as! UITableView
+        tableView.separatorStyle = .None
+        self.messages = [(PFUser.currentUser()!, selectedDeal.finePrint)]
+        tableView.reloadData()
+        tableView.snp_updateConstraints(closure: { (make) -> Void in
+            make.height.equalTo(tableView.contentSize.height)
+        })
+    }
 
     func showUPMessage(callback: () -> Void) {
         messages.removeAll()
@@ -366,10 +377,25 @@ extension DealDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let (user, message) = messages[indexPath.row]
-        let cell = ChatMessageTableViewCell(style: .Default, reuseIdentifier: nil)
-        cell.initializeWith(user: user, message: message)
-        return cell
+        if buyItNow == "buy" {
+            let (_, message) = messages[indexPath.row]
+            let cell = UITableViewCell()
+            cell.addSubview(dealFinePrint)
+            dealFinePrint.snp_makeConstraints { (make)->  Void in
+                make.top.equalTo(cell)
+                make.left.equalTo(cell)
+                make.right.equalTo(cell)
+                make.bottom.equalTo(cell)
+            }
+            dealFinePrint.text = message
+            return cell
+        }
+        else {
+            let (user, message) = messages[indexPath.row]
+            let cell = ChatMessageTableViewCell(style: .Default, reuseIdentifier: nil)
+            cell.initializeWith(user: user, message: message)
+            return cell
+        }
     }
 }
 
