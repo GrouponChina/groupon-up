@@ -112,7 +112,7 @@ extension DealDetailsViewController {
         bar.subviews.forEach { (subview) -> () in
             subview.removeFromSuperview()
         }
-        let createButton = buttonWith(title: "Instant Buy!", target: self, action: "onBuyButton")
+        let createButton = buttonWith(title: "Instant Buy!", target: self, action: "onBuyButton:")
         bar.addSubview(createButton)
 
         createButton.snp_makeConstraints { (make) -> Void in
@@ -333,10 +333,12 @@ extension DealDetailsViewController {
         refreshUI()
     }
     
-    func onBuyButton() {
+    func onBuyButton(sender: UIButton) {
         let order = PFObject(className:"Order")
         order["userID"] = PFUser.currentUser()?.objectId
         order["dealID"] = self.selectedDeal.uuid
+        sender.setTitle("Confirming...", forState: .Normal)
+        sender.enabled = false
         order.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {

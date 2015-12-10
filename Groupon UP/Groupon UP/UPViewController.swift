@@ -110,7 +110,7 @@ class UPViewController: BaseViewController, UITextFieldDelegate, UITextViewDeleg
             subview.removeFromSuperview()
         }
 
-        let saveButton = buttonWith(title: "Save", target: self, action: "saveUP")
+        let saveButton = buttonWith(title: "Save", target: self, action: "saveUP:")
 
         bar.addSubview(saveButton)
 
@@ -297,7 +297,7 @@ extension UPViewController {
         }
     }
 
-    func saveUP() {
+    func saveUP(sender: UIButton) {
         if self.deal.up != nil {
             self.deal.up!.message = self.message.text
             self.deal.up!.date = self.datePickerView.date
@@ -315,9 +315,12 @@ extension UPViewController {
         }
 
         print("Saving object...")
+        sender.setTitle("Saving...", forState: .Normal)
+        sender.enabled = false
         deal.up!.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
+                sender.setTitle("Saved", forState: .Normal)
                 print("Groupon UP saved!")
             } else {
                 print("[ERROR] Unable to save Groupon UP: \(error?.description)")
