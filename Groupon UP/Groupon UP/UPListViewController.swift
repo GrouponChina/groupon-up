@@ -159,7 +159,7 @@ extension UPListViewController {
 extension UPListViewController {
     var segmentedControl: UISegmentedControl {
         if _segmentedControl == nil {
-            let controls = ["Inviting", "Invited"]
+            let controls = ["Accepted", "Invited"]
             _segmentedControl = UISegmentedControl(items: controls)
             _segmentedControl.selectedSegmentIndex = 0
             _segmentedControl.layer.borderWidth = 0
