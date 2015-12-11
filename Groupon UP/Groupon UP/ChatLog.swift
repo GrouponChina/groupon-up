@@ -31,9 +31,7 @@ class ChatLog: PFObject, PFSubclassing {
         query.whereKey("invitation", equalTo: invitation)
         query.findObjectsInBackgroundWithBlock { (chatLogs, error) -> Void in
             if let chatLogs = chatLogs?.map({ $0 as! ChatLog}) {
-                callback(chatLogs.sort({ (left, right) -> Bool in
-                    return left.createdAt!.timeIntervalSince1970 < right.createdAt!.timeIntervalSince1970
-                }), nil)
+                callback(chatLogs, nil)
             } else {
                 callback(nil, error)
             }
